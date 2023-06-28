@@ -1,0 +1,29 @@
+server:
+  port : 1999
+       
+         
+spring:
+  application:
+    name: KPL-SERVICE
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/kpl_2023_main_db
+    password: 1234
+    tomcat.max-active: 2
+    hikari:
+      maximum-pool-size: 2
+      auto-commit: true
+
+  jpa:
+    generate-ddl: 'true'
+    database-platform:  org.hibernate.dialect.PostgreSQL94Dialect
+    hibernate:
+      ddl-auto: update
+   
+springfox:
+  documentation:
+    swagger-ui:
+      base-url: /kplService 
