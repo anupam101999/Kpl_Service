@@ -21,11 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kpl.registration.repository.PlayerRepository;
+
 @Controller
 public class LoginController {
 	@Autowired
 	RegistrationController registrationController;
-
+	@Autowired
+	PlayerRepository playerRepository;
+	
 	@GetMapping("/login")
 	public String showLoginPage() {
 		return "login";
@@ -34,7 +38,16 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam("username") String id, @RequestParam("password") String password, Model model)
 			throws IOException, ParseException {
-
+		if (playerRepository.findByMailOrPhNumber(id)==null) {
+			try {
+				Integer.parseInt(id);
+			} catch (Exception ep) {
+				model.addAttribute("errorMessage", "Invalid Email ID");
+				return "login";
+			}
+			model.addAttribute("errorMessage", "Invalid Phone Number");
+			return "login";
+		}
 		var response = registrationController.registrationStatus(id, password);
 		if (response.getRegistrationId() != null) {
 
@@ -50,7 +63,7 @@ public class LoginController {
 			model.addAttribute("status", response.getPaymentValidation());
 			return "playerView";
 		} else {
-			model.addAttribute("errorMessage", "Invalid Email/Ph No or password");
+			model.addAttribute("errorMessage", "Invalid Password");
 			return "login";
 		}
 	}
@@ -80,4 +93,9 @@ public class LoginController {
 		}
 	}
 
+	
+	@GetMapping("/signUp")
+	public String signUp() {
+		return "signUp";
+	}
 }

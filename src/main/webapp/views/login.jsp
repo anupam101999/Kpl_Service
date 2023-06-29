@@ -1,147 +1,459 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Login Page</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Details</title>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      line-height: 1.5em;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Open Sans", sans-serif;
+      background-color:
+        #27c5ad;
+    }
+
+    header {
+      background-color:
+        #d3df5b;
+      /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -4px rgba(0, 0, 0, 0.1); */
+      padding: 1.5% 0%;
+    }
+
+    header .wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header .logo img {
+      height: 60px;
+      display: block;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 100%;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background-color:
+        rgb(185, 231, 20);
+      padding: 20px;
+      transition: left 0.3s;
+    }
+
+    .navbar.show {
+      left: 0 !important;
+    }
+
+    .hide-scroll {
+      overflow: hidden;
+    }
+
+    .navbar ul {
+      all: unset;
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .navbar ul a {
+      all: unset;
+      color:
+        #444444;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 28px;
+    }
+
+    .navbar ul a:hover {
+      color:
+        #111111;
+      text-decoration: underline overline;
+      text-decoration-thickness: 3px;
+    }
+
+    .close-nav {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    .close-nav button {
+      all: unset;
+      background:
+        #f7f7f7;
+      font-size: 42px;
+      cursor: pointer;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      border-radius: 3px;
+      color:
+        #444444;
+    }
+
+    .close-nav button:hover {
+      color:
+        #222222;
+      background:
+        white;
+    }
+
+    .menu-bar button {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background:
+        #f7f7f7;
+      height: 50px;
+      width: 50px;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .menu-bar i {
+      display: block;
+      border-top: 3px solid #444444;
+      border-bottom: 3px solid #444444;
+    }
+
+    .menu-bar i::after {
+      display: block;
+      content: "";
+      border-top: 3px solid #444444;
+      margin: 6px 0;
+    }
+
+    .menu-bar button:hover {
+      background:
+        white;
+    }
+
+    .menu-bar button:hover i {
+      border-color:
+        #222222;
+    }
+
+    /* .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1%;
+} */
+
+    @media (min-width: 550px) {
+      .navbar {
+        all: unset;
+        display: block;
+      }
+
+      .navbar ul {
+        flex-direction: row;
+        gap: 20px;
+      }
+
+      .navbar ul a {
+        font-size: inherit;
+      }
+
+      .close-nav,
+      .menu-bar {
+        display: none;
+      }
+    }
+
     body {
       font-family: Arial, sans-serif;
+    }
+
+    .container_body {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 5%;
       background-color: #27c5ad;
     }
 
-    .logo-container {
-      margin-bottom: 1%;
-      padding-left: 45%;
-      padding-top: 2%;
+    .user-details {
+      margin-bottom: 10px;
     }
 
-    .logo-container img {
-      width: 15%;
+    .user-details label {
+      font-weight: bold;
     }
 
-    .form-container {
-      width: 60%;
-      padding-left: 18%;
+
+
+
+
+
+
+
+
+
+
+
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
-    h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
+    .login-box {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      width: 97%;
+      height: 100%;
+      padding-left: 25%;
+      padding-right: 25%;
+      padding-top: 5%;
     }
 
-    .form-group {
-      margin-bottom: 20px;
+    .login-header {
+      text-align: center;
+      margin: 20px 0 40px 0;
     }
 
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      color: #555555;
+    .login-header header {
+      color: #333;
+      font-size: 30px;
+      font-weight: 600;
     }
 
-    .form-group input {
+    .input-box .input-field {
       width: 100%;
-      padding: 2%;
-      border: 1px solid #dddddd;
-      border-radius: 5px;
+      height: 41px;
+      font-size: 17px;
+      padding: 0 25px;
+      margin-bottom: 15px;
+      border-radius: 30px;
+      border: none;
+      box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.05);
+      outline: none;
+      transition: .3s;
     }
 
-    .form-group input[type="submit"] {
-      background-color: #007bff;
-      color: #ffffff;
+    ::placeholder {
+      font-weight: 500;
+      color: #222;
+    }
+
+    .input-field:focus {
+      width: 105%;
+    }
+
+    .forgot {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+
+    section {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #555;
+    }
+
+    #check {
+      margin-right: 10px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    section a {
+      color: #555;
+    }
+
+    .input-submit {
+      position: relative;
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 41px;
+      background: #d1cd18;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    .input-submit label {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      color: #fff;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
       cursor: pointer;
     }
 
-    .button-container {
-      display: flex;
-      justify-content: center;
-      padding-left: 24%;
-      padding-right: 18%;
-      padding-top: 3%;
-      flex-direction: row;
-      align-content: flex-start;
-      align-items: baseline;
+    .submit-btn:hover {
+      background: #000;
+      transform: scale(1.05, 1);
     }
 
-
-    .button-container a {
-      text-decoration: none;
-      color: #88ff00;
+    .sign-up-link {
+      text-align: center;
+      font-size: 15px;
+      margin-top: 20px;
     }
 
-    #heading {
-      padding-left: 25%;
-      padding-top: 4%;
+    .sign-up-link a {
+      color: #000;
+      font-weight: 600;
     }
 
     .error-popup {
       position: fixed;
-      top: 50%;
-      left: 50%;
+      top: 90%;
+      left: 48%;
       transform: translate(-50%, -50%);
       padding: 20px;
       color: rgb(240, 8, 8);
       border-radius: 5px;
     }
-
-    .links>a {
-      padding-left: 18%;
-      margin: 0;
-      color: #0e3dd8;
-    }
   </style>
+
+
+
+
+  <title>Login</title>
 </head>
 
-<body>
-  <div id="heading">
-    <h1>Kashipur Premier League (season 5)</h1>
-  </div>
-  <div class="container">
-    <div class="logo-container">
-      <img src="${pageContext.request.contextPath}/images/transparent_logo.png" alt="KPL Logo">
+<header>
+  <div class="wrapper">
+    <div class="logo">
+      <a href="https://www.google.com"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
+          alt="KPL logo"></a>
+      <!-- <a href="https://www.google.com"><img src="transparent_logo.png" alt="KPL logo"></a> -->
     </div>
-    <div class="form-container">
-      <h2>Login</h2>
-      <form action="/login" method="post">
-        <div class="form-group">
-          <label for="username"><strong>Phone No/Email:</strong></label>
-          <input type="text" id="username" name="username" placeholder="Enter Your Phone Number or Mail ID" required>
-        </div>
-        <div class="form-group">
-          <label for="password"><strong>Password:</strong></label>
-          <input type="password" id="password" name="password" placeholder="Enter your Password" required>
-        </div>
-        <div class="form-group button-container">
-          <input type="submit" value="Login">
-        </div>
-      </form>
+    <div>
+      <h2>Kashipur Premier League (season 5)</h2>
+    </div>
+    <div class="navbar">
+      <div class="close-nav"><button></button></div>
+      <nav>
+        <ul>
+          <li><a href="https://www.google.com">Home</a></li>
+          <!-- <li><a href="#">Blog</a></li> -->
+        </ul>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <button><i></i></button>
     </div>
   </div>
-  <div>
-    <!-- <form action="/createNewAccount" method="post"> -->
-    <div class="links">
-      <a href="https://www.google.com" target="_blank">Create New Regitration</a><a href="#"></a> <a
-        href="http://192.168.0.201:1999/forgetPassword" target="_blank">Forget Password ?</a>
+</header>
+<script>
+  const theBody = document.querySelector('body');
+  const openNav = document.querySelector('.menu-bar button');
+  const closeNav = document.querySelector('.close-nav button');
+  const Navbar = document.querySelector('.navbar');
+  function showHide() {
+    Navbar.classList.toggle('show');
+  }
+
+  openNav.onclick = showHide;
+  closeNav.onclick = showHide;
+</script>
+
+
+
+
+
+
+
+<div class="login-box">
+  <div class="login-header">
+    <h2>Check Your Registration Status</h2>
+  </div>
+  <form action="/login" method="post">
+    <div class="input-box">
+      <input type="text" class="input-field" id="username" name="username"
+        placeholder="Enter your email ID or Phone Number" autocomplete="off" required>
     </div>
-    <% if (request.getAttribute("errorShown")==null) { %>
-      <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">
-        <div class="error-popup">
-          <p>
-          <h2>${errorMessage}</h2>
-          </p>
-        </div>
-        <script>
-          // JavaScript code to hide the error message after 5 seconds
-          setTimeout(function () {
-            var errorPopup = document.querySelector('.error-popup');
-            if (errorPopup) {
-              errorPopup.style.display = 'none';
-            }
-          }, 5000);
-        </script>
-        <% request.setAttribute("errorShown", true); %>
-      </c:if>
-      <% } %>
-</body>
+    <div class="input-box">
+      <input type="password" class="input-field" id="password" name="password" placeholder="Enter your Password"
+        autocomplete="off" required>
+    </div>
+    <div class="forgot">
+
+      <section>
+        <a href="http://192.168.0.201:1999/forgetPassword" target="_blank">Forgot password</a>
+      </section>
+    </div>
+    <div class="input-submit">
+      <button class="submit-btn" id="submit" value="login"></button>
+      <label for="submit">Sign In</label>
+    </div>
+  </form>
+  <div class="sign-up-link">
+    <p>Don't have account? <a href="http://192.168.0.201:1999/signUp" target="_blank">Sign Up</a></p>
+  </div>
+</div>
+<% if (request.getAttribute("errorShown")==null) { %>
+  <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">
+    <div class="error-popup">
+      <p>
+      <h2>${errorMessage}</h2>
+      </p>
+    </div>
+    <script>
+      // JavaScript code to hide the error message after 5 seconds
+      setTimeout(function () {
+        var errorPopup = document.querySelector('.error-popup');
+        if (errorPopup) {
+          errorPopup.style.display = 'none';
+        }
+      }, 5000);
+    </script>
+    <% request.setAttribute("errorShown", true); %>
+  </c:if>
+  <% } %>
+
+
+
+
+    <div><br></div>
+    <div><br></div>
+    <div><br></div>
+    <div><br></div>
+    <div><br></div>
+    </body>
 
 </html>
