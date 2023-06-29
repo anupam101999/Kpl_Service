@@ -121,7 +121,7 @@
     <!-- <form action="/createNewAccount" method="post"> -->
     <div class="links">
       <a href="https://www.google.com" target="_blank">Create New Regitration</a><a href="#"></a> <a
-        href="http://localhost:1999/forgetPassword" target="_blank">Forget Password ?</a>
+        href="http://192.168.0.201:1999/forgetPassword" target="_blank">Forget Password ?</a>
     </div>
     <% if (request.getAttribute("errorShown")==null) { %>
       <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">

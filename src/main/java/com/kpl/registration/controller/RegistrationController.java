@@ -171,15 +171,15 @@ public class RegistrationController {
 	@GetMapping("/resetPassword")
 	public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadharNo,
 			@RequestParam String password) throws IOException {
-//		if (phNumber.toString().length()!=10) {
-//			return "Phone Number Must be 10 digit";
-//		}
-//		if (pinCode.toString().length()!=6) {
-//			return "Pin Code Must be 6 digit";
-//		}
-//		if (aadharNo.toString().length()!=12) {
-//			return "Aadhaar Number Must be 12 digit";
-//		}
+		if (phNumber.toString().length()!=10) {
+			return "Phone Number Must be 10 digit";
+		}
+		if (pinCode.toString().length()!=6) {
+			return "Pin Code Must be 6 digit";
+		}
+		if (aadharNo.toString().length()!=12) {
+			return "Aadhaar Number Must be 12 digit";
+		}
 		var length=password.toString().length();
 		if (!(length>3 && length<9)) {
 			return "Password Must be between 4 to 8 character";

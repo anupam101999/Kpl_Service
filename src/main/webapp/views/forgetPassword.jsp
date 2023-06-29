@@ -18,27 +18,6 @@
   <style>
     @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
-/* 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      line-height: 1.5em;
-    } */
-
-    html {
-      font-size: 16px;
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
-    }
-
-    /* body {
-      margin: 0;
-      font-family: "Open Sans", sans-serif;
-      background-color:
-        #27c5ad;
-    } */
-
     header {
       background-color:
         #d3df5b;
@@ -57,81 +36,131 @@
     }
 
     header .logo img {
-      height: 50px;
-      display: block;
-    }
+                    height: 50px;
+                    display: block;
+                }
+                .navbar {
+                    position: fixed;
+                    top: 0;
+                    /* left: 100%; */
+                    margin: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color:
+                    #d3df5b;
+                    padding: 20px;
+                    transition: left 0.3s;
+                }
 
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 100%;
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      background-color:
-        rgb(185, 231, 20);
-      padding: 20px;
-      transition: left 0.3s;
-    }
+                .hide-scroll {
+                    overflow: hidden;
+                }
 
-    .navbar.show {
-      left: 0 !important;
-    }
+                .navbar ul {
+                    all: unset;
+                    list-style-type: none;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 25px;
+                }
 
-    .hide-scroll {
-      overflow: hidden;
-    }
+                .navbar ul a {
+                    all: unset;
+                    color:
+                        #444444;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    font-weight: bold;
+                    font-size: 28px;
+                }
 
-    .navbar ul {
-      all: unset;
-      list-style-type: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 25px;
-    }
+                .navbar ul a:hover {
+                    color:
+                        #111111;
+                    text-decoration: underline overline;
+                    text-decoration-thickness: 3px;
+                }
 
-    .navbar ul a {
-      all: unset;
-      color:
-        #444444;
-      text-transform: uppercase;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 28px;
-    }
+                .close-nav {
+                    text-align: right;
+                    margin-bottom: 20px;
+                }
 
-    .navbar ul a:hover {
-      color:
-        #111111;
-      text-decoration: underline overline;
-      text-decoration-thickness: 3px;
-    }
+                .close-nav button {
+                    all: unset;
+                    background:
+                        #f7f7f7;
+                    font-size: 42px;
+                    cursor: pointer;
+                    border: 1px solid rgba(0, 0, 0, 0.2);
+                    padding: 15px;
+                    border-radius: 3px;
+                    color:
+                        #444444;
+                }
 
-    .close-nav {
-      text-align: right;
-      margin-bottom: 20px;
-    }
+                .close-nav button:hover {
+                    color:
+                        #222222;
+                    background:
+                        white;
+                }
 
-    .close-nav button {
-      all: unset;
-      background:
-        #f7f7f7;
-      font-size: 42px;
-      cursor: pointer;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      padding: 15px;
-      border-radius: 3px;
-      color:
-        #444444;
-    }
+                .menu-bar button {
+                    border: 1px solid rgba(0, 0, 0, 0.1);
+                    background:
+                        #f7f7f7;
+                    height: 50px;
+                    width: 50px;
+                    padding: 5px 10px;
+                    cursor: pointer;
+                    border-radius: 3px;
+                }
 
-    .close-nav button:hover {
-      color:
-        #222222;
-      background:
-        white;
-    }
+                .menu-bar i {
+                    display: block;
+                    border-top: 3px solid #444444;
+                    border-bottom: 3px solid #444444;
+                }
+
+                .menu-bar i::after {
+                    display: block;
+                    content: "";
+                    border-top: 3px solid #444444;
+                    margin: 6px 0;
+                }
+
+                .menu-bar button:hover {
+                    background:
+                        white;
+                }
+
+                .menu-bar button:hover i {
+                    border-color:
+                        #222222;
+                }
+                @media (min-width: 550px) {
+                    .navbar {
+                        all: unset;
+                        display: block;
+                    }
+
+                    .navbar ul {
+                        flex-direction: row;
+                        gap: 20px;
+                    }
+
+                    .navbar ul a {
+                        font-size: inherit;
+                    }
+
+                    .close-nav,
+                    .menu-bar {
+                        display: none;
+                    }
+                }
+    
 
     .menu-bar button {
       border: 1px solid rgba(0, 0, 0, 0.1);
@@ -167,11 +196,6 @@
         #222222;
     }
 
-    /* .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 1%;
-    } */
 
     @media (min-width: 550px) {
       .navbar {
@@ -198,12 +222,11 @@
       font-family: Arial, sans-serif;
     }
 
-    .container_body {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 5%;
-      background-color: #27c5ad;
-    }
+    .container {
+                    max-width: 900px;
+                    margin: 0 auto;
+                    padding: 1%;
+                }
 
     .user-details {
       margin-bottom: 10px;
@@ -248,8 +271,6 @@
       color: rgb(240, 8, 8);
       border-radius: 5px;
     }
-
-
   </style>
 
   <link rel="icon" href="Favicon.png">
@@ -271,7 +292,7 @@
         <h2>Kashipur Premier League (season 5)</h2>
       </div>
       <div class="navbar">
-        <div class="close-nav"><button></button></div>
+        <!-- <div class="close-nav"><button></button></div> -->
         <nav>
           <ul>
             <li><a href="https://www.google.com">Home</a></li>
@@ -279,9 +300,9 @@
           </ul>
         </nav>
       </div>
-      <div class="menu-bar">
+      <!-- <div class="menu-bar">
         <button><i></i></button>
-      </div>
+      </div> -->
     </div>
   </header>
   <div class="container">
@@ -299,14 +320,27 @@
     openNav.onclick = showHide;
     closeNav.onclick = showHide;
   </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <main class="login-form">
     <div class="cotainer">
       <div class="row justify-content-center">
         <div class="col-md-8">
           <div class="card">
-            <div class="card-header">Register</div>
+            <div class="card-header">Reset Password</div>
             <div class="card-body">
-                <form action="/resetPassword" method="post">
+              <form action="/resetPassword" method="post">
                 <div class="form-group row">
                   <label for="phNumber" class="col-md-4 col-form-label text-md-right">Phone Number</label>
                   <div class="col-md-6">
@@ -341,9 +375,9 @@
                     Reset Password
                   </button>
                 </div>
-            </form>
+              </form>
             </div>
-        
+
           </div>
         </div>
       </div>
