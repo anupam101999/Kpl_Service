@@ -252,7 +252,7 @@
 
 
             <div class="container_body">
-                <h2>${name}'s Registration Details</h2>
+                <h2>${firstname}'s Registration Details</h2>
                 <div class="user-details">
                     <label>Registration ID:</label>
                     <span>${id}</span>

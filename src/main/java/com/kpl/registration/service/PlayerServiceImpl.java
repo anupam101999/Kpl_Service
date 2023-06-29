@@ -48,16 +48,7 @@ public class PlayerServiceImpl implements PlayerService {
 		GenericVO genericVO = new GenericVO();
 		PlayerInfo playerInfo = new PlayerInfo();
 		playerInfo.setAadharNo(playerRequetVO.getAadharNo());
-		Long phNumberUniqueCheck = playerRepository.findByPhNumber(playerRequetVO.getPhNo());
-		String emailUniqueCheck = playerRepository.findByEmailID(playerRequetVO.getEmailId());
-		if (phNumberUniqueCheck != null) {
-			genericVO.setResponse("Please use unique phone number!");
-			return genericVO;
-		}
-		if (emailUniqueCheck != null) {
-			genericVO.setResponse("Please use unique email ID!");
-			return genericVO;
-		}
+
 		playerInfo.setEmailId(playerRequetVO.getEmailId());
 		playerInfo.setGenerue(playerRequetVO.getGenerue());
 		playerInfo.setImage(imageData);
@@ -65,10 +56,15 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setPhNo(playerRequetVO.getPhNo());
 		playerInfo.setPinCode(playerRequetVO.getPinCode());
 		playerInfo.setPlayerAddress(playerRequetVO.getPlayerAddress());
-		playerInfo.setPlayerName(playerRequetVO.getPlayerName());
+		playerInfo.setPlayerFirstName(playerRequetVO.getPlayerFirstName());
+		playerInfo.setPlayerLastName(playerRequetVO.getPlayerLastName());
 		playerInfo.setRegistrationTime(LocalDateTime.now());
+		playerInfo.setGenerue(playerRequetVO.getGenerue());
+		playerInfo.setDateOfBirth(playerRequetVO.getDob());
+		playerInfo.setPassword(playerRequetVO.getPassword());
+		playerInfo.setLocation(playerRequetVO.getLocation());
 		playerRepository.save(playerInfo);
-		genericVO.setResponse("You have been Registered");
+		genericVO.setResponse("You have been successfully Registered");
 		return genericVO;
 	}
 
@@ -85,7 +81,8 @@ public class PlayerServiceImpl implements PlayerService {
 
 		}
 		RegistrationResponse registrationResponse = new RegistrationResponse();
-		registrationResponse.setPlayerName("No Record Found");
+		registrationResponse.setPlayerFirstName("No Record Found");
+		registrationResponse.setPlayerLastName("No Record Found");
 		return registrationResponse;
 	}
 
@@ -247,7 +244,9 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getPlayerName(), tablesFont));
+			pcell = new PdfPCell(new Phrase(
+					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
+					tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -262,7 +261,7 @@ public class PlayerServiceImpl implements PlayerService {
 			ptable.addCell(pcell);
 
 			pcell = new PdfPCell(new Phrase("XXXXXXXX" + allplayerInfo.get(i).getAadharNo().toString().substring(8)
-					+ " " + "(" + allplayerInfo.get(i).getPlayerLocation() + ")", tablesFont));
+					+ " " + "(" + allplayerInfo.get(i).getLocation() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -413,7 +412,9 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getPlayerName(), tablesFont));
+			pcell = new PdfPCell(new Phrase(
+					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
+					tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -428,7 +429,7 @@ public class PlayerServiceImpl implements PlayerService {
 			ptable.addCell(pcell);
 
 			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getAadharNo().toString() + " " + "("
-					+ allplayerInfo.get(i).getPlayerLocation() + ")", tablesFont));
+					+ allplayerInfo.get(i).getLocation() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -580,7 +581,9 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getPlayerName(), tablesFont));
+			pcell = new PdfPCell(new Phrase(
+					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
+					tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -588,7 +591,7 @@ public class PlayerServiceImpl implements PlayerService {
 			ptable.addCell(pcell);
 
 			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getAadharNo().toString() + " " + "("
-					+ allplayerInfo.get(i).getPlayerLocation() + ")", tablesFont));
+					+ allplayerInfo.get(i).getLocation() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);

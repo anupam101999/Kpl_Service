@@ -90,7 +90,7 @@
                 .close-nav button {
                     all: unset;
                     background:
-                        #f7f7f7;
+                    #23b5a9;
                     font-size: 42px;
                     cursor: pointer;
                     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -104,7 +104,7 @@
                     color:
                         #222222;
                     background:
-                        white;
+                    #23b5a9;
                 }
 
                 .menu-bar button {

@@ -414,7 +414,7 @@
     <div class="forgot">
 
       <section>
-        <a href="http://192.168.0.201:1999/forgetPassword" target="_blank">Forgot password</a>
+        <a href="http://192.168.0.172:1999/forgetPassword" target="_blank">Forgot password</a>
       </section>
     </div>
     <div class="input-submit">
@@ -423,7 +423,7 @@
     </div>
   </form>
   <div class="sign-up-link">
-    <p>Don't have account? <a href="http://192.168.0.201:1999/signUp" target="_blank">Sign Up</a></p>
+    <p>Don't have account? <a href="http://192.168.0.172:1999/signUpHomePage" target="_blank">Sign Up</a></p>
   </div>
 </div>
 <% if (request.getAttribute("errorShown")==null) { %>

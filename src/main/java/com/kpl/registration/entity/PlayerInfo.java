@@ -1,5 +1,5 @@
- package com.kpl.registration.entity;
- import java.io.Serializable;
+package com.kpl.registration.entity;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -36,9 +36,13 @@ import lombok.NonNull;
  private Long registrationId;
 
  @NonNull
- @Column(name = "player_name")
- private String playerName;
+ @Column(name = "player_first_name")
+ private String playerFirstName;
 
+ @NonNull
+ @Column(name = "player_last_name")
+ private String playerLastName;
+ 
  @NonNull
  @Column(name = "player_address",length = 10000)
  private String playerAddress;
@@ -73,7 +77,7 @@ import lombok.NonNull;
 
  @NonNull
  @Column(name = "player_location_category")
- private String playerLocation;
+ private String location;
 
  @NonNull
  @Lob

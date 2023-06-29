@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RegistrationResponse {
 	private Long registrationId;
-	private String playerName;
+	private String playerFirstName;
+	private String playerLastName;
 	@JsonFormat(pattern = "dd.mm.yyyy hh:mm:ss")
 	private LocalDateTime registrationTime;
 	 private String paymentValidation;
