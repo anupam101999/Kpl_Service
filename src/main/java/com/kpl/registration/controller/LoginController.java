@@ -1,9 +1,17 @@
 package com.kpl.registration.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,15 +33,23 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam("username") String id, @RequestParam("password") String password, Model model)
-			throws IOException {
+			throws IOException, ParseException {
 
 		var response = registrationController.registrationStatus(id, password);
 		if (response.getRegistrationId() != null) {
-//			 session.setAttribute("response", response);
-			 model.addAttribute("id", response.getRegistrationId());
-			 model.addAttribute("name", response.getPlayerName());
-			 model.addAttribute("registerDate",response.getRegistrationTime());
-			 model.addAttribute("status", response.getPaymentValidation());
+			
+			String dateString = response.getRegistrationTime().toString();
+			SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+			Date date = inputFormat.parse(dateString);
+			SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+			String formattedDateTime = outputFormat.format(date);
+
+			
+			
+			model.addAttribute("id", response.getRegistrationId());
+			model.addAttribute("name", response.getPlayerName());
+			model.addAttribute("registerDate", formattedDateTime);
+			model.addAttribute("status", response.getPaymentValidation());
 			return "playerView";
 		} else {
 			model.addAttribute("errorMessage", "Invalid Email/Ph No or password");
@@ -45,7 +61,7 @@ public class LoginController {
 	public String showWelcomePage() {
 		return "welcome";
 	}
-	
+
 	@GetMapping("/playerView")
 	public String playerView() {
 		return "playerView";
