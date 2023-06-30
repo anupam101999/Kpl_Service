@@ -347,6 +347,11 @@
       color: rgb(240, 8, 8);
       border-radius: 5px;
     }
+    span{
+      color: black;
+      font-size: 90%;
+     padding-left: 500%;
+    }
   </style>
 
 
@@ -360,7 +365,6 @@
     <div class="logo">
       <a href="https://www.google.com"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
           alt="KPL logo"></a>
-      <!-- <a href="https://www.google.com"><img src="transparent_logo.png" alt="KPL logo"></a> -->
     </div>
     <div>
       <h2>Kashipur Premier League (season 5)</h2>
@@ -370,12 +374,11 @@
       <nav>
         <ul>
           <li><a href="https://www.google.com">Home</a></li>
-          <!-- <li><a href="#">Blog</a></li> -->
         </ul>
       </nav>
     </div>
     <div class="menu-bar">
-      <button><i></i></button>
+      <a href="http://www.google.com"><h2> <span>Home</span></h2></a>   
     </div>
   </div>
 </header>
@@ -402,10 +405,10 @@
   <div class="login-header">
     <h2>Check Your Registration Status</h2>
   </div>
-  <form action="/login" method="post">
+  <form action="https://kpl-test-v01-production.up.railway.app//login" method="post">
     <div class="input-box">
       <input type="text" class="input-field" id="username" name="username"
-        placeholder="Enter your email ID or Phone Number" autocomplete="off" required>
+        placeholder="Enter your Phone Number or email ID" autocomplete="off" required>
     </div>
     <div class="input-box">
       <input type="password" class="input-field" id="password" name="password" placeholder="Enter your Password"
