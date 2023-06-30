@@ -11,14 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.PlayerService;
@@ -146,12 +143,14 @@ public class LoginController {
 			return "signUp";
 		}
 
-		if (docImage.getSize() > 1 * 1024 * 1024) {
+		System.out.println(docImage.getSize());
+		
+		if (docImage.getSize() > 1 * 512 * 1024) {
 			model.addAttribute("errorMessage", "Please Compress your Aadhar Image less than 1 MB");
 			return "signUp";
 		}
 
-		if (playerPhoto.getSize() > 1 * 1024 * 1024) {
+		if (playerPhoto.getSize() > 1 * 512 * 1024) {
 			model.addAttribute("errorMessage", "Please Compress your photo less than 1 MB");
 			return "signUp";
 		}

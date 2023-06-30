@@ -3,8 +3,6 @@ package com.kpl.registration.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +11,6 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +26,6 @@ import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.ImageInfo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
-
 import com.kpl.registration.service.PlayerService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
