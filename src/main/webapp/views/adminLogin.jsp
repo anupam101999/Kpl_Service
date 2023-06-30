@@ -111,7 +111,7 @@ button:hover {
 <div class="header">
   <h1>Admin Dashboard Log in</h1>
 </div>
-<form action="/adminDashboardView" method="post">
+<form action="https://kpl-test-v01-production.up.railway.app/adminDashboardView" method="post">
 <div class="container">
     <label for="uname"><b>Username</b></label>
     <input type="text" name="id" placeholder="Enter Your Username" name="uname" required>

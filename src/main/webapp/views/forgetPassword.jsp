@@ -349,7 +349,7 @@
           <div class="card">
             <div class="card-header">Reset Password</div>
             <div class="card-body">
-              <form action="/resetPassword" method="post">
+              <form action="https://kpl-test-v01-production.up.railway.app/resetPassword" method="post">
                 <div class="form-group row">
                   <label for="phNumber" class="col-md-4 col-form-label text-md-right">Phone Number</label>
                   <div class="col-md-6">

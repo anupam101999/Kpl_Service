@@ -20,6 +20,20 @@
       font-size: 20px;
 
     }
+    .container {
+    display: flex;
+    justify-content: space-around;
+  }
+  .container2 {
+    display: flex;
+    justify-content: space-around;
+  }
+  .container3{
+    display: flex;
+    justify-content: space-around;
+  }
+
+  
   </style>
 </head>
 
@@ -27,31 +41,45 @@
 
   <div class="header">
     <h1>Admin Dashboard view</h1>
+  </div >
+  <br>
+  <div class="container">
+    <div>
+      <h2>Players who made the payments</h2> 
+      <form action="https://kpl-test-v01-production.up.railway.app/paymentUpdate" method="post">
+        <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  
+    <div>
+      <h2>Players to be updated in Category A</h2>
+      <form action="https://kpl-test-v01-production.up.railway.app/updateCategory" method="post">
+        <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   </div>
-  <div style="padding-left: 4%;">
-    <div>
-      <p>Players who made the payments</p>
-      <form action="/paymentUpdate" method="post">
-        <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-    <div>
-      <p>Players to be updated in Category A</p>
-      <form action="/updateCategory" method="post">
-        <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-    <div>
-      <p>All document pdf download based on registration ID</p>
-    <form action="/downloadDocImg" method="GET">
+
+
+<br><br>
+
+
+
+
+  
+  <div class="container2">
+
+
+    <div >
+      <h2>All document download based <br>on registration ID</p>
+    <form action="https://kpl-test-v01-production.up.railway.app/downloadDocImg" method="GET">
         <button type="submit">Download all document</button>
     </form>
     </div>
     <div class="select-box">
-      <p>Player category specific photo download</p>
-      <form action="/downloadCategorySpecificImage" method="post">
+      <h2>Player category specific photo download</p>
+      <form action="https://kpl-test-v01-production.up.railway.app/downloadCategorySpecificImage" method="post">
       <select name="playerCategory">
         <option hidden>Player Category</option>
         <option value="Batsman">Batsman</option>
@@ -63,15 +91,27 @@
       <button type="submit">Download category specific image</button>
     </form>
     </div>
+  </div>
+
+
+
+<br><br>
+
+
+
+
+
+
+<div class="container3">
     <div>
-      <p>All Player PDF</p>
-    <form action="/kpl/registration/api/generate/AllplayerPdf" method="get" target="_blank">
+      <h2>All Player PDF</p>
+    <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/AllplayerPdf" method="get" target="_blank">
         <button type="submit">Download All Player Pdf</button>
     </form>
     </div>
     <div class="select-box">
-      <p>Player category specific pdf for owners</p>
-      <form action="/kpl/registration/api/generate/finalPlayerListPdf" method="get" target="_blank">
+      <h2>Player category specific pdf for owners</p>
+      <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/finalPlayerListPdf" method="get" target="_blank">
       <select name="generue">
         <option hidden>Player Category</option>
         <option value="Batsman">Batsman</option>
@@ -83,9 +123,22 @@
       <button type="submit">Download category specific pdf</button>
     </form>
     </div>
-    <div class="select-box">
-      <p>Player category specific pdf for committe</p>
-      <form action="/kpl/registration/api/generate/playerPdf" method="get" target="_blank">
+  </div>
+
+
+
+
+
+
+<br><br>
+
+
+
+<div style="display: flex;
+justify-content:space-around">
+    <div class="select-box" >
+      <h2>Player category specific pdf for committee</p>
+      <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/playerPdf" method="get" target="_blank">
       <select name="generue">
         <option hidden>Player Category</option>
         <option value="Batsman">Batsman</option>
