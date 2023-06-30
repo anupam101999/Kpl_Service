@@ -29,8 +29,8 @@
                 body {
                     margin: 0;
                     font-family: "Open Sans", sans-serif;
-                    background-color:
-                        #27c5ad;
+                    /* background-color:
+                        #27c5ad; */
                 }
 
                 header {
@@ -196,7 +196,7 @@
                     max-width: 600px;
                     margin: 0 auto;
                     padding: 5%;
-                    background-color: #27c5ad;
+                    /* background-color: #27c5ad; */
                 }
 
                 .user-details {
