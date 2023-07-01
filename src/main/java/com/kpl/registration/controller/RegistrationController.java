@@ -7,7 +7,20 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -56,6 +69,10 @@ public class RegistrationController {
 	PlayerRepository playerRepository;
 	
 
+    @Autowired
+    private ResourceLoader resourceLoader;
+    
+    
 	public static final String CONTENT_DISPOSITION = "Content-Disposition";
 	public static final String PDF_MIME_TYPE = "application/pdf";
 	public static final String ATTACHMENT_FILENAME = "attachment; filename=";
@@ -233,24 +250,80 @@ public class RegistrationController {
 //	}
 	
 	
+//    @GetMapping("/downloadGenerueSpImage")
+//    public ResponseEntity<ByteArrayResource> downloadAllPlayerImage(@RequestParam String generue) {
+//        // Retrieve the list of images (assuming you have it available)
+//        List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
+//
+//        try {
+//            // Create a byte array output stream to write the ZIP file
+//            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//            ZipOutputStream zipOut = new ZipOutputStream(outputStream);
+//
+//            // Add each image to the ZIP file
+//            for (int i = 0; i < images.size(); i++) {
+//                byte[] imageData = images.get(i);
+//                String fileName = (i + 1) + ".jpg";
+//
+//                // Create a new entry in the ZIP file
+//                ZipEntry zipEntry = new ZipEntry(fileName);
+//                zipOut.putNextEntry(zipEntry);
+//
+//                // Write the image data to the ZIP file
+//                zipOut.write(imageData);
+//
+//                // Close the current entry
+//                zipOut.closeEntry();
+//            }
+//
+//            // Close the ZIP output stream
+//            zipOut.close();
+//
+//            // Create a byte array resource from the ZIP file content
+//            ByteArrayResource resource = new ByteArrayResource(outputStream.toByteArray());
+//
+//            // Create the response headers for file download
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=images.zip");
+//
+//            // Return the ZIP file as a response entity
+//            return ResponseEntity.ok()
+//                    .headers(headers)
+//                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                    .contentLength(resource.contentLength())
+//                    .body(resource);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @GetMapping("/downloadGenerueSpImage")
-    public ResponseEntity<ByteArrayResource> downloadAllPlayerImage(@RequestParam String generue) {
+    public ResponseEntity<Resource> downloadAllPlayerImage(@RequestParam String generue) {
         // Retrieve the list of images (assuming you have it available)
         List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
 
         try {
-            // Create a byte array output stream to write the ZIP file
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ZipOutputStream zipOut = new ZipOutputStream(outputStream);
+            // Create a temporary file for the ZIP
+            File tempFile = File.createTempFile("images", ".zip");
+            FileOutputStream fos = new FileOutputStream(tempFile);
+            ZipOutputStream zipOut = new ZipOutputStream(fos);
 
             // Add each image to the ZIP file
             for (int i = 0; i < images.size(); i++) {
                 byte[] imageData = images.get(i);
-                String fileName = (i + 1) + ".jpg";
+                String fileName = "image" + (i + 1) + ".jpg";
 
                 // Create a new entry in the ZIP file
-                ZipEntry zipEntry = new ZipEntry(fileName);
-                zipOut.putNextEntry(zipEntry);
+                zipOut.putNextEntry(new ZipEntry(fileName));
 
                 // Write the image data to the ZIP file
                 zipOut.write(imageData);
@@ -262,10 +335,10 @@ public class RegistrationController {
             // Close the ZIP output stream
             zipOut.close();
 
-            // Create a byte array resource from the ZIP file content
-            ByteArrayResource resource = new ByteArrayResource(outputStream.toByteArray());
+            // Load the temporary ZIP file as a resource
+            Resource zipFileResource = resourceLoader.getResource("file:" + tempFile.getAbsolutePath());
 
-            // Create the response headers for file download
+            // Set the appropriate response headers for file download
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=images.zip");
 
@@ -273,11 +346,13 @@ public class RegistrationController {
             return ResponseEntity.ok()
                     .headers(headers)
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .contentLength(resource.contentLength())
-                    .body(resource);
+                    .body(zipFileResource);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    
+    
+    
 }
