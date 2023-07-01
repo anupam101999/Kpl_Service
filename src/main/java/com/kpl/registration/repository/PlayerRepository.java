@@ -83,8 +83,11 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	Long countOfLocalPlayer(String soldTeam);
 
 	@Query(value = "SELECT sum(sold_amount) FROM player_registration where sold_team=?1", nativeQuery = true)
-	Long  totalMoneySpend(String soldTeam);
-	
+	Long totalMoneySpend(String soldTeam);
+
+	@Query(value = "select * from player_registration where registration_id in(?1)", nativeQuery = true)
+	List<PlayerInfo> findByRegistriondList(List<Long> registartionIDS);
+
 //	@Transactional
 //	@Modifying
 //	@Query(value = "select registration_id from player_registration where registration_id not in (?1)", nativeQuery = true)

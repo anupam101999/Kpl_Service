@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kpl.registration.repository.AdminRepo;
 import com.kpl.registration.repository.PlayerRepository;
+
+import freemarker.template.TemplateException;
 
 @Controller
 public class AdminController {
@@ -67,7 +71,7 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/paymentUpdate", method = RequestMethod.POST)
-	public String paymentUpdate(@RequestParam String regid, Model model) throws IOException {
+	public String paymentUpdate(@RequestParam String regid, Model model) throws IOException, MessagingException, TemplateException {
 		String[] listOfId = regid.split(",");
 
 		// Convert the array to a list

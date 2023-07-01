@@ -229,7 +229,7 @@
             </select>
           </div>
 
-          <input type="email" name="mail" placeholder="Enter email ID" />
+          <input type="email" name="mail" placeholder="Enter email ID" required/>
         </div>
         <div class="column">
           <div class="select-box">

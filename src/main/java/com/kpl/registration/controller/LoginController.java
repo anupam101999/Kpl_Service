@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.PlayerService;
+import com.kpl.registration.service.PlayerServiceImpl;
+
+import freemarker.template.TemplateException;
 
 @Controller
 public class LoginController {
@@ -28,7 +33,8 @@ public class LoginController {
 	PlayerRepository playerRepository;
 	@Autowired
 	PlayerService playerService;
-
+	@Autowired
+	PlayerServiceImpl playerServiceImpl;
 	@GetMapping("/loginHomePage")
 	public String showLoginPage() {
 		return "login";
@@ -103,7 +109,7 @@ public class LoginController {
 			@RequestParam String dob, @RequestParam Long pinCode, @RequestParam MultipartFile playerPhoto,
 			@RequestParam String address, @RequestParam String password, @RequestParam String location,
 			@RequestParam String playerCategory, @RequestParam String mail, Model model)
-			throws IOException, ParseException {
+			throws IOException, ParseException, MessagingException, TemplateException {
 
 		if (playerFirstName.length() > 20) {
 			model.addAttribute("errorMessage", "Please use your first name in short format");
@@ -180,8 +186,8 @@ public class LoginController {
 		playerRequetVO.setLocation(location);
 		byte[] imageData = playerPhoto.getBytes();
 		byte[] docData = docImage.getBytes();
-		playerService.savePlayerInfo(playerRequetVO, imageData, docData);
-		model.addAttribute("errorMessage", "You have been Registered successfully !");
+		var res=playerService.savePlayerInfo(playerRequetVO, imageData, docData);
+		model.addAttribute("errorMessage", res.getResponse());
 		return "login";
 
 	}

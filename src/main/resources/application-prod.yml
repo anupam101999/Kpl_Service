@@ -22,7 +22,21 @@ spring:
     database-platform:  org.hibernate.dialect.PostgreSQL94Dialect
     hibernate:
       ddl-auto: update
-   
+  mail:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          timeout: 5000 
+          connctiontimeout: 5000
+          writetimeout: 5000
+       
+    host: smtp.gmail.com    
+    username: kpl2023prod@gmail.com
+    password: vhijfojqbbzygyvi
+    port: 587   
 springfox:
   documentation:
     swagger-ui:

@@ -1,33 +1,26 @@
 package com.kpl.registration.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import org.apache.commons.io.FileUtils;
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,34 +29,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.LiveDataVO;
+import com.kpl.registration.dto.PlayerInfoVO;
 import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.PlayerResponseVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.ImageInfo;
+import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.PlayerService;
 
+import freemarker.template.TemplateException;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/kpl/registration/api")
 @CrossOrigin(origins = "*")
@@ -94,7 +79,8 @@ public class RegistrationController {
 
 	@PostMapping("/completeRegistration")
 	public GenericVO saveRegistration(@RequestBody PlayerRequetVO playerRequetVO,
-			@RequestParam("file") MultipartFile file, @RequestParam("file") MultipartFile docFile) throws IOException {
+			@RequestParam("file") MultipartFile file, @RequestParam("file") MultipartFile docFile)
+			throws IOException, MessagingException, TemplateException {
 		byte[] imageData = file.getBytes();
 		byte[] docData = docFile.getBytes();
 		return playerService.savePlayerInfo(playerRequetVO, imageData, docData);
@@ -110,8 +96,7 @@ public class RegistrationController {
 
 	@GetMapping("generate/playerPdf")
 	public void generueSpecificPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue,
-			Model model)
-			throws Exception {
+			Model model) throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
 		String headerKey = CONTENT_DISPOSITION;
@@ -142,8 +127,10 @@ public class RegistrationController {
 	// update payment validation
 
 	@PutMapping("/paymentUpdate")
-	public String paymentUpdate(@RequestParam List<Long> registartionIDS) throws IOException {
+	public String paymentUpdate(@RequestParam List<Long> registartionIDS)
+			throws IOException, MessagingException, TemplateException {
 		playerRepository.paymentUpdate(registartionIDS);
+		playerService.sendMailOnPaymentValidation(registartionIDS);
 		return "payment details updated";
 	}
 
@@ -161,8 +148,7 @@ public class RegistrationController {
 
 	@GetMapping("generate/finalPlayerListPdf")
 	public void generueFinalPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue,
-			Model model)
-			throws Exception {
+			Model model) throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
 		String headerKey = CONTENT_DISPOSITION;
@@ -335,6 +321,7 @@ public class RegistrationController {
 		String headerKey = CONTENT_DISPOSITION;
 		String headerValue = "committe" + soldTeam + ".pdf";
 		response.setHeader(headerKey, headerValue);
+		log.info("           ::::::::::::::::             /kpl/registration/api/teamList");
 		playerService.generateTeamListPdf(response, soldTeam);
 
 	}
@@ -357,6 +344,20 @@ public class RegistrationController {
 			liveDataVO.setMoneyRem(remBalance);
 			liveDataVOList.add(liveDataVO);
 		}
+		log.info("           ::::::::::::::::             /kpl/registration/api/liveTeamData");
 		return liveDataVOList;
+	}
+
+	@GetMapping("/findAll")
+	public List<PlayerInfoVO> findAll() {
+		List<PlayerInfoVO> playerInfoVOList = new ArrayList<>();
+		List<PlayerInfo> player = playerRepository.findAll(Sort.by(Sort.Direction.ASC, "registrationId"));
+		for (int i = 0; i < player.size(); i++) {
+			PlayerInfoVO playerInfoVO = new PlayerInfoVO();
+			modelMapper.map(player.get(i), playerInfoVO);
+			playerInfoVOList.add(playerInfoVO);
+		}
+		log.info("           ::::::::::::::::             /kpl/registration/api/findAll");
+		return playerInfoVOList;
 	}
 }

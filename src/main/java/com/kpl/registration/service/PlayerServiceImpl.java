@@ -2,15 +2,22 @@ package com.kpl.registration.service;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
@@ -31,7 +38,6 @@ import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.PlayerRequetVO;
-import com.kpl.registration.dto.PlayerResponseVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.PlayerInfo;
@@ -39,6 +45,15 @@ import com.kpl.registration.repository.AdminRepo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
 
+import freemarker.core.ParseException;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class PlayerServiceImpl implements PlayerService {
 	@Autowired
@@ -49,10 +64,16 @@ public class PlayerServiceImpl implements PlayerService {
 	ImageRepo imageRepo;
 	@Autowired
 	AdminRepo adminRepo;
+	@Autowired
+	JavaMailSender javaMailSender;
+	@Autowired
+	Configuration config;
+	@Value("${spring.mail.username}")
+	private String emailUsername;
 
 	@Override
 	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docData)
-			throws IOException {
+			throws IOException, MessagingException, TemplateException {
 		GenericVO genericVO = new GenericVO();
 		PlayerInfo playerInfo = new PlayerInfo();
 		playerInfo.setAadharNo(playerRequetVO.getAadharNo());
@@ -73,9 +94,73 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setPassword(playerRequetVO.getPassword());
 		playerInfo.setLocation(playerRequetVO.getLocation());
 		playerRepository.save(playerInfo);
-		genericVO.setResponse("You have been successfully Registered");
-		return genericVO;
+
+		try {
+			sendMail(playerInfo);
+			genericVO.setResponse("You have been successfully Registered and check your registered mail");
+			return genericVO;
+		} catch (Exception e) {
+			genericVO.setResponse("You have been successfully Registered");
+			return genericVO;
+		}
+
 	}
+
+	public void sendMail(PlayerInfo playerInfo) throws MessagingException, TemplateNotFoundException,
+			MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		Map<String, Object> model = new HashMap<>();
+
+		model.put("firstname", playerInfo.getPlayerFirstName());
+		model.put("name", playerInfo.getPlayerFirstName() + " " + playerInfo.getPlayerLastName());
+		model.put("location", playerInfo.getLocation());
+		model.put("mail", playerInfo.getEmailId());
+		model.put("phNo", playerInfo.getPhNo().toString());
+		model.put("category", playerInfo.getGenerue());
+		model.put("address", playerInfo.getPlayerAddress());
+		model.put("password", playerInfo.getPassword());
+
+		var message = javaMailSender.createMimeMessage();
+		var mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+				StandardCharsets.UTF_8.name());
+
+		Template mailTemplate = config.getTemplate("registration.ftl");
+		var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
+
+		mimeMessageHelper.setFrom(emailUsername);
+		mimeMessageHelper.setTo(playerInfo.getEmailId());
+		mimeMessageHelper.setText(htmlTemp, true);
+		mimeMessageHelper.setSubject(playerInfo.getPlayerFirstName()
+				+ ",You have been registered successfully for KPL season 5 grand Auction");
+		javaMailSender.send(message);
+
+	}
+
+	@Override
+	public void sendMailOnPaymentValidation(List<Long> registartionIDS) throws MessagingException,
+			TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		Map<String, Object> model = new HashMap<>();
+		var message = javaMailSender.createMimeMessage();
+		var mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+				StandardCharsets.UTF_8.name());
+		mimeMessageHelper.setFrom(emailUsername);
+		Template mailTemplate = config.getTemplate("paymentValidation.ftl");
+
+		List<PlayerInfo> playerInfo = playerRepository.findByRegistriondList(registartionIDS);
+		for (int i = 0; i < playerInfo.size(); i++) {
+				model.put("firstname", playerInfo.get(i).getPlayerFirstName());
+				var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
+				mimeMessageHelper.setTo(playerInfo.get(i).getEmailId());
+				mimeMessageHelper.setText(htmlTemp, true);
+				mimeMessageHelper
+						.setSubject(playerInfo.get(i).getPlayerFirstName() + ",Your payment status has been Updated");
+				log.info("name : " + playerInfo.get(i).getPlayerFirstName() + " , Mail ID : "
+						+ playerInfo.get(i).getEmailId());
+				javaMailSender.send(message);
+			}
+
+		}
+
+	
 
 	@Override
 	public RegistrationResponse getRegistrationStatus(String id, String password) {
@@ -642,7 +727,8 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public void generateTeamListPdf(HttpServletResponse response, String soldTeam) throws DocumentException, IOException {
+	public void generateTeamListPdf(HttpServletResponse response, String soldTeam)
+			throws DocumentException, IOException {
 		var allplayerInfo = playerRepository.findbyTeam(soldTeam);
 
 		var yellowBold = "FORsmartNext-Bolds.otf";
@@ -775,8 +861,9 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase(new Phrase("XXXXXXXX" + allplayerInfo.get(i).getAadharNo().toString().substring(8)
-					+ " " + "(" + allplayerInfo.get(i).getLocation() + ")", tablesFont)));
+			pcell = new PdfPCell(
+					new Phrase(new Phrase("XXXXXXXX" + allplayerInfo.get(i).getAadharNo().toString().substring(8) + " "
+							+ "(" + allplayerInfo.get(i).getLocation() + ")", tablesFont)));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -808,4 +895,5 @@ public class PlayerServiceImpl implements PlayerService {
 		document.add(ptable);
 		document.close();
 	}
+
 }
