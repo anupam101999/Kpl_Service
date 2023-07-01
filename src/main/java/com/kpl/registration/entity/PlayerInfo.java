@@ -96,4 +96,11 @@ import lombok.NonNull;
  @Column(name = "password")
  private String password;
 
+ @NonNull
+ @Column(name = "sold_amount")
+ private Long soldAmount;
+ 
+ @NonNull
+ @Column(name = "sold_team")
+ private String soldTeam;
  }

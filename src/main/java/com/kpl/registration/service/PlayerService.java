@@ -8,6 +8,7 @@ import com.itextpdf.text.DocumentException;
 import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.PlayerRequetVO;
+import com.kpl.registration.dto.PlayerResponseVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
 
@@ -24,4 +25,7 @@ public interface PlayerService{
 	void generateFinalPlayerPdf(HttpServletResponse response, String generue) throws DocumentException, IOException;
 
 	AdminInfo saveAdminDetails(AdminReqVO adminReqVO);
+
+	void generateTeamListPdf(HttpServletResponse response, String soldTeam) throws DocumentException, IOException;
+
 }

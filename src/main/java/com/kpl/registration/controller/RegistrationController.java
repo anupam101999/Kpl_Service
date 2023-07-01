@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,6 +24,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.FileUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
@@ -45,9 +48,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
+import com.kpl.registration.dto.LiveDataVO;
 import com.kpl.registration.dto.PlayerRequetVO;
+import com.kpl.registration.dto.PlayerResponseVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.ImageInfo;
@@ -67,6 +74,9 @@ public class RegistrationController {
 	ImageRepo imageRepo;
 	@Autowired
 	PlayerRepository playerRepository;
+
+	@Autowired
+	ModelMapper modelMapper;
 
 	@Autowired
 	private ResourceLoader resourceLoader;
@@ -96,16 +106,18 @@ public class RegistrationController {
 		return playerService.getRegistrationStatus(id, password);
 	}
 
-//	category specific player PDF
+	// category specific player PDF
 
 	@GetMapping("generate/playerPdf")
-	public void generueSpecificPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue)
+	public void generueSpecificPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue,
+			Model model)
 			throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
 		String headerKey = CONTENT_DISPOSITION;
 		String headerValue = "owner" + generue + ".pdf";
 		response.setHeader(headerKey, headerValue);
+		model.addAttribute("errorMessage", "PDF download is processing");
 		playerService.generatePdfByClassification(response, generue);
 
 	}
@@ -119,7 +131,7 @@ public class RegistrationController {
 		return "Image Master data has been uploaded successfully";
 	}
 
-//	update player category to List A
+	// update player category to List A
 
 	@PutMapping("/specialPlayer")
 	public String updateSpecialPlayerCategory(@RequestParam List<Long> registartionIDS) throws IOException {
@@ -127,7 +139,7 @@ public class RegistrationController {
 		return "players category has been change to List A";
 	}
 
-//	update payment validation
+	// update payment validation
 
 	@PutMapping("/paymentUpdate")
 	public String paymentUpdate(@RequestParam List<Long> registartionIDS) throws IOException {
@@ -136,24 +148,27 @@ public class RegistrationController {
 	}
 
 	@GetMapping("generate/AllplayerPdf")
-	public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response) throws Exception {
+	public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response, Model model) throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
 		String headerKey = CONTENT_DISPOSITION;
 		String headerValue = "AllPlayer" + ".pdf";
 		response.setHeader(headerKey, headerValue);
+		model.addAttribute("errorMessage", "PDF download is processing");
 		playerService.generueSpecificPlayerPdfForCommitte(response);
 
 	}
 
 	@GetMapping("generate/finalPlayerListPdf")
-	public void generueFinalPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue)
+	public void generueFinalPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue,
+			Model model)
 			throws Exception {
 
 		response.setContentType(PDF_MIME_TYPE);
 		String headerKey = CONTENT_DISPOSITION;
 		String headerValue = "committe" + generue + ".pdf";
 		response.setHeader(headerKey, headerValue);
+		model.addAttribute("errorMessage", "PDF download is processing");
 		playerService.generateFinalPlayerPdf(response, generue);
 
 	}
@@ -199,7 +214,7 @@ public class RegistrationController {
 	}
 
 	@GetMapping("/downloadGenerueSpImage")
-	public ResponseEntity<Resource> downloadImages(@RequestParam String generue) {
+	public ResponseEntity<Resource> downloadImages(@RequestParam String generue, Model model) {
 		// Retrieve the list of images (assuming you have it available)
 		List<byte[]> images = playerRepository.findAllImageByGenerue(generue);
 
@@ -232,20 +247,25 @@ public class RegistrationController {
 
 			// Set the appropriate response headers for file download
 			HttpHeaders headers = new HttpHeaders();
-			
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+generue+".zip");
 
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + generue + ".zip");
+			if (images.size() > 0) {
+				model.addAttribute("errorMessage", "Zip will be downloaded shortly");
+			} else {
+				model.addAttribute("errorMessage", "Please check your input correctly");
+			}
 			// Return the ZIP file as a response entity
 			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM)
 					.body(zipFileResource);
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("errorMessage", "Issue with the file please connect with dev team");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 
 	@GetMapping("/downloadAllDocImage")
-	public ResponseEntity<Resource> downloadAllDocImage() throws IOException {
+	public ResponseEntity<Resource> downloadAllDocImage(Model model) throws IOException {
 		List<byte[]> images = playerRepository.findAllDoc();
 
 		try {
@@ -279,13 +299,64 @@ public class RegistrationController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=documents.zip");
 
+			if (images.size() > 0) {
+				model.addAttribute("errorMessage", "Zip will be downloaded shortly");
+			} else {
+				model.addAttribute("errorMessage", "Please check your input correctly");
+			}
+
 			// Return the ZIP file as a response entity
 			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM)
 					.body(zipFileResource);
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("errorMessage", "Issue with the file please connect with dev team");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 
+	// live data feed
+
+	@GetMapping("/findPlayerInfo")
+	public PlayerResponseVO findByRegistratonID(@RequestParam("id") Long regID) throws Exception {
+		var response = playerRepository.findDataByregistrationId(regID);
+		return modelMapper.map(response, PlayerResponseVO.class);
+	}
+
+	@PostMapping("/soldAmountandTeam")
+	public void saveSoldTeamAndAmount(@RequestParam("id") Long regID, @RequestParam("soldAmount") Long soldAmount,
+			@RequestParam("soldTeam") String soldTeam) throws Exception {
+		playerRepository.updateSoldamountAndTeam(regID, soldAmount, soldTeam);
+	}
+
+	@GetMapping("/teamList")
+	public void teamListPdf(@RequestParam("soldTeam") String soldTeam, HttpServletResponse response) throws Exception {
+		response.setContentType(PDF_MIME_TYPE);
+		String headerKey = CONTENT_DISPOSITION;
+		String headerValue = "committe" + soldTeam + ".pdf";
+		response.setHeader(headerKey, headerValue);
+		playerService.generateTeamListPdf(response, soldTeam);
+
+	}
+
+	@GetMapping("/liveTeamData")
+	public List<LiveDataVO> liveTeamData() {
+		List<LiveDataVO> liveDataVOList = new ArrayList<>();
+		List<String> teamList = playerRepository.getDistinctTeam();
+		for (int i = 0; i < teamList.size(); i++) {
+			LiveDataVO liveDataVO = new LiveDataVO();
+			Long overSeasPlayerCount = playerRepository.countOfOverSeasPlayer(teamList.get(i));
+			Long localPlayerCount = playerRepository.countOfLocalPlayer(teamList.get(i));
+			Long totalSpendMoney = playerRepository.totalMoneySpend(teamList.get(i));
+			Long remBalance = 5000 - totalSpendMoney;
+
+			liveDataVO.setTeamName(teamList.get(i));
+			liveDataVO.setOverSeasplayer(overSeasPlayerCount);
+			liveDataVO.setLocalplayer(localPlayerCount);
+			liveDataVO.setMoneyspend(totalSpendMoney);
+			liveDataVO.setMoneyRem(remBalance);
+			liveDataVOList.add(liveDataVO);
+		}
+		return liveDataVOList;
+	}
 }

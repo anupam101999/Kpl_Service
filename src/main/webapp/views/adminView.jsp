@@ -42,16 +42,27 @@
       border-radius: 25px;
     }
 
-    /* button[type=submit]{
-    width: 242px;
-    height: 38px;
-    border-radius: 25px;
-  } */
+    button[type=submit]{
+      border-style: solid;
+  border-color: black black black black;
+  }
+
+  .error-popup {
+      position: fixed;
+      top: 90%;
+      left: 48%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      color: rgb(240, 8, 8);
+      border-radius: 5px;
+    }
   </style>
 </head>
 
 <body>
-
+  <% if (request.getAttribute("errorShown") == null) { %>
+    <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">
+   
   <div class="header">
     <h1>Admin Dashboard view</h1>
   </div>
@@ -118,7 +129,9 @@
   </div>
 
 
-
+  <div class="error-message">
+    <h2 style="color: #ff0000; padding-left: 35%; font-size:300%">${errorMessage}</h2>
+</div>
   <br><br>
 
 
@@ -186,6 +199,23 @@ justify-content:space-around">
         </form>
     </div>
   </div>
+  <script>
+    // JavaScript code to hide the error message after 5 seconds
+    setTimeout(function () {
+        var errorContainer = document.querySelector('.error-message');
+        if (errorContainer) {
+            errorContainer.style.display = 'none';
+        }
+    }, 5000);
+</script>
+
+<% request.setAttribute("errorShown", true); %>
+</c:if>
+<% } %>
+<div>
+<br><br><br><br>
+</div>
 </body>
+
 
 </html>
