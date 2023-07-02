@@ -26,6 +26,9 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select email_id from player_registration where email_id=?1", nativeQuery = true)
 	String findByEmailID(String emailId);
 
+	@Query(value = "select aadhar_no from player_registration where aadhar_no=?1", nativeQuery = true)
+	String findByAadhaarID(Long aadharNo);
+	
 	@Query(value = "select * from player_registration where generue=?1 order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findbyGenerue(String generue);
 

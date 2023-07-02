@@ -36,38 +36,36 @@
     </div>
   </header>
   <main>
-      <div style="padding: 3% 0% 2% 3%;">
+      <div style="padding: 3% 0% 0% 3%;">
         <span>
           <h2>Hi ${firstname},</h2>
         </span>
       </div>
-      <div class="message" style=" padding-left: 3%;padding-right: 3%"">
+      <div class="message" style=" padding-left: 3%;padding-right: 3%">
         <h4>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your initial registration is completed. Please ensure that you have paid the initial registration fees within the time frame and provide the <font color="red">registration ID</font>  to the committee for further processing.
         </h4>  
-        <br>
+      
         <h4>
             Please verify the data you have provided during Registration  : 
         </h4>
         </div>
         <div style="padding-left: 10%;padding-right: 5%;">
-          <h4>Name : {name}</h4>
-          <h4>Address : {address}</h4>
-          <h4>Address : {address}</h4>
-          <h4>Phone Num : {phNo}</h4>
-          <h4>Email ID : {mail}</h4>
-          <h4>Location Catrgoty : {location}</h4>
-          <h4>Password : {password}</h4>
+          <strong>Name :  ${name}</strong><br>
+          <strong>Address :  ${address}</strong><br>
+          <strong>Address :  ${address}</strong><br>
+          <strong>Phone Number :  ${phNo}</strong><br>
+          <strong>Email ID :  ${mail}</strong><br>
+          <strong>Location Category :  ${location}</strong><br>
+          <strong>Password : ${password}</strong>
         </div>
-        <br>
+       
   <div  style=" padding-left: 3%;padding-right: 3%";>
     <h4>
       Thank you for registering with us. See you on the Grand auction day of KPL season 5.
-      <br><br>
+      <br>
     </h4>
   </div>
-  
-
 
   <footer style="padding-left: 5%;padding-bottom: 5%;">
     <h4><div>Regards,</div>

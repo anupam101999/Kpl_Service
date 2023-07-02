@@ -170,14 +170,14 @@ public class PlayerServiceImpl implements PlayerService {
 		mimeMessageHelper.setFrom(emailUsername);
 		Template mailTemplate = config.getTemplate("passwordReset.ftl");
 
-		var playerInfo = playerRepository.findById(phNumber);
+		var playerInfo = playerRepository.findByMailOrPhNumber(String.valueOf(phNumber));
 
-		model.put("firstname", playerInfo.get().getPlayerFirstName());
+		model.put("firstname", playerInfo.getPlayerFirstName());
 		var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
-		mimeMessageHelper.setTo(playerInfo.get().getEmailId());
+		mimeMessageHelper.setTo(playerInfo.getEmailId());
 		mimeMessageHelper.setText(htmlTemp, true);
-		mimeMessageHelper.setSubject(playerInfo.get().getPlayerFirstName() + ",Your payment status has been Updated");
-		log.info("name : " + playerInfo.get().getPlayerFirstName() + " , Mail ID : " + playerInfo.get().getEmailId());
+		mimeMessageHelper.setSubject(playerInfo.getPlayerFirstName() + ",password changed");
+		log.info("name : " + playerInfo.getPlayerFirstName() + " , Mail ID : " + playerInfo.getEmailId());
 		javaMailSender.send(message);
 
 	}

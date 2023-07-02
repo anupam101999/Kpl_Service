@@ -163,6 +163,7 @@ public class LoginController {
 
 		Long phNumberUniqueCheck = playerRepository.findByPhNumber(phNo);
 		String emailUniqueCheck = playerRepository.findByEmailID(mail);
+		String aadhaarCheck = playerRepository.findByAadhaarID(aadharNo);
 		if (phNumberUniqueCheck != null) {
 			model.addAttribute("errorMessage", "Please use unique phone number!");
 			return "signUp";
@@ -171,7 +172,10 @@ public class LoginController {
 			model.addAttribute("errorMessage", "Please use unique email ID!");
 			return "signUp";
 		}
-
+		if (aadhaarCheck != null) {
+			model.addAttribute("errorMessage", "Please use unique aadhaar ID!");
+			return "signUp";
+		}
 		var playerRequetVO = new PlayerRequetVO();
 		playerRequetVO.setAadharNo(aadharNo);
 		playerRequetVO.setEmailId(mail);

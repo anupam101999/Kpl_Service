@@ -176,7 +176,7 @@ public class RegistrationController {
 			return "Password Must be between 4 to 8 character";
 		}
 		var phNo = playerRepository.findByPhNumber(phNumber);
-		var phNobyPIN = playerRepository.findByPinCode(pinCode);
+		var phNobyPIN = playerRepository.findByPinCode(phNumber);
 		var phNobyaadhar = playerRepository.findByAaddharNo(aadharNo);
 		if (phNo != null) {
 			if (pinCode.equals(phNobyPIN)) {
