@@ -141,6 +141,17 @@ public class LoginController {
 			return "signUp";
 		}
 
+		if (!(playerCategory.toString().equals("Player Category"))) {
+			model.addAttribute("errorMessage", "Please Select Your Category");
+			return "signUp";
+		}
+		
+		if (!(location.toString().equals("Your Home location"))) {
+			model.addAttribute("errorMessage", "Please Select Your Home Location");
+			return "signUp";
+		}
+		
+		
 		if (!(docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".png")
 				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpg"))) {
 			model.addAttribute("errorMessage",

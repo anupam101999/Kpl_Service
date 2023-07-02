@@ -107,19 +107,13 @@ public class AdminController {
 	@PostMapping("/soldAmountandTeam")
 	public String saveSoldTeamAndAmount(@RequestParam("id") Long id, @RequestParam("soldAmount") Long soldAmount,
 			@RequestParam("team") String team, Model model) throws Exception {
+		if (team.equals("Team List")) {
+			model.addAttribute("errorMessage", "Pleae Select Sold Team");
+			return "dataFeed";
+		}
 		registrationController.saveSoldTeamAndAmount(id, soldAmount, team);
 		model.addAttribute("errorMessage", "Data Updated For Reg ID : " + id);
 		return "dataFeed";
 	}
 
-//	@PostMapping("/adminView")
-//	public String adminView(@RequestParam(value = "dashboard", required = false) String dashboard,
-//			@RequestParam(value = "liveData", required = false) String liveData) {
-//		if (button1 != null) {
-//			return "redirect:/page1";
-//		} else if (liveData != null) {
-//			return "redirect:/page2";
-//		}
-//		return "dataFeed";
-//	}
 }

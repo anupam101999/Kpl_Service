@@ -51,9 +51,12 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select * from player_registration order by registration_id", nativeQuery = true)
 	List<PlayerInfo> findAllPlayer();
 
-	@Query(value = "select doc_image from player_registration order by registration_id", nativeQuery = true)
-	List<byte[]> findAllDoc();
+	@Query(value = "select doc_image_front from player_registration order by registration_id", nativeQuery = true)
+	List<byte[]> findAllDocFront();
 
+	@Query(value = "select doc_image_back from player_registration order by registration_id", nativeQuery = true)
+	List<byte[]> findAllDocBack();
+	
 	@Query(value = "select pin_code from player_registration where ph_no=?1", nativeQuery = true)
 	Long findByPinCode(Long pinCode);
 

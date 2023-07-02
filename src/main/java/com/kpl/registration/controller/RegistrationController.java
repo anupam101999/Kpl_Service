@@ -252,9 +252,9 @@ public class RegistrationController {
 		}
 	}
 
-	@GetMapping("/downloadAllDocImage")
-	public ResponseEntity<Resource> downloadAllDocImage(Model model) throws IOException {
-		List<byte[]> images = playerRepository.findAllDoc();
+	@GetMapping("/downloadAllDocFrontImage")
+	public ResponseEntity<Resource> downloadAllDocImageFront(Model model) throws IOException {
+		List<byte[]> images = playerRepository.findAllDocFront();
 
 		try {
 			// Create a temporary file for the ZIP
@@ -285,7 +285,7 @@ public class RegistrationController {
 
 			// Set the appropriate response headers for file download
 			HttpHeaders headers = new HttpHeaders();
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=documents.zip");
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=documentsFront.zip");
 
 			if (images.size() > 0) {
 				model.addAttribute("errorMessage", "Zip will be downloaded shortly");
@@ -303,6 +303,58 @@ public class RegistrationController {
 		}
 	}
 
+	
+	@GetMapping("/downloadAllDocBackImage")
+	public ResponseEntity<Resource> downloadAllDocImageBack(Model model) throws IOException {
+		List<byte[]> images = playerRepository.findAllDocBack();
+
+		try {
+			// Create a temporary file for the ZIP
+			File tempFile = File.createTempFile("images", ".zip");
+			FileOutputStream fos = new FileOutputStream(tempFile);
+			ZipOutputStream zipOut = new ZipOutputStream(fos);
+
+			// Add each image to the ZIP file
+			for (int i = 0; i < images.size(); i++) {
+				byte[] imageData = images.get(i);
+				String fileName = (i + 1) + ".jpg";
+
+				// Create a new entry in the ZIP file
+				zipOut.putNextEntry(new ZipEntry(fileName));
+
+				// Write the image data to the ZIP file
+				zipOut.write(imageData);
+
+				// Close the current entry
+				zipOut.closeEntry();
+			}
+
+			// Close the ZIP output stream
+			zipOut.close();
+
+			// Load the temporary ZIP file as a resource
+			Resource zipFileResource = resourceLoader.getResource("file:" + tempFile.getAbsolutePath());
+
+			// Set the appropriate response headers for file download
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=documentsBack.zip");
+
+			if (images.size() > 0) {
+				model.addAttribute("errorMessage", "Zip will be downloaded shortly");
+			} else {
+				model.addAttribute("errorMessage", "Please check your input correctly");
+			}
+
+			// Return the ZIP file as a response entity
+			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM)
+					.body(zipFileResource);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "Issue with the file please connect with dev team");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
 	// live data feed
 
 	@GetMapping("/findPlayerInfo")
