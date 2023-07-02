@@ -36,4 +36,6 @@ public interface PlayerService{
 
 	void sendMailOnPaymentValidation(List<Long> registartionIDS) throws MessagingException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
 
+	void resetPasswordMail(Long phNumber) throws MessagingException, TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException;
+
 }

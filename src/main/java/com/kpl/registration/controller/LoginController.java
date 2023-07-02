@@ -85,7 +85,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
 	public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadhaarNo,
-			@RequestParam String password, Model model) throws IOException, ParseException {
+			@RequestParam String password, Model model) throws IOException, ParseException, MessagingException, TemplateException {
 
 		var response = registrationController.resetPassword(phNumber, pinCode, aadhaarNo, password);
 		if (response == "Success") {

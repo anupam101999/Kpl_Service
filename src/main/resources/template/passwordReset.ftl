@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mail Template Payment Validation</title>
+  <title>Mail Template Password Reset</title>
   <style>
     header {
       padding: 0.005%;
@@ -43,11 +43,11 @@
       </div>
       <div class="message" style=" padding-left: 3%;padding-right: 10%;">
         <h4>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your payment status has been updated at our end.
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your password has been changed.
         </h4>    
   <div  style=" padding-left: 3%;padding-right: 3%";>
     <h4>
-      Thank you for registering with us. See you on the Grand auction day of KPL season 5.
+      Please connect with the core team if you have not initiated any change request
       <br><br>
     </h4>
   </div>

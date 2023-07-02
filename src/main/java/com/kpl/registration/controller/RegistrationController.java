@@ -161,7 +161,7 @@ public class RegistrationController {
 
 	@GetMapping("/passwordReset")
 	public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadharNo,
-			@RequestParam String password) throws IOException {
+			@RequestParam String password) throws IOException, MessagingException, TemplateException {
 		if (phNumber.toString().length() != 10) {
 			return "Phone Number Must be 10 digit";
 		}
@@ -182,6 +182,7 @@ public class RegistrationController {
 			if (pinCode.equals(phNobyPIN)) {
 				if (phNo.equals(phNobyaadhar)) {
 					playerRepository.updatePassword(password, phNumber);
+					playerService.resetPasswordMail(phNumber);
 					return "Success";
 				} else {
 					return "Incorrect Aadhaar Number";

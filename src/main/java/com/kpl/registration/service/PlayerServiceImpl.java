@@ -147,20 +147,40 @@ public class PlayerServiceImpl implements PlayerService {
 
 		List<PlayerInfo> playerInfo = playerRepository.findByRegistriondList(registartionIDS);
 		for (int i = 0; i < playerInfo.size(); i++) {
-				model.put("firstname", playerInfo.get(i).getPlayerFirstName());
-				var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
-				mimeMessageHelper.setTo(playerInfo.get(i).getEmailId());
-				mimeMessageHelper.setText(htmlTemp, true);
-				mimeMessageHelper
-						.setSubject(playerInfo.get(i).getPlayerFirstName() + ",Your payment status has been Updated");
-				log.info("name : " + playerInfo.get(i).getPlayerFirstName() + " , Mail ID : "
-						+ playerInfo.get(i).getEmailId());
-				javaMailSender.send(message);
-			}
-
+			model.put("firstname", playerInfo.get(i).getPlayerFirstName());
+			var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
+			mimeMessageHelper.setTo(playerInfo.get(i).getEmailId());
+			mimeMessageHelper.setText(htmlTemp, true);
+			mimeMessageHelper
+					.setSubject(playerInfo.get(i).getPlayerFirstName() + ",Your payment status has been Updated");
+			log.info("name : " + playerInfo.get(i).getPlayerFirstName() + " , Mail ID : "
+					+ playerInfo.get(i).getEmailId());
+			javaMailSender.send(message);
 		}
 
-	
+	}
+
+	@Override
+	public void resetPasswordMail(Long phNumber) throws MessagingException, TemplateNotFoundException,
+			MalformedTemplateNameException, ParseException, IOException, TemplateException {
+		Map<String, Object> model = new HashMap<>();
+		var message = javaMailSender.createMimeMessage();
+		var mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+				StandardCharsets.UTF_8.name());
+		mimeMessageHelper.setFrom(emailUsername);
+		Template mailTemplate = config.getTemplate("passwordReset.ftl");
+
+		var playerInfo = playerRepository.findById(phNumber);
+
+		model.put("firstname", playerInfo.get().getPlayerFirstName());
+		var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
+		mimeMessageHelper.setTo(playerInfo.get().getEmailId());
+		mimeMessageHelper.setText(htmlTemp, true);
+		mimeMessageHelper.setSubject(playerInfo.get().getPlayerFirstName() + ",Your payment status has been Updated");
+		log.info("name : " + playerInfo.get().getPlayerFirstName() + " , Mail ID : " + playerInfo.get().getEmailId());
+		javaMailSender.send(message);
+
+	}
 
 	@Override
 	public RegistrationResponse getRegistrationStatus(String id, String password) {
