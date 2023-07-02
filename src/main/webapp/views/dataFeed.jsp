@@ -186,7 +186,7 @@ button[type=submit]{
           if (errorContainer) {
               errorContainer.style.display = 'none';
           }
-      }, 50000);
+      }, 5000);
   </script>
   
   <% request.setAttribute("errorShown", true); %>
