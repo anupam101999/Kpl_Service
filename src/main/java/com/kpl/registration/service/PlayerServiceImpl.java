@@ -3,6 +3,7 @@ package com.kpl.registration.service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -89,7 +90,7 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setPlayerFirstName(playerRequetVO.getPlayerFirstName());
 		playerInfo.setPlayerLastName(playerRequetVO.getPlayerLastName());
 
-		playerInfo.setRegistrationTime(LocalDateTime.now());
+		playerInfo.setRegistrationTime(LocalDateTime.now(Clock.systemUTC()));
 		playerInfo.setGenerue(playerRequetVO.getGenerue());
 		playerInfo.setDateOfBirth(playerRequetVO.getDob());
 		playerInfo.setPassword(playerRequetVO.getPassword());
