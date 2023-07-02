@@ -19,13 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kpl.registration.dto.PlayerRequetVO;
-import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.PlayerService;
 import com.kpl.registration.service.PlayerServiceImpl;
 
 import freemarker.template.TemplateException;
-import lombok.Data;
 
 @Controller
 public class LoginController {
