@@ -34,15 +34,11 @@
     body {
       margin: 0;
       font-family: "Open Sans", sans-serif;
-      /* background-color:
-        #27c5ad; */
     }
 
     header {
       background-color:
         #d3df5b;
-      /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -4px rgba(0, 0, 0, 0.1); */
       padding: 1.5% 0%;
     }
 
@@ -166,12 +162,6 @@
         #222222;
     }
 
-    /* .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 1%;
-} */
-
     @media (min-width: 550px) {
       .navbar {
         all: unset;
@@ -201,7 +191,6 @@
       max-width: 600px;
       margin: 0 auto;
       padding: 5%;
-      /* background-color: #27c5ad; */
     }
 
     .user-details {

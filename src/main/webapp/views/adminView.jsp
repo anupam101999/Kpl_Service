@@ -42,20 +42,6 @@
 
     }
 
-    /* .container {
-      display: flex;
-      justify-content: space-around;
-    }
-
-    .container2 {
-      display: flex;
-      justify-content: space-around;
-    }
-
-    .container3 {
-      display: flex;
-      justify-content: space-around;
-    } */
     button[type=submit]{
       border-style: solid;
   border-color: black black black black;
@@ -95,9 +81,6 @@
   
 }
 .flex-container1 > div {
- 
- /* margin: 10px; */
- /* padding: 20px; */
  font-size: 20px;
 }
 .flex-container2 {
@@ -106,9 +89,6 @@
   
 }
 .flex-container2 > div {
- 
- /* margin: 10px; */
- /* padding: 20px; */
  font-size: 20px;
 }
 .flex-container3 {
@@ -117,9 +97,6 @@
   
 }
 .flex-container3 > div {
- 
- /* margin: 10px; */
- /* padding: 20px; */
  font-size: 20px;
 }
 .flex-container4 {
@@ -128,9 +105,6 @@
   
 }
 .flex-container4 > div {
- 
- /* margin: 10px; */
- /* padding: 20px; */
  font-size: 20px;
 }
   .error-popup {
@@ -153,7 +127,6 @@
     <h1>Admin Dashboard view</h1>
   </div>
   <div class="flex-container1">
-  <!-- <div class="container"> -->
     <div>
       <p>Players who made the payments</p>
       <form action="https://kpl-test-v01-production.up.railway.app/paymentUpdate" method="post">
@@ -218,7 +191,7 @@
        </select>
        <button type="submit">Download</button>
      </form>
- <!-- </div> -->
+
   </div>
 
 </div>
