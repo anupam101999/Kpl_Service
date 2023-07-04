@@ -1,6 +1,0 @@
-services:
-  - name: kpl-service
-    dockerfile: Dockerfile
-    env:
-      - key: SPRING_PROFILES_ACTIVE
-        value: prod
