@@ -11,7 +11,7 @@ FROM adoptopenjdk:11-jdk-hotspot
 COPY target/spring-boot-docker.jar spring-boot-docker.jar
 
 # Expose the application port
-EXPOSE 1999
+EXPOSE 8080
 
 # Run the application
 CMD ["java", "-jar", "spring-boot-docker.jar"]
