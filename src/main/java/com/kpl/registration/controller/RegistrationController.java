@@ -257,7 +257,7 @@ public class RegistrationController {
 	@GetMapping("/downloadAllDocFrontImage")
 	public ResponseEntity<Resource> downloadAllDocImageFront(Model model) throws IOException {
 		List<byte[]> images = playerRepository.findAllDocFront();
-
+		List<Long> regID = playerRepository.findAllDocImageFrontRegID();
 		try {
 			// Create a temporary file for the ZIP
 			File tempFile = File.createTempFile("images", ".zip");
@@ -267,7 +267,7 @@ public class RegistrationController {
 			// Add each image to the ZIP file
 			for (int i = 0; i < images.size(); i++) {
 				byte[] imageData = images.get(i);
-				String fileName = (i + 1) + ".jpg";
+				String fileName = (regID.get(i)) + ".jpg";
 
 				// Create a new entry in the ZIP file
 				zipOut.putNextEntry(new ZipEntry(fileName));
@@ -309,7 +309,7 @@ public class RegistrationController {
 	@GetMapping("/downloadAllDocBackImage")
 	public ResponseEntity<Resource> downloadAllDocImageBack(Model model) throws IOException {
 		List<byte[]> images = playerRepository.findAllDocBack();
-
+		List<Long> regID = playerRepository.findAllDocImageFrontRegID();
 		try {
 			// Create a temporary file for the ZIP
 			File tempFile = File.createTempFile("images", ".zip");
@@ -319,7 +319,7 @@ public class RegistrationController {
 			// Add each image to the ZIP file
 			for (int i = 0; i < images.size(); i++) {
 				byte[] imageData = images.get(i);
-				String fileName = (i + 1) + ".jpg";
+				String fileName = (regID.get(i)) + ".jpg";
 
 				// Create a new entry in the ZIP file
 				zipOut.putNextEntry(new ZipEntry(fileName));

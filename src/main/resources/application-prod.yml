@@ -1,5 +1,5 @@
 server:
-  port : 1999
+  port : 5000
        
          
 spring:
@@ -9,11 +9,9 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: test1
-#    url: jdbc:postgresql://containers-us-west-118.railway.app:7479/railway
-#    password: mzdEDSBNQOcFThIsQfVP
-    url: jdbc:postgresql://dpg-cihs36iip7vpelqh3ppg-a.oregon-postgres.render.com:5432/kpl_2023_main_db_test1
-    password: 7yM17BtUs6wySfvkoG0PhKjQCSkECMmF
+    username: postgres
+    url: jdbc:postgresql://kpl-2023-prod.c4yeumt7cxgi.ap-south-1.rds.amazonaws.com:5432/kpl_2023_main_db
+    password: 12345678
     tomcat.max-active: 2
     hikari:
       maximum-pool-size: 2
