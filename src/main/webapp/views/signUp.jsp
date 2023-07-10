@@ -177,7 +177,7 @@
 
       <section class="container">
         <header>Registration Form</header>
-        <form action="https://kpl-test-v01-production.up.railway.app/signUp" class="form" method="post" enctype="multipart/form-data">
+        <form action="http://13.126.58.1:5000/signUp" class="form" method="post" enctype="multipart/form-data">
           <div class="column">
             <div class="input-box">
               <label>First Name</label>

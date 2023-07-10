@@ -107,7 +107,7 @@ button[type=submit]{
       var resultContainer = $("#resultContainer");
 
       // Make an AJAX request to search by ID
-      $.get("https://kpl-test-v01-production.up.railway.app/kpl/registration/api/search", {id: searchInput}, function(response) {
+      $.get("http://13.126.58.1:5000/kpl/registration/api/search", {id: searchInput}, function(response) {
         // Display the search result
         if (response) {
           var resultHtml = "<img src='data:image/png;base64," + response.image + "' class='image' />";
@@ -135,7 +135,7 @@ button[type=submit]{
     <h1>Live Data feeding</h1>
   </div>
   <div class="flex-container">
-    <div style="padding: 0% 5% 0% 8%; "><form action="https://kpl-test-v01-production.up.railway.app/soldAmountandTeam" method="post">
+    <div style="padding: 0% 5% 0% 8%; "><form action="http://13.126.58.1:5000/soldAmountandTeam" method="post">
       <h3>
         <U>Update Player Information</U>
       </h3>

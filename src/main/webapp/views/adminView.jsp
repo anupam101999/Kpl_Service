@@ -129,7 +129,7 @@
   <div class="flex-container1">
     <div>
       <p>Players who made the payments</p>
-      <form action="https://kpl-test-v01-production.up.railway.app/paymentUpdate" method="post">
+      <form action="http://13.126.58.1:5000/paymentUpdate" method="post">
         <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
         <button type="submit">Submit</button>
       </form>
@@ -137,7 +137,7 @@
 
     <div>
       <p>Players to be updated in Category A</p>
-      <form action="https://kpl-test-v01-production.up.railway.app/updateCategory" method="post">
+      <form action="http://13.126.58.1:5000/updateCategory" method="post">
         <input type="text" name="regid" placeholder="Enter Reg ID like 1,2,3" required>
         <button type="submit" >Submit</button>
       </form>
@@ -163,7 +163,7 @@
    
     <div class="select-box"">
       <p>Player category specific photo download</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadGenerueSpImage"
+        <form action="http://13.126.58.1:5000/kpl/registration/api/downloadGenerueSpImage"
           method="get">
           <select name="generue">
             <option hidden>Category</option>
@@ -179,7 +179,7 @@
 
     <div class="select-box">
       <p>Player category specific pdf for committee</p>
-     <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/finalPlayerListPdf"
+     <form action="http://13.126.58.1:5000/kpl/registration/api/generate/finalPlayerListPdf"
        method="get" target="_blank">
        <select name="generue">
          <option hidden>Category</option>
@@ -208,14 +208,14 @@
 <div class="flex-container2">
   <div>
     <p>Documents Front</p>
-      <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadAllDocFrontImage"
+      <form action="http://13.126.58.1:5000/kpl/registration/api/downloadAllDocFrontImage"
         method="get">
         <button type="submit">Download</button>
       </form>
   </div>
   <div>
     <p>Document Back</p>
-      <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/downloadAllDocBackImage"
+      <form action="http://13.126.58.1:5000/kpl/registration/api/downloadAllDocBackImage"
         method="get">
         <button type="submit">Download</button>
       </form>
@@ -229,14 +229,14 @@
   <!-- <div class="container3"> -->
     <div style="padding-left: 260px;">
       <p >All Player PDF</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/AllplayerPdf"
+        <form action="http://13.126.58.1:5000/kpl/registration/api/generate/AllplayerPdf"
           method="get" target="_blank">
           <button type="submit">Download</button>
         </form>
     </div>
     <div class="select-box" style="padding-left: 240px;">
          <p>Player category specific pdf for owners</p>
-        <form action="https://kpl-test-v01-production.up.railway.app/kpl/registration/api/generate/playerPdf"
+        <form action="http://13.126.58.1:5000/kpl/registration/api/generate/playerPdf"
           method="get" target="_blank">
           <select name="generue">
             <option hidden>Category</option>
