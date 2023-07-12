@@ -301,17 +301,12 @@
         <h2>Kashipur Premier League (season 5)</h2>
       </div>
       <div class="navbar">
-        <!-- <div class="close-nav"><button></button></div> -->
         <nav>
           <ul>
             <li><a href="https://www.google.com">Home</a></li>
-            <!-- <li><a href="#">Blog</a></li> -->
           </ul>
         </nav>
       </div>
-      <!-- <div class="menu-bar">
-        <button><i></i></button>
-      </div> -->
     </div>
   </header>
   <div class="container">

@@ -111,15 +111,19 @@ public class PlayerServiceImpl implements PlayerService {
 	public void sendMail(PlayerInfo playerInfo) throws MessagingException, TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		Map<String, Object> model = new HashMap<>();
-
+		String phNu=playerInfo.getPhNo().toString();
+		String password=playerInfo.getPassword();
+        var regID=playerRepository.findByPhNu(phNu);
+        
+		model.put("regid", regID);
 		model.put("firstname", playerInfo.getPlayerFirstName());
 		model.put("name", playerInfo.getPlayerFirstName() + " " + playerInfo.getPlayerLastName());
 		model.put("location", playerInfo.getLocation());
 		model.put("mail", playerInfo.getEmailId());
-		model.put("phNo", playerInfo.getPhNo().toString());
+		model.put("phNo",phNu);
 		model.put("category", playerInfo.getGenerue());
 		model.put("address", playerInfo.getPlayerAddress());
-		model.put("password", playerInfo.getPassword());
+		model.put("password", password);
 
 		var message = javaMailSender.createMimeMessage();
 		var mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,

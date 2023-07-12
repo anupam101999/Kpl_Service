@@ -17,6 +17,9 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "select * from player_registration where email_id=?1 or CAST(ph_no AS VARCHAR)=?1 and password=?2", nativeQuery = true)
 	PlayerInfo findByMailOrPhNumberandpassword(String id, String password);
 
+	@Query(value = "select registration_id from player_registration where CAST(ph_no AS VARCHAR)=?1", nativeQuery = true)
+	Long findByPhNu(String id);
+	
 	@Query(value = "select * from player_registration where email_id=?1 or CAST(ph_no AS VARCHAR)=?1 ", nativeQuery = true)
 	PlayerInfo findByMailOrPhNumber(String id);
 

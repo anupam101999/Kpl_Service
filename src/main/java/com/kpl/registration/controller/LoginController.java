@@ -226,14 +226,17 @@ public class LoginController {
 		byte[] docDataBack = docImageBack.getBytes();
 		var res=playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront,docDataBack);
 		model.addAttribute("errorMessage", res.getResponse());
-		return "login";
+		return "payment";
 
 	}
 	
 
 	
 	
-	
+	@GetMapping("/payment")
+	public String payment() {
+		return "payment";
+	}
 	
 	
 	

@@ -317,11 +317,17 @@
           <label>Payment Status:</label>
           <span>${status}</span>
         </div>
+        <div class="user-details">
+          <label>Phone Pe,G-Pay,Paytm Number:</label>
+          <span>8116199489</span>
+        </div>
+        <div class="user-details">
+          <label>UPI ID:</label>
+          <span><a href="upi://pay?pa=8116199489@ybl">8116199489@ybl</a></span>
+        </div>
       </div>
       <div style="padding: 3%;color: #0011f3;">
-        <h3> *If your payment is in the pending stage, don't worry; wait for 24 hours after successful compilation of
-          the payment. For further queries, please contact development or the KPL core team for further
-          clarification.</h3>
+        <h3> *If your payment is in the pending stage, don't worry; wait for 24 hours after successful compilation of the payment. For further clarification, please contact development or the KPL core team.</h3>
       </div>
     </body>
     <div class="footer">
