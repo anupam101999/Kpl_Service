@@ -294,7 +294,7 @@
   <header>
     <div class="wrapper">
       <div class="logo">
-        <a href="https://www.google.com"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
+        <a href="https://anupam101999.github.io/kpl2k23"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
             alt="KPL logo"></a>
       </div>
       <div>
@@ -303,7 +303,7 @@
       <div class="navbar">
         <nav>
           <ul>
-            <li><a href="https://www.google.com">Home</a></li>
+            <li><a href="https://anupam101999.github.io/kpl2k23">Home</a></li>
           </ul>
         </nav>
       </div>

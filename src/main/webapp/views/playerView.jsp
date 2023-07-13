@@ -260,7 +260,7 @@
       <header>
         <div class="wrapper">
           <div class="logo">
-            <a href="https://www.google.com"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
+            <a href="https://anupam101999.github.io/kpl2k23"><img src="${pageContext.request.contextPath}/images/transparent_logo.png"
                 alt="KPL logo"></a>
           </div>
           <div>
@@ -270,7 +270,7 @@
             <div class="close-nav"><button></button></div>
             <nav>
               <ul>
-                <li><a href="https://www.google.com" onMouseOver="this.style.color='blue'"
+                <li><a href="https://anupam101999.github.io/kpl2k23" onMouseOver="this.style.color='blue'"
                   onMouseOut="this.style.color='black'">Home</a></li>
                 <!-- <li><a href="#">Blog</a></li> -->
               </ul>
