@@ -3,7 +3,10 @@ package com.kpl.registration.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -79,12 +82,12 @@ public class RegistrationController {
 
 	@PostMapping("/completeRegistration")
 	public GenericVO saveRegistration(@RequestBody PlayerRequetVO playerRequetVO,
-			@RequestParam("file") MultipartFile file, @RequestParam("file") MultipartFile docFileFront,@RequestParam("file") MultipartFile docFileBack)
-			throws IOException, MessagingException, TemplateException {
+			@RequestParam("file") MultipartFile file, @RequestParam("file") MultipartFile docFileFront,
+			@RequestParam("file") MultipartFile docFileBack) throws IOException, MessagingException, TemplateException {
 		byte[] imageData = file.getBytes();
 		byte[] docDataFront = docFileFront.getBytes();
-		byte[] docDataBack=docFileBack.getBytes();
-		return playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront,docDataBack);
+		byte[] docDataBack = docFileBack.getBytes();
+		return playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront, docDataBack);
 	}
 
 	@GetMapping("/getYourRegistrationStatus")
@@ -148,7 +151,7 @@ public class RegistrationController {
 	}
 
 //	for committee
-	
+
 	@GetMapping("generate/finalPlayerListPdf")
 	public void generueFinalPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue,
 			Model model) throws Exception {
@@ -216,7 +219,7 @@ public class RegistrationController {
 
 			// Add each image to the ZIP file
 			for (int i = 0; i < playerDetails.size(); i++) {
-				byte[] imageData =playerDetails.get(i).getImage();
+				byte[] imageData = playerDetails.get(i).getImage();
 				String fileName = playerDetails.get(i).getRegistrationId() + ".jpg";
 
 				// Create a new entry in the ZIP file
@@ -305,7 +308,6 @@ public class RegistrationController {
 		}
 	}
 
-	
 	@GetMapping("/downloadAllDocBackImage")
 	public ResponseEntity<Resource> downloadAllDocImageBack(Model model) throws IOException {
 		List<byte[]> images = playerRepository.findAllDocBack();
@@ -356,7 +358,7 @@ public class RegistrationController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+
 	// live data feed
 
 	@GetMapping("/findPlayerInfo")
@@ -368,8 +370,9 @@ public class RegistrationController {
 	@PostMapping("/soldAmountandTeam")
 	public void saveSoldTeamAndAmount(@RequestParam("id") Long regID, @RequestParam("soldAmount") Long soldAmount,
 			@RequestParam("team") String team) throws Exception {
-		playerRepository.updateSoldamountAndTeam(regID, soldAmount, team);
-		var playerInfo=playerRepository.findDataByregistrationId(regID);
+		var updationTime = LocalDateTime.now(Clock.systemUTC());
+		playerRepository.updateSoldamountAndTeam(regID, soldAmount, team, updationTime);
+		var playerInfo = playerRepository.findDataByregistrationId(regID);
 		playerService.sendMailOnSold(playerInfo);
 	}
 
@@ -393,15 +396,15 @@ public class RegistrationController {
 			Long overSeasPlayerCount = playerRepository.countOfOverSeasPlayer(teamList.get(i));
 			Long localPlayerCount = playerRepository.countOfLocalPlayer(teamList.get(i));
 			Long totalSpendMoney = playerRepository.totalMoneySpend(teamList.get(i));
-			Long remBalance = 5000 - totalSpendMoney;
+			Long remBalance = 4000 - totalSpendMoney;
 
 			liveDataVO.setTeamName(teamList.get(i));
 			liveDataVO.setOverSeasplayer(overSeasPlayerCount);
 			liveDataVO.setLocalplayer(localPlayerCount);
 			liveDataVO.setMoneyspend(totalSpendMoney);
 			liveDataVO.setMoneyRem(remBalance);
-			long playerCountRem=15-(overSeasPlayerCount+localPlayerCount);
-			long maxBetOnSinglePlayer=remBalance-((playerCountRem-1)*50);
+			long playerCountRem = 15 - (overSeasPlayerCount + localPlayerCount);
+			long maxBetOnSinglePlayer = remBalance - ((playerCountRem - 1) * 50);
 
 			liveDataVO.setMaxiumBetAmountOnSinglePlayer(maxBetOnSinglePlayer);
 			liveDataVOList.add(liveDataVO);
@@ -431,5 +434,17 @@ public class RegistrationController {
 			model.addAttribute("data", searchData);
 		}
 		return searchData;
+	}
+
+	@GetMapping("/soldPlayerList")
+	public List<String> soldPlayerList() {
+		List<String> list=new ArrayList<>();
+		var playerInfo = playerRepository.findBySoldUpdateTime();
+		for (int i = 0; i < playerInfo.size(); i++) {
+			var name = playerInfo.get(i).getPlayerFirstName() + " " + playerInfo.get(i).getPlayerLastName()
+					+ " sold to team " + playerInfo.get(i).getSoldTeam() + " for Rs." + playerInfo.get(i).getSoldAmount();
+			list.add(name);
+		}
+		return list;
 	}
 }

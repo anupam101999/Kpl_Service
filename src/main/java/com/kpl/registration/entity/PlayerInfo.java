@@ -107,4 +107,8 @@ import lombok.NonNull;
  @NonNull
  @Column(name = "sold_team")
  private String soldTeam;
+ 
+ @NonNull
+ @Column(name = "sold_time")
+ private LocalDateTime soldTime;
  }

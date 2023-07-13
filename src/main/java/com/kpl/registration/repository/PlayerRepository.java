@@ -1,5 +1,6 @@
 package com.kpl.registration.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -82,8 +83,8 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "update player_registration set sold_amount=?2 , sold_team=?3  where registration_id=?1", nativeQuery = true)
-	void updateSoldamountAndTeam(Long regID, Long soldAmount, String soldTeam);
+	@Query(value = "update player_registration set sold_amount=?2 , sold_team=?3 , sold_time=?4  where registration_id=?1", nativeQuery = true)
+	void updateSoldamountAndTeam(Long regID, Long soldAmount, String soldTeam,LocalDateTime updationTime);
 
 	@Query(value = "select * from player_registration  where sold_team=?1", nativeQuery = true)
 	List<PlayerInfo> findbyTeam(String soldTeam);
@@ -102,6 +103,9 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 
 	@Query(value = "select * from player_registration where registration_id in(?1)", nativeQuery = true)
 	List<PlayerInfo> findByRegistriondList(List<Long> registartionIDS);
+
+	@Query(value = "SELECT * FROM player_registration where sold_team is not null ORDER BY sold_time desc", nativeQuery = true)
+	List<PlayerInfo> findBySoldUpdateTime();
 
 //	@Transactional
 //	@Modifying
