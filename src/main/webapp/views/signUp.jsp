@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <link rel="icon" href="${pageContext.request.contextPath}/images/transparent_logo.ico" type="image/x-icon">
 
 <head>
+  <meta charset="UTF-8">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2DKXMGP7B2"></script>
   <script>
@@ -177,7 +179,8 @@
 
       <section class="container">
         <header>Registration Form</header>
-        <form action="https://kpl2023.online/registration/signUp" class="form" method="post" enctype="multipart/form-data">
+        <form action="https://kpl2023.online/registration/signUp" class="form" method="post"
+          enctype="multipart/form-data">
           <div class="column">
             <div class="input-box">
               <label>First Name</label>
@@ -198,10 +201,6 @@
               <label>Phone Number</label>
               <input type="number" name="phNo" maxlength="10" placeholder="Enter phone number" required />
             </div>
-            <!-- <div class="input-box">
-          <label>Aadhaar Card Image</label>
-          <input type="file" name="docImage" accept="image/**" required />
-        </div> -->
           </div>
 
           <div class="column">
@@ -209,10 +208,6 @@
               <label>Aadhaar Card Image Front</label>
               <input type="file" name="docImageFront" accept="image/**" required />
             </div>
-            <!-- <div class="input-box">
-          <label>Phone Number</label>
-          <input type="number" name="phNo" maxlength="10"  placeholder="Enter phone number" required />
-        </div> -->
             <div class="input-box">
               <label>Aadhaar Card Image Back</label>
               <input type="file" name="docImageBack" accept="image/**" required />
@@ -270,14 +265,29 @@
                   required />
               </div>
             </div>
-
+            <br>
+            <div style="color: red;">
+              <strong lang="bn">
+                মালিক পক্ষ থেকে খেলায় অংশগ্রহন করার জন্য কোন প্রকার এর অর্থ কিংবা উপঢৌকন এর দাবি করা শাস্তিযোগ্য অপরাধ
+                হিসাবে বিবেচিত হবে
+              </strong>
+            </div>
+          </div>
+            <label style="font-size: 120%;">
+              <br>
+              <input type="checkbox" required> I have read and agree to the terms and conditions of KPL2023
+            </label>
             <div class="col-md-6 offset-md-4">
               <button type="submit" class="btn btn-primary" value="signUp">
                 Submit
               </button>
             </div>
         </form>
+
       </section>
+
+     
+
 
       <script>
         // JavaScript code to hide the error message after 5 seconds

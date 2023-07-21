@@ -113,7 +113,7 @@ button[type=submit]{
           var resultHtml = "<img src='data:image/png;base64," + response.image + "' class='image' />";
           resultHtml += "<p>Reg ID: " + response.registrationId + "</p>";          
           resultHtml += "<p>Name: " + response.playerFirstName +" "+response.playerLastName  + "</p>";
-          resultHtml += "<p>DOB: " + response.dateOfBirth + "</p>";
+          resultHtml += "<p>DOB: " + response.dob + "</p>";
           resultHtml += "<p>Location Category: " + response.location + "</p>";
           resultHtml += "<p>Player Category: " + response.generue + "</p>";
           resultHtml += "<p>Address: " + response.playerAddress + "</p>";
