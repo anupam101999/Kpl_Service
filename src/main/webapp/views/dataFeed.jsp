@@ -100,19 +100,26 @@ button[type=submit]{
   </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
-    // Listen for input change event
-    $("#searchInput").on("input", function() {
-      var searchInput = $(this).val();
-      var resultContainer = $("#resultContainer");
+$(document).ready(function() {
+  var delayTimer; // Variable to store the timer ID
 
-      // Make an AJAX request to search by ID
-      $.get("https://kpl2023.online/registration/kpl/registration/api/search", {id: searchInput}, function(response) {
+  // Listen for input change event
+  $("#searchInput").on("input", function() {
+    var searchInput = $(this).val();
+    var resultContainer = $("#resultContainer");
+
+    // Clear the previous delay timer (if any)
+    clearTimeout(delayTimer);
+
+    // Set a new delay timer for 3 seconds
+    delayTimer = setTimeout(function() {
+      // Make an AJAX request to search by ID after the delay
+      $.get("https://kpl2023.online/registration/kpl/registration/api/search", { id: searchInput }, function(response) {
         // Display the search result
         if (response) {
           var resultHtml = "<img src='data:image/png;base64," + response.image + "' class='image' />";
-          resultHtml += "<p>Reg ID: " + response.registrationId + "</p>";          
-          resultHtml += "<p>Name: " + response.playerFirstName +" "+response.playerLastName  + "</p>";
+          resultHtml += "<p>Reg ID: " + response.registrationId + "</p>";
+          resultHtml += "<p>Name: " + response.playerFirstName + " " + response.playerLastName + "</p>";
           resultHtml += "<p>DOB: " + response.dob + "</p>";
           resultHtml += "<p>Location Category: " + response.location + "</p>";
           resultHtml += "<p>Player Category: " + response.generue + "</p>";
@@ -122,8 +129,10 @@ button[type=submit]{
           resultContainer.html("No data found.");
         }
       });
-    });
+    }, 3000); // 3000 milliseconds (3 seconds) delay
   });
+});
+
 </script>
 
 </head>
