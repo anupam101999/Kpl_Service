@@ -101,6 +101,7 @@ public class PlayerServiceImpl implements PlayerService {
 		docInfo.setImage(imageData);
 		docInfo.setDocImageFront(docDataFront);
 		docInfo.setDocImageBack(docDataBack);
+		log.info("Registration ID for "+playerRequetVO.getPlayerFirstName()+" is "+res.getRegistrationId());
 		docInfo.setRegistrationId(res.getRegistrationId());
 		docRepo.save(docInfo);
 		try {

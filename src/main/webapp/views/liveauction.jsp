@@ -282,7 +282,7 @@ th {
   <div class="footer-content">
     <span class="developer-name">Devloped By : Kpl Dev Team   |   Connect With US on    
       <a href="https://www.facebook.com/kplofficial11" target="_blank">Facebook</a>   |
-      <a href="https://wa.me/7074401961" target="_blank" style="color: #ebe7d9;">Whatsapp</a>
+      <a href="https://wa.me/8116199489" target="_blank" style="color: #ebe7d9;">Whatsapp</a>
     </span>
 
   </div>
