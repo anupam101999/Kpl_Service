@@ -386,7 +386,7 @@ public class RegistrationController {
 		String headerKey = CONTENT_DISPOSITION;
 		String headerValue = "committe" + soldTeam + ".pdf";
 		response.setHeader(headerKey, headerValue);
-		log.info("           ::::::::::::::::             /kpl/registration/api/teamList");
+		log.info(" /kpl/registration/api/teamList");
 		playerService.generateTeamListPdf(response, soldTeam);
 
 	}
@@ -407,13 +407,18 @@ public class RegistrationController {
 			liveDataVO.setLocalplayer(localPlayerCount);
 			liveDataVO.setMoneyspend(totalSpendMoney);
 			liveDataVO.setMoneyRem(remBalance);
+			long maxBetOnSinglePlayer = 0;
 			long playerCountRem = 15 - (overSeasPlayerCount + localPlayerCount);
-			long maxBetOnSinglePlayer = remBalance - ((playerCountRem - 1) * 50);
+			if (playerCountRem <= 0) {
+				maxBetOnSinglePlayer = remBalance;
+			} else {
+				maxBetOnSinglePlayer = remBalance - ((playerCountRem - 1) * 50);
+			}
 
 			liveDataVO.setMaxiumBetAmountOnSinglePlayer(maxBetOnSinglePlayer);
 			liveDataVOList.add(liveDataVO);
 		}
-		log.info("           ::::::::::::::::             /kpl/registration/api/liveTeamData");
+		log.info("/kpl/registration/api/liveTeamData");
 		return liveDataVOList;
 	}
 
@@ -426,7 +431,7 @@ public class RegistrationController {
 			modelMapper.map(player.get(i), playerInfoVO);
 			playerInfoVOList.add(playerInfoVO);
 		}
-		log.info("           ::::::::::::::::             /kpl/registration/api/findAll");
+		log.info(" /kpl/registration/api/findAll");
 		return playerInfoVOList;
 	}
 
@@ -435,9 +440,8 @@ public class RegistrationController {
 	public Object searchDataById(@RequestParam("id") Long id, Model model) {
 		var searchData = playerRepository.findDataByregistrationId(Long.valueOf(id));
 		var searchImage = docRepo.findByregistrationId(Long.valueOf(id));
-		var livesearch=new LiveSearchVO();
-		
-		
+		var livesearch = new LiveSearchVO();
+
 		if (searchData != null) {
 			livesearch.setRegistrationId(searchData.getRegistrationId());
 			livesearch.setDob(searchData.getDateOfBirth());
@@ -454,11 +458,12 @@ public class RegistrationController {
 
 	@GetMapping("/soldPlayerList")
 	public List<String> soldPlayerList() {
-		List<String> list=new ArrayList<>();
+		List<String> list = new ArrayList<>();
 		var playerInfo = playerRepository.findBySoldUpdateTime();
 		for (int i = 0; i < playerInfo.size(); i++) {
 			var name = playerInfo.get(i).getPlayerFirstName() + " " + playerInfo.get(i).getPlayerLastName()
-					+ " sold to team " + playerInfo.get(i).getSoldTeam() + " for Rs." + playerInfo.get(i).getSoldAmount();
+					+ " sold to team " + playerInfo.get(i).getSoldTeam() + " for Rs."
+					+ playerInfo.get(i).getSoldAmount();
 			list.add(name);
 		}
 		return list;

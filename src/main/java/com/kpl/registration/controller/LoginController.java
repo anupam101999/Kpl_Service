@@ -25,6 +25,7 @@ import com.kpl.registration.service.PlayerServiceImpl;
 
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Controller
 public class LoginController {
@@ -122,29 +123,36 @@ public class LoginController {
 
 		if (playerFirstName.length() > 20) {
 			model.addAttribute("errorMessage", "Please use your first name in short format");
+			log.info("Please use your first name in short format");
 			return "signUp";
 		}
-		log.info("Player who tried to sign up : "+playerFirstName+ " "+playerLastName);
+		log.info("Player who tried to sign up : " + playerFirstName + " " + playerLastName);
+		log.info(playerFirstName + " phone number  : " + phNo);
 		if (playerLastName.length() > 20) {
 			model.addAttribute("errorMessage", "Please use your last name in short format");
+			log.info("Please use your last name in short format");
 			return "signUp";
 		}
 		if (aadharNo.toString().length() != 12) {
 			model.addAttribute("errorMessage", "Please use Correct aadhaar No");
+			log.info("Please use Correct aadhaar No");
 			return "signUp";
 		}
 		if (pinCode.toString().length() != 6) {
 			model.addAttribute("errorMessage", "Please use Correct Postal Code");
+			log.info("Please use Correct Postal Code");
 			return "signUp";
 		}
 
 		if (playerCategory.toString().equals("Player Category")) {
 			model.addAttribute("errorMessage", "Please Select Your Category");
+			log.info("Please Select Your Category");
 			return "signUp";
 		}
 
 		if (location.toString().equals("Your Home location")) {
 			model.addAttribute("errorMessage", "Please Select Your Home Location");
+			log.info("Please Select Your Home Location");
 			return "signUp";
 		}
 
@@ -153,6 +161,7 @@ public class LoginController {
 				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
 			model.addAttribute("errorMessage",
 					"Aadhaar Card Front Image must be an Image and it should be in jpg or png or jpeg format");
+			log.info("Aadhaar Card Front Image must be an Image and it should be in jpg or png or jpeg format");
 			return "signUp";
 		}
 
@@ -161,6 +170,7 @@ public class LoginController {
 				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
 			model.addAttribute("errorMessage",
 					"Aadhaar Card Back Image must be an Image and it should be in jpg or png or jpeg format");
+			log.info("Aadhaar Card Back Image must be an Image and it should be in jpg or png or jpeg format");
 			return "signUp";
 		}
 		if (!(playerPhoto.getOriginalFilename().toString().toLowerCase().endsWith(".png")
@@ -168,30 +178,36 @@ public class LoginController {
 				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpeg"))) {
 			model.addAttribute("errorMessage",
 					"Your photo must be an Image and it should be in jpg or png or jpeg format");
+			log.info("Your photo must be an Image and it should be in jpg or png or jpeg format");
 			return "signUp";
 		}
 		if (!(password.length() > 3 && password.length() < 9)) {
 			model.addAttribute("errorMessage", "Password Must be between 4 to 8 character");
+			log.info("Password Must be between 4 to 8 character");
 			return "signUp";
 		}
 
 		if (Period.between(LocalDate.parse(dob).plusYears(14), LocalDate.now()).getYears() < 0) {
 			model.addAttribute("errorMessage", "Please Enter Correct Date of Birth");
+			log.info("Please Enter Correct Date of Birth");
 			return "signUp";
 		}
 
 		if (docImageFront.getSize() > 1 * 512 * 1024) {
 			model.addAttribute("errorMessage", "Please Compress your Aadhar Front Image less than 512 KB");
+			log.info("Please Compress your Aadhar Front Image less than 512 KB");
 			return "signUp";
 		}
 
 		if (docImageBack.getSize() > 1 * 512 * 1024) {
-			model.addAttribute("errorMessage", "Please Compress your Back Aadhar Image less than 512 KB");
+			model.addAttribute("errorMessage", "Please Compress your Aadhar Back Image less than 512 KB");
+			log.info("Please Compress your Back Aadhar Image less than 512 KB");
 			return "signUp";
 		}
 
 		if (playerPhoto.getSize() > 1 * 512 * 1024) {
 			model.addAttribute("errorMessage", "Please Compress your photo less than 512 KB");
+			log.info("Please Compress your photo less than 512 KB");
 			return "signUp";
 		}
 
@@ -200,14 +216,17 @@ public class LoginController {
 		String aadhaarCheck = playerRepository.findByAadhaarID(aadharNo);
 		if (phNumberUniqueCheck != null) {
 			model.addAttribute("errorMessage", "Please use unique phone number!");
+			log.info("Please use unique phone number!");
 			return "signUp";
 		}
 		if (emailUniqueCheck != null) {
 			model.addAttribute("errorMessage", "Please use unique email ID!");
+			log.info("Please use unique email ID!");
 			return "signUp";
 		}
 		if (aadhaarCheck != null) {
 			model.addAttribute("errorMessage", "Please use unique aadhaar ID!");
+			log.info("Please use unique aadhaar ID!");
 			return "signUp";
 		}
 		var playerRequetVO = new PlayerRequetVO();

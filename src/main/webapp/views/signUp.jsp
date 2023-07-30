@@ -21,12 +21,12 @@
   <style>
     /* Import Google font - Poppins */
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-
+   
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
+      font-family: "Calibri", sans-serif;
     }
 
     body {
@@ -181,6 +181,11 @@
         <header>Registration Form</header>
         <form action="https://kpl2023.online/registration/signUp" class="form" method="post"
           enctype="multipart/form-data">
+          <div style="color: #FFA500">
+            <strong lang="bn">
+                আঁধার এর সামনের পিছনের এবং নিজের ছবি ৩০০ কেবি এর মধ্যে রাখবেন
+            </strong>
+          </div>
           <div class="column">
             <div class="input-box">
               <label>First Name</label>

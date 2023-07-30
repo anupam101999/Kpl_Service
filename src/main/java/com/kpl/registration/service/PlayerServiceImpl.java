@@ -104,6 +104,8 @@ public class PlayerServiceImpl implements PlayerService {
 		docInfo.setRegistrationId(res.getRegistrationId());
 		docRepo.save(docInfo);
 		try {
+			log.info("You have been Registered successfully" +",name : " + playerInfo.getPlayerFirstName() + " , Mail ID : "
+					+ playerInfo.getEmailId());
 			sendMail(playerInfo);
 			genericVO.setResponse("You have been Registered successfully, please check your registered mail");
 			return genericVO;

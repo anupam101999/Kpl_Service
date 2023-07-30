@@ -25,8 +25,9 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
   <link rel="icon" href="${pageContext.request.contextPath}/images/transparent_logo.ico" type="image/x-icon">
   <style>
-    @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
+    * {
+    font-family: "Calibri", sans-serif;
+  }
     header {
       background-color:
         #d3df5b;

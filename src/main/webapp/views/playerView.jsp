@@ -33,7 +33,9 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Personal Details</title>
       <style>
-        @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+      * {
+        font-family: "Calibri", sans-serif;
+      }
 
         *,
         *::before,
@@ -318,10 +320,10 @@
           <span>${status}</span>
         </div>
         
-        <div class="user-details">
+        <!-- <div class="user-details">
           <label>UPI ID:</label>
           <span><a href="upi://pay?pa=8116199489fdl@ybl&pn=%20&tr=%20&am=70&cu=INR">Click here to Pay</a></span>
-        </div>
+        </div> -->
       </div>
       <div style="padding: 3%;color: #0011f3;">
         <h3> *If your payment is in the pending stage, don't worry; wait for 24 hours after successful compilation of the payment. For further clarification, please contact development or the KPL core team.</h3>

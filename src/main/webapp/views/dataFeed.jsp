@@ -29,6 +29,9 @@
 
 
   <style>
+    * {
+    font-family: "Calibri", sans-serif;
+  }
     body {
       font-family: Arial;
       margin: 0;

@@ -12,7 +12,11 @@
 
 <!-- <script src="livedata.js"></script> -->
 
-<style>header {
+<style>
+* {
+    font-family: "Calibri", sans-serif;
+  }
+header {
   padding: 20px;
   font-size: 22px;
   background-color: teal;
