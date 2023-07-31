@@ -22,6 +22,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,7 +55,7 @@ import com.kpl.registration.service.PlayerService;
 import freemarker.template.TemplateException;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
-
+@Component
 @Slf4j
 @RestController
 @RequestMapping("/kpl/registration/api")
@@ -475,16 +477,17 @@ public class RegistrationController {
 		}
 		return list;
 	}
-
+	@Scheduled(cron = "0 59 17 * * *", zone = "UTC")
 	@GetMapping("/apiTrigger")
 	public void todayRegList() {
+		log.info("Daily API trigger");
 		var todayTime = LocalDateTime.now();
 		var yesterdayTime = LocalDateTime.now().minusDays(1);
 		List<String> list = new ArrayList<>();
 		var message = "List of player who have registered Today : ";
 		List<PlayerInfo> playerInfo = playerRepository.todaySignedUpPlayerList(todayTime, yesterdayTime);
 		for (int i = 0; i < playerInfo.size(); i++) {
-			var info = (i + 1) + ". Name : " + playerInfo.get(i).getPlayerFirstName() + " "
+			var info = (i + 1) + ". " + playerInfo.get(i).getPlayerFirstName() + " "
 					+ playerInfo.get(i).getPlayerLastName() + " ,Reg ID : " + playerInfo.get(i).getRegistrationId();
 			list.add(info);
 		}
@@ -495,7 +498,7 @@ public class RegistrationController {
 		List<String> paymentlist = new ArrayList<>();
 		var paymentmessage = "Players who have not paid the registrartion fees : ";
 		for (int i = 0; i < payment.size(); i++) {
-			var info = (i + 1) + ". Name : " + payment.get(i).getPlayerFirstName() + " "
+			var info = (i + 1) + ". " + payment.get(i).getPlayerFirstName() + " "
 					+ payment.get(i).getPlayerLastName() + " ,Reg ID : " + payment.get(i).getRegistrationId()
 					+ " ,Phone Num : " + payment.get(i).getPhNo();
 			paymentlist.add(info);
@@ -509,9 +512,8 @@ public class RegistrationController {
 		List<String> paymentDonelist = new ArrayList<>();
 		var paymentDonemessage = "Players who have paid the registrartion fees : ";
 		for (int i = 0; i < paymentDone.size(); i++) {
-			var info = (i + 1) + ". Name : " + paymentDone.get(i).getPlayerFirstName() + " "
-					+ paymentDone.get(i).getPlayerLastName() + " ,Reg ID : " + paymentDone.get(i).getRegistrationId()
-					+ " ,Phone Num : " + paymentDone.get(i).getPhNo();
+			var info = (i + 1) + ". " + paymentDone.get(i).getPlayerFirstName() + " "
+					+ paymentDone.get(i).getPlayerLastName();
 			paymentDonelist.add(info);
 		}
 

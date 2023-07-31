@@ -204,7 +204,7 @@ public class PlayerServiceImpl implements PlayerService {
 			mimeMessageHelper
 					.setSubject(playerInfo.get(i).getPlayerFirstName() + ",Your payment status has been Updated");
 			String text = "Payment status updated for : " + playerInfo.get(i).getPlayerFirstName() + " "
-					+ playerInfo.get(i).getPlayerLastName() + " ,and his Mail ID,Reg ID is : "
+					+ playerInfo.get(i).getPlayerLastName() + " ,and his Mail ID,Reg ID are : "
 					+ playerInfo.get(i).getEmailId() + "," + playerInfo.get(i).getRegistrationId();
 			log.info(text);
 
