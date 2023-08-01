@@ -10,7 +10,7 @@
 
   gtag('config', 'G-2DKXMGP7B2');
 </script>
-<title>Page Title</title>
+<title>Admin Log in</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="${pageContext.request.contextPath}/images/transparent_logo.ico" type="image/x-icon">
