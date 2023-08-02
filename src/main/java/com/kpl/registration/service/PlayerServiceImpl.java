@@ -101,6 +101,7 @@ public class PlayerServiceImpl implements PlayerService {
 		playerInfo.setDateOfBirth(playerRequetVO.getDob());
 		playerInfo.setPassword(playerRequetVO.getPassword());
 		playerInfo.setLocation(playerRequetVO.getLocation());
+
 		var res = playerRepository.save(playerInfo);
 		docInfo.setImage(imageData);
 		docInfo.setDocImageFront(docDataFront);
@@ -108,21 +109,17 @@ public class PlayerServiceImpl implements PlayerService {
 		log.info("Registration ID for " + playerRequetVO.getPlayerFirstName() + " is " + res.getRegistrationId());
 		docInfo.setRegistrationId(res.getRegistrationId());
 		docRepo.save(docInfo);
-		try {
-			String firstname = playerInfo.getPlayerFirstName();
-			String mailID = playerInfo.getEmailId();
-			log.info("User has been Registered successfully" + ",name : " + firstname + " , Mail ID : " + mailID);
-			String message = "Hey we have a new Registration!,His name is :" + firstname + " "
-					+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
-					+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
-			restTemplate.getForObject(telegramBotUrl + message, String.class);
-			sendMail(playerInfo);
-			genericVO.setResponse("You have been Registered successfully, please check your registered mail");
-			return genericVO;
-		} catch (Exception e) {
-			genericVO.setResponse("You have been successfully Registered");
-			return genericVO;
-		}
+
+		String firstname = playerInfo.getPlayerFirstName();
+		String message = "Hey, @RAVVAN23 we have a new Registration!,His name is :" + firstname + " "
+				+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
+				+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
+		restTemplate.getForObject(telegramBotUrl + message, String.class);
+
+		log.info("User has been Registered successfully" + ",name : " + firstname);
+
+		genericVO.setResponse("You have been successfully Registered");
+		return genericVO;
 
 	}
 
@@ -203,8 +200,8 @@ public class PlayerServiceImpl implements PlayerService {
 			mimeMessageHelper.setText(htmlTemp, true);
 			mimeMessageHelper
 					.setSubject(playerInfo.get(i).getPlayerFirstName() + ",Your payment status has been Updated");
-			String text = "Payment status updated for : " + playerInfo.get(i).getPlayerFirstName() + " "
-					+ playerInfo.get(i).getPlayerLastName() + " ,and his Mail ID,Reg ID are : "
+			String text = "@RAVVAN23 @Ajaykalu @emotionalclown  Payment status updated for : " + playerInfo.get(i).getPlayerFirstName()
+					+ " " + playerInfo.get(i).getPlayerLastName() + " ,and his Mail ID,Reg ID are : "
 					+ playerInfo.get(i).getEmailId() + "," + playerInfo.get(i).getRegistrationId();
 			log.info(text);
 

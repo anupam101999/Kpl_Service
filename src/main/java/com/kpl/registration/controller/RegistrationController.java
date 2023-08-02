@@ -52,6 +52,7 @@ import com.kpl.registration.repository.DocRepo;
 import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.service.PlayerService;
+import com.kpl.registration.service.PlayerServiceImpl;
 
 import freemarker.template.TemplateException;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -65,6 +66,8 @@ import lombok.extern.slf4j.Slf4j;
 public class RegistrationController {
 	@Autowired
 	PlayerService playerService;
+	@Autowired
+	PlayerServiceImpl playerServiceImpl;
 	@Autowired
 	ImageRepo imageRepo;
 	@Autowired
@@ -523,11 +526,27 @@ public class RegistrationController {
 	@DeleteMapping("/deleteRegistration")
 	public String saveSoldTeamAndAmount(@RequestParam("id") Long id) throws Exception {
 		var player = playerRepository.findById(id);
-		String messageString = "Hey team, Registration deleted for User Name : " + player.get().getPlayerFirstName()
-				+ " " + player.get().getPlayerLastName();
+		String messageString = "Hey Support team @RAVVAN23 @Ajaykalu @emotionalclown Registration deleted for User Name : "
+				+ player.get().getPlayerFirstName() + " " + player.get().getPlayerLastName();
 		playerRepository.deleteById(id);
 		docRepo.deleteById(id);
 		restTemplate.getForObject(telegramBotUrl + messageString, String.class);
 		return "Player Wiped from Database";
+	}
+
+	@Scheduled(fixedRate = 900000)
+	@GetMapping("/mailTrigger")
+	public void mailTriggerOnRegistration() throws Exception {
+		log.info("Mail trigger in each 15 min API trigger");
+		var timeNow = LocalDateTime.now();
+		var time15minBack = LocalDateTime.now().minusMinutes(15);
+		List<PlayerInfo> playerInfo = playerRepository.todaySignedUp15minPlayerList(timeNow, time15minBack);
+
+		for (int i = 0; i < playerInfo.size(); i++) {
+			playerServiceImpl.sendMail(playerInfo.get(i));
+			String messageString = "Registration mail shooted for user name : " + playerInfo.get(i).getPlayerFirstName()
+					+ " " + playerInfo.get(i).getPlayerLastName();
+			restTemplate.getForObject(telegramBotUrl + messageString, String.class);
+		}
 	}
 }

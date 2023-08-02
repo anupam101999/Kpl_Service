@@ -238,8 +238,8 @@
             </div>
             <div class="column">
               <div class="select-box">
-                <select name="location">
-                  <option hidden>Your Home location</option>
+                <select name="location" required>
+                  <option option value="" disabled selected>Your Home location</option>
                   <option value="Local">Local(Kumra Panchayet)</option>
                   <option value="Overseas">Overseas</option>
                 </select>
@@ -249,8 +249,8 @@
             </div>
             <div class="column">
               <div class="select-box">
-                <select name="playerCategory">
-                  <option hidden>Player Category</option>
+                <select name="playerCategory" required>
+                  <option option value="" disabled selected>Player Category</option>
                   <option value="Batsman">Batsman</option>
                   <option value="Bowler">Bowler</option>
                   <option value="Wicket Keeper">Wicket Keeper</option>
