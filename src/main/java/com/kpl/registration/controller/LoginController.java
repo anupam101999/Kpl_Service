@@ -329,7 +329,8 @@ public class LoginController {
 
 		var res = playerService.savePlayerInfo(playerRequetVO, imageData, docDataFront, docDataBack);
 		model.addAttribute("errorMessage", res.getResponse());
-		return "payment";
+		model.addAttribute("id", res.getRegistrationID());
+		return directPayment(model);
 
 	}
 
@@ -341,6 +342,12 @@ public class LoginController {
 	@GetMapping("/liveAution")
 	public String liveAution() {
 		return "liveauction";
+	}
+
+	
+	public String directPayment(Model model) {
+		return "directPayment";
+
 	}
 
 }

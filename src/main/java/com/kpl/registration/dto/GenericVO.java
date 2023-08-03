@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
  public class GenericVO {
+	 private String registrationID;
 	 private String response;
  }

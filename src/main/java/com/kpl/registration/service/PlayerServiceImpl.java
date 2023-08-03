@@ -119,6 +119,7 @@ public class PlayerServiceImpl implements PlayerService {
 		log.info("User has been Registered successfully" + ",name : " + firstname);
 
 		genericVO.setResponse("You have been successfully Registered");
+		genericVO.setRegistrationID(res.getRegistrationId().toString());
 		return genericVO;
 
 	}

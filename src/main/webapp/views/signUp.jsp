@@ -182,6 +182,8 @@
         <header>Registration Form</header>
         <form action="https://kpl2023.online/registration/signUp" class="form" method="post"
           enctype="multipart/form-data">
+          <!-- <form action="http://localhost:1999/signUp" class="form" method="post" -->
+          <!-- enctype="multipart/form-data"> -->
           <div style="color: #FFA500">
             <strong lang="bn">
                 আঁধার এর সামনের পিছনের এবং নিজের ছবি ৩০০ কেবি এর মধ্যে রাখবেন
@@ -231,6 +233,9 @@
           <div class="error-message">
             <h2 style="color: #ff0000; padding-left: 10%; font-size:300%">${errorMessage}</h2>
           </div>
+          <!-- <div class="loader-screen" id="loaderScreen">
+            <div class="loader"></div>
+          </div> -->
           <div class="input-box address">
             <div class="input-box">
               <label>Address</label>
