@@ -23,6 +23,7 @@
 
 
     <script>
+      let isSubmitting = false;
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.querySelector(".form");
         const docImageFrontInput = form.querySelector('[name="docImageFront"]');
@@ -43,6 +44,22 @@
           const mail = form.querySelector('[name="mail"]').value;
           const pinCode = form.querySelector('[name="pinCode"]').value;
           const password = form.querySelector('[name="password"]').value;
+
+
+          if (isSubmitting) {
+            alert("ব্যাকগ্রাউন্ড এ প্রসেস চলছে দয়া করে একাধিক বার সাবমিট বাটন এ ক্লিক করবেন না।");
+            return;
+          }
+
+          // Set the flag to indicate that the form submission is in progress
+          isSubmitting = true;
+
+          setTimeout(() => {
+            isSubmitting = false;
+          }, 2000)
+
+
+
 
           // Check the image size before submission
           const fileSizeFront = docImageFrontInput.files[0].size;
@@ -160,12 +177,12 @@
             return;
           }
 
-          const url = "https://kpl2023.online/registration/kpl/registration/api/phNoCheck?phNo="+playerPhNo;
+          const url = "https://kpl2023.online/registration/kpl/registration/api/phNoCheck?phNo=" + playerPhNo;
           const response = await fetch(url);
           const data = await response.text();
           console.log(data)
-          
-          if (data=="ok") {
+
+          if (data == "ok") {
             const text = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown " + playerFirstName + " " + playerLastName + " is trying to Register using already registered Phone Number, please help him and his Phone number is : " + playerPhNo;
 
             try {
@@ -182,12 +199,12 @@
           }
 
 
-          const urlAadhar = "https://kpl2023.online/registration/kpl/registration/api/aadharCheck?aadharNo="+aadharNo;
+          const urlAadhar = "https://kpl2023.online/registration/kpl/registration/api/aadharCheck?aadharNo=" + aadharNo;
           const responseAadhar = await fetch(urlAadhar);
           const dataAadhar = await responseAadhar.text();
           console.log(dataAadhar)
-          
-          if (dataAadhar=="ok") {
+
+          if (dataAadhar == "ok") {
             const text = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown " + playerFirstName + " " + playerLastName + " is trying to Register but he is using already registered Aadhar no, please help him and his Phone number is : " + playerPhNo;
 
             try {
@@ -204,12 +221,12 @@
           }
 
 
-          const urlmail = "https://kpl2023.online/registration/kpl/registration/api/emailCheck?mail="+mail;
-          const responsemail = await fetch(url);
-          const datamail = await responsemail.text();
+          const urlmail = "https://kpl2023.online/registration/kpl/registration/api/emailCheck?mail=" + mail;
+          const responseurlmail = await fetch(urlmail);
+          const datamail = await responseurlmail.text();
           console.log(datamail)
-          
-          if (datamail=="ok") {
+
+          if (datamail == "ok") {
             const text = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown " + playerFirstName + " " + playerLastName + " is trying to Register using already registered Email ID, please help him and his Phone number is : " + playerPhNo;
 
             try {
@@ -243,8 +260,7 @@
 
 
 
-
-
+         
           // If all checks pass, submit the form
           form.submit();
         });

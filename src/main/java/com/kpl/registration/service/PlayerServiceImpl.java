@@ -79,6 +79,7 @@ public class PlayerServiceImpl implements PlayerService {
 	@Value("${spring.mail.username}")
 	private String emailUsername;
 	String telegramBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@kpl2023updates&text=";
+	String telegramTestBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@test2017Grp&text=";
 
 	@Override
 	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docDataFront,

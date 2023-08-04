@@ -127,10 +127,21 @@ public class LoginController {
 			@RequestParam String mail, Model model)
 			throws IOException, ParseException, MessagingException, TemplateException {
 		String message = "";
-		
+
 		log.info("Player who tried to sign up : " + playerFirstName + " " + playerLastName);
 		log.info(playerFirstName + " phone number  : " + phNo);
-
+		Long phNumberUniqueCheck = playerRepository.findByPhNumber(phNo);
+		if (phNumberUniqueCheck != null) {
+			var regId = playerRepository.findByPhNu(phNo.toString());
+			message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " "
+					+ playerLastName
+					+ " is refreshing page unnecessarily please ask him to avoid so and his Phone number is : " + phNo;
+			restTemplate.getForObject(telegramBotUrl + message, String.class);
+			model.addAttribute("id", regId);
+			log.info(playerLastName
+					+ " is refreshing page unnecessarily please ask him to avoid so and his Phone number is : " + phNo);
+			return directPayment(model);
+		}
 
 		if (!(docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".png")
 				|| docImageFront.getOriginalFilename().toString().toLowerCase().endsWith(".jpg")
@@ -183,7 +194,6 @@ public class LoginController {
 			restTemplate.getForObject(telegramBotUrl + message, String.class);
 			return "signUp";
 		}
-		
 
 		var playerRequetVO = new PlayerRequetVO();
 		playerRequetVO.setAadharNo(aadharNo);
@@ -205,6 +215,7 @@ public class LoginController {
 		model.addAttribute("errorMessage", res.getResponse());
 		model.addAttribute("id", res.getRegistrationID());
 		return directPayment(model);
+//		return directPayment(model);
 //		if (docImageFront.getSize() > 1 * 512 * 1024) {
 //		message = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown   " + playerFirstName + " " + playerLastName
 //				+ " is trying to Register but he has selected Aadhar Front image more than 300 KB, please help him and his Phone number is : "
@@ -297,7 +308,7 @@ public class LoginController {
 //		log.info("Please Select Your Home Location");
 //		return "signUp";
 //	}
-	
+
 //		if (!(password.length() > 3 && password.length() < 9)) {
 //		model.addAttribute("errorMessage", "Password Must be between 4 to 8 character");
 //		log.info("Password Must be between 4 to 8 character");
@@ -343,7 +354,6 @@ public class LoginController {
 //			return "signUp";
 //		}
 
-
 	}
 
 	@GetMapping("/payment")
@@ -360,7 +370,5 @@ public class LoginController {
 		return "directPayment";
 
 	}
-
-	
 
 }

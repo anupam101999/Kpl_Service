@@ -132,15 +132,17 @@
             <% if (request.getAttribute("errorShown")==null) { %>
                 <c:if test="${not empty errorMessage && 'POST' eq pageContext.request.method}">
 
+                <div class="error-message">
+                  <h2 style="color: #ff0000; padding-left: 10%; font-size:300%" lang="bn">আপনার রেজিস্ট্রেশন
+                      সম্পন্ন হয়েছে দয়া করে , পেমেন্ট করে প্রসেস টা কমপ্লিট করুন</h2>
+              </div>
+
                     <div id="tagline">
                         <div lang="bn">
                             পেমেন্ট করার সময় চেক করে নেবেন রিসিভার এর নামে <font color="red">আকাশ মজুমদার</font> কি না,
                             যদি আকাশ না হয় ইমিডিয়েট KPL কমিটি কে ইস্যু টা জানান
                         </div>
-                        <div class="error-message">
-                            <h2 style="color: #ff0000; padding-left: 10%; font-size:300%" lang="bn">আপনার রেজিস্ট্রেশন
-                                সম্পন্ন হয়েছে দয়া করে , পেমেন্ট করে প্রসেস টা কমপ্লিট করুন</h2>
-                        </div>
+                      
                         <div>
                             <p lang="bn">
                                 টেকনিক্যাল ইস্যুর জন্য UPI অ্যাপ লিংক কাজ না করলে ডাইরেক্টলি <font color="red">
