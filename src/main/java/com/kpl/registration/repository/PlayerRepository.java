@@ -114,4 +114,5 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "SELECT * FROM player_registration registration_time where registration_time < ?1 and registration_time >= ?2\r\n"
 			+ "order by registration_id", nativeQuery = true)
 	List<PlayerInfo> todaySignedUp15minPlayerList(LocalDateTime timeNow, LocalDateTime time15minBack);
+
 }

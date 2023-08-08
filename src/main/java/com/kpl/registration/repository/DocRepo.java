@@ -2,7 +2,10 @@ package com.kpl.registration.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -24,4 +27,9 @@ public interface DocRepo extends JpaRepository<DocInfo, Long> {
 
 	@Query(value = "SELECT d.doc_image_back FROM doc_info d JOIN player_registration p ON d.registration_id = p.registration_id WHERE p.payment_validation = 'ok' ORDER BY d.registration_id", nativeQuery = true)
 	List<byte[]> findAllDocBack();
+
+	@Transactional
+	@Modifying
+	@Query(value = "update doc_info set image=?2  where registration_id=?1", nativeQuery = true)
+	void updateOwnImage(Long id,byte[] imageData);
 }

@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.kpl.registration.dto.AdminReqVO;
 import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.LiveDataVO;
@@ -579,4 +580,11 @@ public class RegistrationController {
 		return "";
 	}
 
+
+	@PutMapping("/updateOwnImage")
+	public String updateOwnImage(@RequestParam("id") Long id,@RequestParam("file") MultipartFile file) throws IOException, MessagingException, TemplateException {
+		byte[] imageData = file.getBytes();
+		 docRepo.updateOwnImage(id,imageData);
+		 return "Image updated";
+	}
 }
