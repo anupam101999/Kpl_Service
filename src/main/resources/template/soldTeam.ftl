@@ -43,7 +43,7 @@
       </div>
       <div class="message" style=" padding-left: 3%;padding-right: 10%;">
         <h4>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On the big auction day of Kashipur Premier League Season 5, you were sold to franchise ${soldteam} for Rs.${soldamount}.
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On the big auction day of Kashipur Premier League Season 5, you have been sold to franchise ${soldteam} for Rs.${soldamount}.
         </h4>    
 
         <h4>

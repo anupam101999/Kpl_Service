@@ -618,16 +618,16 @@ public class RegistrationController {
 		}
 	}
 
-	
-	@Scheduled(fixedRate = 300000)
-	@GetMapping("/mailTriggerOnSell")
-	public void mailTriggerOnSell() throws Exception {
-		log.info("Mail trigger in each 5 min API trigger");
-		var timeNow = LocalDateTime.now();
-		var time5minBack = LocalDateTime.now().minusMinutes(5);
-		List<PlayerInfo> playerInfo = playerRepository.sellOnLast5min(timeNow, time5minBack);		
-		for (int i = 0; i < playerInfo.size(); i++) {
-			playerService.sendMailOnSold(playerInfo.get(i));
-		}
-	}
+//	
+//	@Scheduled(fixedRate = 300000)
+//	@GetMapping("/mailTriggerOnSell")
+//	public void mailTriggerOnSell() throws Exception {
+//		log.info("Mail trigger in each 5 min API trigger");
+//		var timeNow = LocalDateTime.now();
+//		var time5minBack = LocalDateTime.now().minusMinutes(5);
+//		List<PlayerInfo> playerInfo = playerRepository.sellOnLast5min(timeNow, time5minBack);		
+//		for (int i = 0; i < playerInfo.size(); i++) {
+//			playerService.sendMailOnSold(playerInfo.get(i));
+//		}
+//	}
 }
