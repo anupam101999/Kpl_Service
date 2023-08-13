@@ -390,8 +390,6 @@ public class RegistrationController {
 			@RequestParam("team") String team) throws Exception {
 		var updationTime = LocalDateTime.now(Clock.systemUTC());
 		playerRepository.updateSoldamountAndTeam(regID, soldAmount, team, updationTime);
-		var playerInfo = playerRepository.findDataByregistrationId(regID);
-		playerService.sendMailOnSold(playerInfo);
 	}
 
 	@GetMapping("/teamList")
@@ -538,22 +536,7 @@ public class RegistrationController {
 		return "Player Wiped from Database";
 	}
 
-	@Scheduled(fixedRate = 900000)
-	@GetMapping("/mailTrigger")
-	public void mailTriggerOnRegistration() throws Exception {
-		log.info("Mail trigger in each 15 min API trigger");
-		var timeNow = LocalDateTime.now();
-		var time15minBack = LocalDateTime.now().minusMinutes(15);
-		List<PlayerInfo> playerInfo = playerRepository.todaySignedUp15minPlayerList(timeNow, time15minBack);
-
-		for (int i = 0; i < playerInfo.size(); i++) {
-			playerServiceImpl.sendMail(playerInfo.get(i));
-			String messageString = "Registration mail shooted for user name : " + playerInfo.get(i).getPlayerFirstName()
-					+ " " + playerInfo.get(i).getPlayerLastName();
-			restTemplate.getForObject(telegramBotUrl + messageString, String.class);
-		}
-	}
-
+	
 	@GetMapping("/aadharCheck")
 	public String aadharCheck(@RequestParam Long aadharNo) {
 		String aadhaarCheck = playerRepository.findByAadhaarID(aadharNo);
@@ -616,6 +599,35 @@ public class RegistrationController {
 		}
 		else {
 			return "ok";
+		}
+	}
+	
+	@Scheduled(fixedRate = 900000)
+	@GetMapping("/mailTrigger")
+	public void mailTriggerOnRegistration() throws Exception {
+		log.info("Mail trigger in each 15 min API trigger");
+		var timeNow = LocalDateTime.now();
+		var time15minBack = LocalDateTime.now().minusMinutes(15);
+		List<PlayerInfo> playerInfo = playerRepository.todaySignedUp15minPlayerList(timeNow, time15minBack);
+
+		for (int i = 0; i < playerInfo.size(); i++) {
+			playerServiceImpl.sendMail(playerInfo.get(i));
+			String messageString = "Registration mail shooted for user name : " + playerInfo.get(i).getPlayerFirstName()
+					+ " " + playerInfo.get(i).getPlayerLastName();
+			restTemplate.getForObject(telegramBotUrl + messageString, String.class);
+		}
+	}
+
+	
+	@Scheduled(fixedRate = 300000)
+	@GetMapping("/mailTriggerOnSell")
+	public void mailTriggerOnSell() throws Exception {
+		log.info("Mail trigger in each 5 min API trigger");
+		var timeNow = LocalDateTime.now();
+		var time5minBack = LocalDateTime.now().minusMinutes(5);
+		List<PlayerInfo> playerInfo = playerRepository.sellOnLast5min(timeNow, time5minBack);		
+		for (int i = 0; i < playerInfo.size(); i++) {
+			playerService.sendMailOnSold(playerInfo.get(i));
 		}
 	}
 }

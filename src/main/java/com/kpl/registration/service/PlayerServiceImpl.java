@@ -192,7 +192,7 @@ public class PlayerServiceImpl implements PlayerService {
 		var ownerInfo=ownerRepo.ownerInformation(playerInfo.getSoldTeam());
 		if (ownerInfo.isPresent()) {
 			model.put("ownername", ownerInfo.get().getOwnerName());
-			model.put("phnum", ownerInfo.get().getOwnerPhNo());
+			model.put("phnum", ownerInfo.get().getOwnerPhNo().toString());
 		}
 		
 

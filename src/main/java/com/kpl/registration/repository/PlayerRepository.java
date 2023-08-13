@@ -111,11 +111,15 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	List<PlayerInfo> paymentDone();
 	
 	
-	@Query(value = "SELECT * FROM player_registration registration_time where registration_time < ?1 and registration_time >= ?2\r\n"
+	@Query(value = "SELECT * FROM player_registration where registration_time < ?1 and registration_time >= ?2\r\n"
 			+ "order by registration_id", nativeQuery = true)
 	List<PlayerInfo> todaySignedUp15minPlayerList(LocalDateTime timeNow, LocalDateTime time15minBack);
 
 	@Query(value = "SELECT count(ph_no) FROM player_registration  where ph_no=?1", nativeQuery = true)
 	Long findCount(Long phNo);
+
+	@Query(value = "SELECT * FROM player_registration  where sold_time < ?1 and sold_time >= ?2\r\n"
+			+ "order by registration_id", nativeQuery = true)
+	List<PlayerInfo> sellOnLast5min(LocalDateTime timeNow, LocalDateTime time5minBack);
 
 }
