@@ -140,7 +140,7 @@
             return;
           }
 
-          if (pinCode.toString().length > 6) {
+          if (pinCode.toString().length != 6) {
             const text = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown " + playerFirstName + " " + playerLastName + " is trying to Register but he is using Postal code more than 6 digits, please help him and his Phone number is : " + playerPhNo;
 
             try {
@@ -152,7 +152,7 @@
             } catch (error) {
               console.error('Error calling API:', error);
             }
-            alert("পিন কোড এর সংখ্যা ৬ থেকে বেশি হওয়া সম্ভব না পুনরায় চেক করুন.");
+            alert("পিন কোড এর সংখ্যা পুনরায় চেক করুন.");
             return;
           }
 
@@ -171,7 +171,7 @@
             alert("নামের পদবী  ২০ টা ওয়ার্ড এর কম করুন.");
             return;
           }
-          if (aadharNo.toString().length > 12) {
+          if (aadharNo.toString().length != 12) {
             const text = "Hey Support team @RAVVAN23 @Kalajaduu13 @emotionalclown " + playerFirstName + " " + playerLastName + " is trying to Register but he is not using 12 digits Aadhar no, please help him and his Phone number is : " + playerPhNo;
 
             try {
@@ -183,7 +183,7 @@
             } catch (error) {
               console.error('Error calling API:', error);
             }
-            alert("আঁধার এর সংখ্যা ১২ থেকে বেশি হওয়া সম্ভব না পুনরায় চেক করুন.");
+            alert("আঁধার এর সংখ্যা পুনরায় চেক করুন.");
             return;
           }
 
