@@ -93,4 +93,8 @@ import lombok.NonNull;
  @NonNull
  @Column(name = "sold_time")
  private LocalDateTime soldTime;
+ 
+ @NonNull
+ @Column(name = "base_price")
+ private Long basePrice;
  }

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.DocumentException;
 import com.kpl.registration.dto.AdminReqVO;
+import com.kpl.registration.dto.GenericVO;
+import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.entity.PlayerInfo;

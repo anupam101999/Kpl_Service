@@ -3,6 +3,8 @@ package com.kpl.registration.service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +38,11 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.kpl.registration.dto.AdminReqVO;
+import com.kpl.registration.dto.GenericVO;
+import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
+import com.kpl.registration.entity.DocInfo;
 import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.repository.AdminRepo;
 import com.kpl.registration.repository.DocRepo;
@@ -184,12 +189,11 @@ public class PlayerServiceImpl implements PlayerService {
 		model.put("soldteam", playerInfo.getSoldTeam());
 		model.put("soldamount", playerInfo.getSoldAmount());
 
-		var ownerInfo=ownerRepo.ownerInformation(playerInfo.getSoldTeam());
+		var ownerInfo = ownerRepo.ownerInformation(playerInfo.getSoldTeam());
 		if (ownerInfo.isPresent()) {
 			model.put("ownername", ownerInfo.get().getOwnerName());
 			model.put("phnum", ownerInfo.get().getOwnerPhNo().toString());
 		}
-		
 
 		var htmlTemp = FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model);
 		mimeMessageHelper.setTo(playerInfo.getEmailId());
@@ -218,9 +222,10 @@ public class PlayerServiceImpl implements PlayerService {
 			mimeMessageHelper.setText(htmlTemp, true);
 			mimeMessageHelper
 					.setSubject(playerInfo.get(i).getPlayerFirstName() + ",Your payment status has been Updated");
-			String text = "@RAVVAN23 @Kalajaduu13 @emotionalclown  Payment status updated for : " + playerInfo.get(i).getPlayerFirstName()
-					+ " " + playerInfo.get(i).getPlayerLastName() + " ,and his Mail ID,Reg ID are : "
-					+ playerInfo.get(i).getEmailId() + "," + playerInfo.get(i).getRegistrationId();
+			String text = "@RAVVAN23 @Kalajaduu13 @emotionalclown  Payment status updated for : "
+					+ playerInfo.get(i).getPlayerFirstName() + " " + playerInfo.get(i).getPlayerLastName()
+					+ " ,and his Mail ID,Reg ID are : " + playerInfo.get(i).getEmailId() + ","
+					+ playerInfo.get(i).getRegistrationId();
 			log.info(text);
 
 			restTemplate.getForObject(telegramBotUrl + text, String.class);
@@ -399,7 +404,7 @@ public class PlayerServiceImpl implements PlayerService {
 		pcell.setBorderColor(new BaseColor(220, 220, 0));
 		ptable.addCell(pcell);
 
-		pcell = new PdfPCell(new Phrase("Aadhar No", tableFont));
+		pcell = new PdfPCell(new Phrase("Category", tableFont));
 		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -434,7 +439,7 @@ public class PlayerServiceImpl implements PlayerService {
 					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
 					tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
-			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
@@ -446,8 +451,9 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase("XXXXXXXX" + allplayerInfo.get(i).getAadharNo().toString().substring(8)
-					+ " " + "(" + allplayerInfo.get(i).getLocation() + ")", tablesFont));
+			pcell = new PdfPCell(
+					new Phrase(allplayerInfo.get(i).getGenerue() + " " + "(" + allplayerInfo.get(i).getLocation() + ")",
+							tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -561,7 +567,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 		pcell = new PdfPCell(new Phrase("Address", tableFont));
 		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
-		pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setBorderColor(new BaseColor(220, 220, 0));
 		ptable.addCell(pcell);
@@ -589,7 +595,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 		for (int i = 0; i < allplayerInfo.size(); i++) {
 
-log.info(allplayerInfo.get(i).getRegistrationId().toString());
+			log.info(allplayerInfo.get(i).getRegistrationId().toString());
 			pcell = new PdfPCell(new Phrase(String.valueOf(i + 1) + "          " + "(Reg ID : "
 					+ allplayerInfo.get(i).getRegistrationId() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
@@ -602,7 +608,7 @@ log.info(allplayerInfo.get(i).getRegistrationId().toString());
 					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
 					tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
-			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
@@ -614,8 +620,9 @@ log.info(allplayerInfo.get(i).getRegistrationId().toString());
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Phrase(allplayerInfo.get(i).getGenerue()
-					+ " " + "(" + allplayerInfo.get(i).getLocation() + ")", tablesFont));
+			pcell = new PdfPCell(
+					new Phrase(allplayerInfo.get(i).getGenerue() + " " + "(" + allplayerInfo.get(i).getLocation() + ")",
+							tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -747,7 +754,7 @@ log.info(allplayerInfo.get(i).getRegistrationId().toString());
 
 		pcell = new PdfPCell(new Phrase("Sold Team", tableFont));
 		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
-		pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setPaddingLeft(10f);
 		pcell.setBorderColor(new BaseColor(220, 220, 0));
@@ -755,7 +762,7 @@ log.info(allplayerInfo.get(i).getRegistrationId().toString());
 
 		pcell = new PdfPCell(new Phrase("Sold Amount", tableFont));
 		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
-		pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setPaddingLeft(10f);
 		pcell.setBorderColor(new BaseColor(220, 220, 0));
@@ -774,7 +781,7 @@ log.info(allplayerInfo.get(i).getRegistrationId().toString());
 					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
 					tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
-			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
@@ -933,7 +940,7 @@ log.info(allplayerInfo.get(i).getRegistrationId().toString());
 
 		pcell = new PdfPCell(new Phrase("Sold Amount", tableFont));
 		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
-		pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setPaddingLeft(10f);
 		pcell.setBorderColor(new BaseColor(220, 220, 0));
@@ -952,7 +959,7 @@ log.info(allplayerInfo.get(i).getRegistrationId().toString());
 					allplayerInfo.get(i).getPlayerFirstName() + " " + allplayerInfo.get(i).getPlayerLastName(),
 					tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
-			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);

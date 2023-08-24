@@ -36,9 +36,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kpl.registration.dto.AdminReqVO;
+import com.kpl.registration.dto.GenericVO;
 import com.kpl.registration.dto.LiveDataVO;
 import com.kpl.registration.dto.LiveSearchVO;
 import com.kpl.registration.dto.PlayerInfoVO;
+import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.PlayerResponseVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
