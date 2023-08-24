@@ -426,7 +426,7 @@ public class RegistrationController {
 			liveDataVO.setMoneyspend(totalSpendMoney);
 			liveDataVO.setMoneyRem(remBalance);
 			long maxBetOnSinglePlayer = 0;
-			long playerCountRem = 17 - (overSeasPlayerCount + localPlayerCount);
+			long playerCountRem = 18 - (overSeasPlayerCount + localPlayerCount);
 			if (playerCountRem <= 0) {
 				maxBetOnSinglePlayer = remBalance;
 			} else {
