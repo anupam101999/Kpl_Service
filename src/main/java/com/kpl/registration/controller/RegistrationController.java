@@ -398,6 +398,9 @@ public class RegistrationController {
 	public void saveSoldTeamAndAmount(@RequestParam("id") Long regID, @RequestParam("soldAmount") Long soldAmount,
 			@RequestParam("team") String team) throws Exception {
 		var updationTime = LocalDateTime.now(Clock.systemUTC());
+		var info=playerRepository.findInfo(regID);
+		String text=info.getPlayerFirstName()+" "+info.getPlayerLastName()+" have been Sold to Team "+team+" for Rs. "+soldAmount;
+		restTemplate.getForObject(telegramBotUrl+ text, String.class);
 		playerRepository.updateSoldamountAndTeam(regID, soldAmount, team, updationTime);
 	}
 

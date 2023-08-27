@@ -134,4 +134,7 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	
 	@Query(value = "SELECT registration_id FROM public.player_registration WHERE date_of_birth > current_date - interval '19 years' ORDER BY registration_id asc", nativeQuery = true)
 	List<Long> emergingPlayerList();
+
+	@Query(value = "SELECT * FROM player_registration where player_registration.registration_id=?1", nativeQuery = true)
+	PlayerInfo findInfo(Long regID);
 }
