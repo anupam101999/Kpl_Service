@@ -22,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -125,6 +126,21 @@ public class RegistrationController {
 		playerService.generatePdfByClassification(response, generue);
 
 	}
+	
+//	for committee
+
+	@GetMapping("generate/finalPlayerListPdf")
+	public void generueFinalPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue,
+			Model model) throws Exception {
+
+		response.setContentType(PDF_MIME_TYPE);
+		String headerKey = CONTENT_DISPOSITION;
+		String headerValue = "committe" + generue + ".pdf";
+		response.setHeader(headerKey, headerValue);
+		model.addAttribute("errorMessage", "PDF download is processing");
+		playerService.generateFinalPlayerPdf(response, generue);
+
+	}
 
 	@PostMapping("/masterImage")
 	public String uploadImage(@RequestParam("file") MultipartFile file, @RequestParam String name) throws IOException {
@@ -174,20 +190,7 @@ public class RegistrationController {
 
 	}
 
-//	for committee
 
-	@GetMapping("generate/finalPlayerListPdf")
-	public void generueFinalPlayerPdf(HttpServletResponse response, @RequestParam("generue") String generue,
-			Model model) throws Exception {
-
-		response.setContentType(PDF_MIME_TYPE);
-		String headerKey = CONTENT_DISPOSITION;
-		String headerValue = "committe" + generue + ".pdf";
-		response.setHeader(headerKey, headerValue);
-		model.addAttribute("errorMessage", "PDF download is processing");
-		playerService.generateFinalPlayerPdf(response, generue);
-
-	}
 
 	@GetMapping("/passwordReset")
 	public String resetPassword(@RequestParam Long phNumber, @RequestParam Long pinCode, @RequestParam Long aadharNo,
@@ -640,16 +643,16 @@ public class RegistrationController {
 		restTemplate.getForObject(telegramBotUrl + paymentDonemessage + " " + paymentDonelist, String.class);
 	}
 	
-//	@Scheduled(fixedRate = 300000)
-//	@GetMapping("/mailTriggerOnSell")
-//	public void mailTriggerOnSell() throws Exception {
-//		log.info("Mail trigger in each 5 min API trigger");
-//		var timeNow = LocalDateTime.now(Clock.systemUTC());
-//		var time5minBack = LocalDateTime.now(Clock.systemUTC()).minusMinutes(5);
-//		log.info(timeNow.toString());
-//		List<PlayerInfo> playerInfo = playerRepository.sellOnLast5min(timeNow, time5minBack);		
-//		for (int i = 0; i < playerInfo.size(); i++) {
-//			playerService.sendMailOnSold(playerInfo.get(i));
-//		}
-//	}
+	@Scheduled(fixedRate = 300000)
+	@GetMapping("/mailTriggerOnSell")
+	public void mailTriggerOnSell() throws Exception {
+		log.info("Mail trigger in each 5 min API trigger");
+		var timeNow = LocalDateTime.now(Clock.systemUTC());
+		var time5minBack = LocalDateTime.now(Clock.systemUTC()).minusMinutes(5);
+		log.info(timeNow.toString());
+		List<PlayerInfo> playerInfo = playerRepository.sellOnLast5min(timeNow, time5minBack);		
+		for (int i = 0; i < playerInfo.size(); i++) {
+			playerService.sendMailOnSold(playerInfo.get(i));
+		}
+	}
 }

@@ -313,8 +313,8 @@ public class PlayerServiceImpl implements PlayerService {
 		var yellowBold = "FORsmartNext-Bolds.otf";
 		var font1 = FontFactory.getFont(yellowBold, 20, Font.BOLD, BaseColor.BLACK);
 		var font2 = FontFactory.getFont(yellowBold, 15, Font.BOLD, BaseColor.BLACK);
-		var tableFont = FontFactory.getFont(yellowBold, 7, Font.BOLD, BaseColor.BLACK);
-		var tablesFont = FontFactory.getFont(yellowBold, 7, BaseColor.BLACK);
+		var tableFont = FontFactory.getFont(yellowBold, 8, Font.BOLD, BaseColor.BLACK);
+		var tablesFont = FontFactory.getFont(yellowBold, 8, Font.BOLD,BaseColor.BLACK);
 		var layout = new Rectangle(PageSize.A4);
 		layout.setBackgroundColor(new BaseColor(255, 255, 255));
 		layout.setBorderColor(BaseColor.WHITE);
