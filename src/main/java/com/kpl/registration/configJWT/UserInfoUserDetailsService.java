@@ -1,6 +1,5 @@
 package com.kpl.registration.configJWT;
 
-import com.kpl.registration.config.CustomUserDetails;
 import com.kpl.registration.dto.UserInfo;
 import com.kpl.registration.entity.AdminInfo;
 import com.kpl.registration.repository.AdminRepo;
