@@ -14,7 +14,7 @@ public class LiveSearchVO {
 	private String playerFirstName;
 	private String playerLastName;
 	private String playerAddress;
-	private String generue;
+	private String category;
 	private LocalDate dob;
 	private String location;
 	private byte[] image;

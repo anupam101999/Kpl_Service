@@ -3,6 +3,8 @@ package com.kpl.registration.service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kpl.registration.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,14 +40,12 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.kpl.registration.dto.AdminReqVO;
+import com.kpl.registration.dto.GenericVO;
+import com.kpl.registration.dto.PlayerRequetVO;
 import com.kpl.registration.dto.RegistrationResponse;
 import com.kpl.registration.entity.AdminInfo;
+import com.kpl.registration.entity.DocInfo;
 import com.kpl.registration.entity.PlayerInfo;
-import com.kpl.registration.repository.AdminRepo;
-import com.kpl.registration.repository.DocRepo;
-import com.kpl.registration.repository.ImageRepo;
-import com.kpl.registration.repository.OwnerRepo;
-import com.kpl.registration.repository.PlayerRepository;
 
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -66,6 +67,8 @@ public class PlayerServiceImpl implements PlayerService {
 	@Autowired
 	DocRepo docRepo;
 	@Autowired
+	PlayerRepo2024 playerRepo2024;
+	@Autowired
 	AdminRepo adminRepo;
 	@Autowired
 	JavaMailSender javaMailSender;
@@ -77,66 +80,66 @@ public class PlayerServiceImpl implements PlayerService {
 	Configuration config;
 	@Value("${spring.mail.username}")
 	private String emailUsername;
-	String telegramBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@kpl2023updates&text=";
-	String telegramTestBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@test2017Grp&text=";
+//	String telegramBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@kpl2023updates&text=";
+//	String telegramTestBotUrl = "https://api.telegram.org/bot6637753416:AAHb7DHnfrvEl6Aje0RfyrumAkZjZglxXHU/sendmessage?chat_id=@test2017Grp&text=";
 
-//	@Override
-//	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docDataFront,
-//			byte[] docDataBack) throws IOException, MessagingException, TemplateException {
-//		GenericVO genericVO = new GenericVO();
-//		PlayerInfo playerInfo = new PlayerInfo();
-//		DocInfo docInfo = new DocInfo();
-//		playerInfo.setAadharNo(playerRequetVO.getAadharNo());
-//
-//		playerInfo.setEmailId(playerRequetVO.getEmailId());
-//		playerInfo.setGenerue(playerRequetVO.getGenerue());
-//		playerInfo.setPhNo(playerRequetVO.getPhNo());
-//		playerInfo.setPinCode(playerRequetVO.getPinCode());
-//		playerInfo.setPlayerAddress(playerRequetVO.getPlayerAddress());
-//		playerInfo.setPlayerFirstName(playerRequetVO.getPlayerFirstName());
-//		playerInfo.setPlayerLastName(playerRequetVO.getPlayerLastName());
-//
-//		playerInfo.setRegistrationTime(LocalDateTime.now(Clock.systemUTC()));
-//		playerInfo.setGenerue(playerRequetVO.getGenerue());
-//		playerInfo.setDateOfBirth(playerRequetVO.getDob());
-//		playerInfo.setPassword(playerRequetVO.getPassword());
-//		playerInfo.setLocation(playerRequetVO.getLocation());
-//
-//		docInfo.setImage(imageData);
-//		docInfo.setDocImageFront(docDataFront);
-//		docInfo.setDocImageBack(docDataBack);
-//		
-//		var res = playerRepository.save(playerInfo);
-//		
-//		
-//		log.info("Registration ID for " + playerRequetVO.getPlayerFirstName() + " is " + res.getRegistrationId());
-//		docInfo.setRegistrationId(res.getRegistrationId());
-//		docRepo.save(docInfo);
-//
-//		
-//		var count= playerRepository.findCount(playerRequetVO.getPhNo()) ;
-//		if (count>1) {
-//			String message = "Hey, @Insanebaby2017 there is a major issue :" + playerInfo.getPlayerFirstName() + " "
-//					+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
-//					+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
+	// @Override
+	public GenericVO savePlayerInfo(PlayerRequetVO playerRequetVO, byte[] imageData, byte[] docDataFront,
+			byte[] docDataBack) throws IOException, MessagingException, TemplateException {
+		GenericVO genericVO = new GenericVO();
+		PlayerInfo playerInfo = new PlayerInfo();
+		DocInfo docInfo = new DocInfo();
+		playerInfo.setAadharNo(playerRequetVO.getAadharNo());
+
+		playerInfo.setEmailId(playerRequetVO.getEmailId());
+		playerInfo.setGenerue(playerRequetVO.getGenerue());
+		playerInfo.setPhNo(playerRequetVO.getPhNo());
+		playerInfo.setPinCode(playerRequetVO.getPinCode());
+		playerInfo.setPlayerAddress(playerRequetVO.getPlayerAddress());
+		playerInfo.setPlayerFirstName(playerRequetVO.getPlayerFirstName());
+		playerInfo.setPlayerLastName(playerRequetVO.getPlayerLastName());
+
+		playerInfo.setRegistrationTime(LocalDateTime.now(Clock.systemUTC()));
+		playerInfo.setGenerue(playerRequetVO.getGenerue());
+		playerInfo.setDateOfBirth(playerRequetVO.getDob());
+		playerInfo.setPassword(playerRequetVO.getPassword());
+		playerInfo.setLocation(playerRequetVO.getLocation());
+
+		docInfo.setImage(imageData);
+		docInfo.setDocImageFront(docDataFront);
+		docInfo.setDocImageBack(docDataBack);
+		
+		var res = playerRepository.save(playerInfo);
+		
+		
+		log.info("Registration ID for " + playerRequetVO.getPlayerFirstName() + " is " + res.getRegistrationId());
+		docInfo.setRegistrationId(res.getRegistrationId());
+		docRepo.save(docInfo);
+
+		
+		var count= playerRepository.findCount(playerRequetVO.getPhNo()) ;
+		if (count>1) {
+			String message = "Hey, @Insanebaby2017 there is a major issue :" + playerInfo.getPlayerFirstName() + " "
+					+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
+					+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
 //			restTemplate.getForObject(telegramBotUrl + message, String.class);
-//		}
-//		
-//		
-//		
-//		String firstname = playerInfo.getPlayerFirstName();
-//		String message = "Hey, @RAVVAN23 we have a new Registration!,His name is :" + firstname + " "
-//				+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
-//				+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
+		}
+		
+		
+		
+		String firstname = playerInfo.getPlayerFirstName();
+		String message = "Hey, @RAVVAN23 we have a new Registration!,His name is :" + firstname + " "
+				+ playerInfo.getPlayerLastName() + " and his registration id and phone number are :"
+				+ res.getRegistrationId() + " ," + playerInfo.getPhNo();
 //		restTemplate.getForObject(telegramBotUrl + message, String.class);
-//
-//		log.info("User has been Registered successfully" + ",name : " + firstname);
-//
-//		genericVO.setResponse("You have been successfully Registered");
-//		genericVO.setRegistrationID(res.getRegistrationId().toString());
-//		return genericVO;
-//
-//	}
+
+		log.info("User has been Registered successfully" + ",name : " + firstname);
+
+		genericVO.setResponse("You have been successfully Registered");
+		genericVO.setRegistrationID(res.getRegistrationId().toString());
+		return genericVO;
+
+	}
 
 	public void sendMail(PlayerInfo playerInfo) throws MessagingException, TemplateNotFoundException,
 			MalformedTemplateNameException, ParseException, IOException, TemplateException {
@@ -224,7 +227,7 @@ public class PlayerServiceImpl implements PlayerService {
 					+ playerInfo.get(i).getRegistrationId();
 			log.info(text);
 
-			restTemplate.getForObject(telegramBotUrl + text, String.class);
+//			restTemplate.getForObject(telegramBotUrl + text, String.class);
 			javaMailSender.send(message);
 		}
 
@@ -345,7 +348,7 @@ public class PlayerServiceImpl implements PlayerService {
 		cel.setBorderColor(new BaseColor(220, 220, 0));
 		tables.addCell(cel);
 
-		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 5 ", font1));
+		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 6 ", font1));
 		cel.setBackgroundColor(new BaseColor(220, 220, 0));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
@@ -516,7 +519,7 @@ public class PlayerServiceImpl implements PlayerService {
 		cel.setBorderColor(new BaseColor(220, 220, 0));
 		tables.addCell(cel);
 
-		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 5 ", font1));
+		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 6 ", font1));
 		cel.setBackgroundColor(new BaseColor(220, 220, 0));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
@@ -703,7 +706,7 @@ public class PlayerServiceImpl implements PlayerService {
 		cel.setBorderColor(new BaseColor(220, 220, 0));
 		tables.addCell(cel);
 
-		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 5 ", font1));
+		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 6 ", font1));
 		cel.setBackgroundColor(new BaseColor(220, 220, 0));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
@@ -851,16 +854,17 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public AdminInfo saveAdminDetails(AdminReqVO adminReqVO) {
 		AdminInfo adminInfo = new AdminInfo();
+		adminInfo.setAdminId(adminReqVO.getAdminId());
 		adminInfo.setId(adminReqVO.getId());
 		adminInfo.setPassword(adminReqVO.getPassword());
+		adminRepo.deletebyAdminId(adminReqVO.getAdminId());
 		return adminRepo.save(adminInfo);
 	}
 
 	@Override
 	public void generateTeamListPdf(HttpServletResponse response, String soldTeam)
 			throws DocumentException, IOException {
-		var allplayerInfo = playerRepository.findbyTeam(soldTeam);
-
+		var allplayerInfo = playerRepo2024.findbyTeam(soldTeam);
 		var yellowBold = "FORsmartNext-Bolds.otf";
 		var font1 = FontFactory.getFont(yellowBold, 20, Font.BOLD, BaseColor.BLACK);
 		var font2 = FontFactory.getFont(yellowBold, 15, Font.BOLD, BaseColor.BLACK);
@@ -896,7 +900,7 @@ public class PlayerServiceImpl implements PlayerService {
 		cel.setBorderColor(new BaseColor(220, 220, 0));
 		tables.addCell(cel);
 
-		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 5 ", font1));
+		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 6 ", font1));
 		cel.setBackgroundColor(new BaseColor(220, 220, 0));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
@@ -975,7 +979,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 		for (int i = 0; i < allplayerInfo.size(); i++) {
 			pcell = new PdfPCell(new Phrase(String.valueOf(i + 1) + "          " + "(Reg ID : "
-					+ allplayerInfo.get(i).getRegistrationId() + ")", tablesFont));
+					+ allplayerInfo.get(i).getRegId() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1021,7 +1025,7 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(getPlayerSpecificImageData(allplayerInfo.get(i).getRegistrationId()));
+			pcell = new PdfPCell(getPlayerSpecificImageDataSeasonSix(allplayerInfo.get(i).getImage()));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1040,4 +1044,15 @@ public class PlayerServiceImpl implements PlayerService {
 		document.close();
 	}
 
+	public Image getPlayerSpecificImageDataSeasonSix(byte[] imageData)
+			throws BadElementException, MalformedURLException, IOException {
+
+		Image imageDataEn = com.itextpdf.text.Image.getInstance(imageData);
+		imageDataEn.setAlignment(Element.ALIGN_CENTER);
+		imageDataEn.scalePercent(90);
+		imageDataEn.scaleToFit(90, 90);
+		imageDataEn.setAlignment(Element.ALIGN_LEFT);
+		imageDataEn.setBorder(Rectangle.NO_BORDER);
+		return imageDataEn;
+	}
 }

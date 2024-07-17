@@ -1,6 +1,7 @@
 package com.kpl.registration.repository;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -78,12 +79,12 @@ public interface PlayerRepository extends JpaRepository<PlayerInfo, Long> {
 	@Query(value = "update player_registration set sold_amount=?2 , sold_team=?3 , sold_time=?4  where registration_id=?1", nativeQuery = true)
 	void updateSoldamountAndTeam(Long regID, Long soldAmount, String soldTeam, LocalDateTime updationTime);
 
-	@Query(value = "select * from player_registration  where sold_team=?1", nativeQuery = true)
+	@Query(value = "select * from player_registration  where sold_team=?1 order by player_first_name", nativeQuery = true)
 	List<PlayerInfo> findbyTeam(String soldTeam);
 
 	@Query(value = "SELECT distinct(sold_team)\r\n"
 			+ "FROM player_registration where sold_team is not null", nativeQuery = true)
-	List<String> getDistinctTeam();
+	LinkedList<String> getDistinctTeam();
 
 	@Query(value = "SELECT count(*) FROM player_registration where player_location_category='Overseas' and sold_team=?1", nativeQuery = true)
 	Long countOfOverSeasPlayer(String soldTeam);

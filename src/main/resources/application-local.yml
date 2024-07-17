@@ -53,8 +53,8 @@ spring:
     
 
 
-
-   
+jwt_secret: 87067a5c90101b420dcbdcaa90f1115452bca49a28c9d1bb1ef66c5a04949321
+jwt_expire: 600000000000
 springfox:
   documentation:
     swagger-ui:

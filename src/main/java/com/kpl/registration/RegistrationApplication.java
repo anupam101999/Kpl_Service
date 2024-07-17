@@ -7,14 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kpl.registration.config.UTCtoISTConverter;
 import com.kpl.registration.logging.LoggingInterceptor;
-@EnableScheduling
+//@EnableScheduling
 @SpringBootApplication
 public class RegistrationApplication extends SpringBootServletInitializer implements WebMvcConfigurer {
 
