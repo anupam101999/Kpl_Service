@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/kpl/registration/api/validId/**")
+                .antMatchers("/kpl/registration/api/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

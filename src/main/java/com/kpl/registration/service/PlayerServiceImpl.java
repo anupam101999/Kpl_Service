@@ -322,7 +322,7 @@ public class PlayerServiceImpl implements PlayerService {
 		layout.setBackgroundColor(new BaseColor(255, 255, 255));
 		layout.setBorderColor(BaseColor.WHITE);
 		layout.setUseVariableBorders(true);
-		layout.setBorderColorBottom(new BaseColor(220, 220, 0));
+		layout.setBorderColorBottom(new BaseColor(255, 192, 203));
 		layout.setBorderWidthBottom(20);
 		layout.setBorderWidth(6);
 		layout.setBorder(Rectangle.BOTTOM);
@@ -340,32 +340,32 @@ public class PlayerServiceImpl implements PlayerService {
 		tables.setWidths(columnWidth);
 
 		var cel = new PdfPCell(new Phrase("\n" + "(" + generue + ")", font2));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
 		cel.setPaddingTop(11f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 
 		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 6 ", font1));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
 		cel.setPaddingBottom(15f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 
 		cel = new PdfPCell(getImageData("logo"));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(10f);
 		cel.setPaddingRight(10f);
 		cel.setPaddingTop(10f);
 		cel.setPaddingBottom(10f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 		document.add(tables);
 
@@ -383,45 +383,45 @@ public class PlayerServiceImpl implements PlayerService {
 		ptable.setSpacingBefore(10f);
 		ptable.setSpacingAfter(5f);
 		var pcell = new PdfPCell(new Phrase("Sl No.", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Name", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setBorderColor(BaseColor.WHITE);
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Address", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Category", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Phone No", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Photo", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		for (int i = 0; i < allplayerInfo.size(); i++) {
@@ -483,17 +483,20 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response)
 			throws DocumentException, IOException {
-		var allplayerInfo = playerRepository.findAllPlayer();
+		var allplayerInfo = playerRepo2024.findAllPlayer();
+
 		var yellowBold = "FORsmartNext-Bolds.otf";
 		var font1 = FontFactory.getFont(yellowBold, 20, Font.BOLD, BaseColor.BLACK);
 		var font2 = FontFactory.getFont(yellowBold, 15, Font.BOLD, BaseColor.BLACK);
 		var tableFont = FontFactory.getFont(yellowBold, 8, Font.BOLD, BaseColor.BLACK);
 		var tablesFont = FontFactory.getFont(yellowBold, 8, Font.BOLD,BaseColor.BLACK);
+
+
 		var layout = new Rectangle(PageSize.A4);
 		layout.setBackgroundColor(new BaseColor(255, 255, 255));
 		layout.setBorderColor(BaseColor.WHITE);
 		layout.setUseVariableBorders(true);
-		layout.setBorderColorBottom(new BaseColor(220, 220, 0));
+		layout.setBorderColorBottom(new BaseColor(255, 192, 203));
 		layout.setBorderWidthBottom(20);
 		layout.setBorderWidth(6);
 		layout.setBorder(Rectangle.BOTTOM);
@@ -511,32 +514,32 @@ public class PlayerServiceImpl implements PlayerService {
 		tables.setWidths(columnWidth);
 
 		var cel = new PdfPCell(new Phrase("\n" + "(" + "All Player" + ")", font2));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
 		cel.setPaddingTop(11f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 
 		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 6 ", font1));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
 		cel.setPaddingBottom(15f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 
 		cel = new PdfPCell(getImageData("logo"));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(10f);
 		cel.setPaddingRight(10f);
 		cel.setPaddingTop(10f);
 		cel.setPaddingBottom(10f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 		document.add(tables);
 
@@ -554,52 +557,52 @@ public class PlayerServiceImpl implements PlayerService {
 		ptable.setSpacingBefore(10f);
 		ptable.setSpacingAfter(5f);
 		var pcell = new PdfPCell(new Phrase("Registration ID.", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Name", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setBorderColor(BaseColor.WHITE);
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Address", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Category", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Phone No", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Photo", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		for (int i = 0; i < allplayerInfo.size(); i++) {
 
-			log.info(allplayerInfo.get(i).getRegistrationId().toString());
+			log.info(allplayerInfo.get(i).getRegId().toString());
 			pcell = new PdfPCell(new Phrase(String.valueOf(i + 1) + "          " + "(Reg ID : "
-					+ allplayerInfo.get(i).getRegistrationId() + ")", tablesFont));
+					+ allplayerInfo.get(i).getRegId() + ")", tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -637,7 +640,7 @@ public class PlayerServiceImpl implements PlayerService {
 			ptable.addCell(pcell);
 
 			pcell = new PdfPCell(
-					new Phrase(allplayerInfo.get(i).getGenerue() + " " + "(" + allplayerInfo.get(i).getLocation() + ")",
+					new Phrase(allplayerInfo.get(i).getCategory() + " " + "(" + allplayerInfo.get(i).getPlayerLocationCategory() + ")",
 							tablesFont));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -652,7 +655,7 @@ public class PlayerServiceImpl implements PlayerService {
 			pcell.setBorderColor(BaseColor.WHITE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(getPlayerSpecificImageData(allplayerInfo.get(i).getRegistrationId()));
+			pcell = new PdfPCell(getPlayerSpecificImageDataSeasonSix(allplayerInfo.get(i).getImage()));
 			pcell.setBackgroundColor(new BaseColor(230, 230, 230));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -680,7 +683,7 @@ public class PlayerServiceImpl implements PlayerService {
 		layout.setBackgroundColor(new BaseColor(255, 255, 255));
 		layout.setBorderColor(BaseColor.WHITE);
 		layout.setUseVariableBorders(true);
-		layout.setBorderColorBottom(new BaseColor(220, 220, 0));
+		layout.setBorderColorBottom(new BaseColor(255, 192, 203));
 		layout.setBorderWidthBottom(20);
 		layout.setBorderWidth(6);
 		layout.setBorder(Rectangle.BOTTOM);
@@ -698,32 +701,32 @@ public class PlayerServiceImpl implements PlayerService {
 		tables.setWidths(columnWidth);
 
 		var cel = new PdfPCell(new Phrase("\n" + "(" + generue + ")", font2));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
 		cel.setPaddingTop(11f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 
 		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 6 ", font1));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
 		cel.setPaddingBottom(15f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 
 		cel = new PdfPCell(getImageData("logo"));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(10f);
 		cel.setPaddingRight(10f);
 		cel.setPaddingTop(10f);
 		cel.setPaddingBottom(10f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 		document.add(tables);
 
@@ -741,47 +744,47 @@ public class PlayerServiceImpl implements PlayerService {
 		ptable.setSpacingBefore(10f);
 		ptable.setSpacingAfter(5f);
 		var pcell = new PdfPCell(new Phrase("Sl No.", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Name", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setBorderColor(BaseColor.WHITE);
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Phone No", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Photo", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Sold Team", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setPaddingLeft(10f);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Sold Amount", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setPaddingLeft(10f);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		for (int i = 0; i < allplayerInfo.size(); i++) {
@@ -874,7 +877,7 @@ public class PlayerServiceImpl implements PlayerService {
 		layout.setBackgroundColor(new BaseColor(255, 255, 255));
 		layout.setBorderColor(BaseColor.WHITE);
 		layout.setUseVariableBorders(true);
-		layout.setBorderColorBottom(new BaseColor(220, 220, 0));
+		layout.setBorderColorBottom(new BaseColor(255, 192, 203));
 		layout.setBorderWidthBottom(20);
 		layout.setBorderWidth(6);
 		layout.setBorder(Rectangle.BOTTOM);
@@ -892,32 +895,32 @@ public class PlayerServiceImpl implements PlayerService {
 		tables.setWidths(columnWidth);
 
 		var cel = new PdfPCell(new Phrase("\n" + "(" + soldTeam + ")", font2));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
 		cel.setPaddingTop(11f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 
 		cel = new PdfPCell(new Phrase("\n" + "Kashipur Premier League - 6 ", font1));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(30f);
 		cel.setPaddingBottom(15f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 
 		cel = new PdfPCell(getImageData("logo"));
-		cel.setBackgroundColor(new BaseColor(220, 220, 0));
+		cel.setBackgroundColor(new BaseColor(255, 192, 203));
 		cel.setHorizontalAlignment(Element.ALIGN_LEFT);
 		cel.setPaddingLeft(10f);
 		cel.setPaddingRight(10f);
 		cel.setPaddingTop(10f);
 		cel.setPaddingBottom(10f);
 		cel.setVerticalAlignment(Element.ALIGN_BASELINE);
-		cel.setBorderColor(new BaseColor(220, 220, 0));
+		cel.setBorderColor(new BaseColor(255, 192, 203));
 		tables.addCell(cel);
 		document.add(tables);
 
@@ -935,46 +938,46 @@ public class PlayerServiceImpl implements PlayerService {
 		ptable.setSpacingBefore(10f);
 		ptable.setSpacingAfter(5f);
 		var pcell = new PdfPCell(new Phrase("Sl No.", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Name", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setBorderColor(BaseColor.WHITE);
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Aadhar No", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Phone No", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Photo", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		pcell = new PdfPCell(new Phrase("Sold Amount", tableFont));
-		pcell.setBackgroundColor(new BaseColor(220, 220, 0));
+		pcell.setBackgroundColor(new BaseColor(255, 192, 203));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setVerticalAlignment(Element.ALIGN_CENTER);
 		pcell.setPaddingLeft(10f);
-		pcell.setBorderColor(new BaseColor(220, 220, 0));
+		pcell.setBorderColor(new BaseColor(255, 192, 203));
 		ptable.addCell(pcell);
 
 		for (int i = 0; i < allplayerInfo.size(); i++) {

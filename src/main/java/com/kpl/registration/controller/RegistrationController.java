@@ -176,17 +176,7 @@ public class RegistrationController {
         return "payment details updated";
     }
 
-    @GetMapping("generate/AllplayerPdf")
-    public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response, Model model) throws Exception {
 
-        response.setContentType(PDF_MIME_TYPE);
-        String headerKey = CONTENT_DISPOSITION;
-        String headerValue = "AllPlayer" + ".pdf";
-        response.setHeader(headerKey, headerValue);
-        model.addAttribute("errorMessage", "PDF download is processing");
-        playerService.generueSpecificPlayerPdfForCommitte(response);
-
-    }
 
 
     @GetMapping("/passwordReset")
@@ -613,9 +603,10 @@ public class RegistrationController {
     @PostMapping("/upload")
     public String updateOwnImage(@RequestParam("file") List<MultipartFile> file)
             throws IOException {
-        for (int i = 0; i < file.size(); i++) {
-            byte[] imageData = file.get(i).getBytes();
-            playerRepo2024.updateImage(i + 1, imageData);
+        for (int i = 1; i <= file.size(); i++) {
+            byte[] imageData = file.get(i-1).getBytes();
+            playerRepo2024.updateImage(i, imageData);
+            log.info("image update : "+(i));
         }
 
         return "Image updated";
@@ -659,12 +650,11 @@ public class RegistrationController {
             var location = row.getCell(5).getStringCellValue();
             var category = row.getCell(6).getStringCellValue();
             var address = row.getCell(7).getStringCellValue();
-            var aadhaar = row.getCell(8).getStringCellValue();
+            var aadhaar = row.getCell(8).getNumericCellValue();
             var pin = row.getCell(9).getNumericCellValue();
             var phNum = row.getCell(10).getNumericCellValue();
-            var paid = row.getCell(11).getStringCellValue();
+            var paid = row.getCell(13).getStringCellValue();
 
-            if ("yes".equalsIgnoreCase(paid)) {
                 var p = new PlayerRegistration();
                 p.setRegistrationTime(String.valueOf(timeStamp));
                 p.setEmailId(email);
@@ -674,12 +664,12 @@ public class RegistrationController {
                 p.setPlayerLocationCategory(location);
                 p.setCategory(category);
                 p.setPlayerAddress(address);
-                p.setAadhaar(Long.valueOf(aadhaar));
+                p.setAadhaar((long) aadhaar);
                 p.setPinCode(Long.valueOf((long) pin));
                 p.setPhNo(Long.valueOf((long) phNum));
                 p.setPaid(paid);
                 playerRepo2024.save(p);
-            }
+
         }
         workbook.close();
 
@@ -750,6 +740,18 @@ public class RegistrationController {
         response.setHeader(headerKey, headerValue);
         log.info(" /kpl/registration/api/teamList");
         playerService.generateTeamListPdf(response, soldTeam);
+
+    }
+
+    @GetMapping("generate/AllplayerPdf")
+    public void generueSpecificPlayerPdfForCommitte(HttpServletResponse response, Model model) throws Exception {
+
+        response.setContentType(PDF_MIME_TYPE);
+        String headerKey = CONTENT_DISPOSITION;
+        String headerValue = "AllPlayer" + ".pdf";
+        response.setHeader(headerKey, headerValue);
+        model.addAttribute("errorMessage", "PDF download is processing");
+        playerService.generueSpecificPlayerPdfForCommitte(response);
 
     }
 
