@@ -617,7 +617,7 @@ public class RegistrationController {
         var searchData = playerRepo2024.findById(Long.valueOf(id));
         var livesearch = new LiveSearchVO();
 
-        if (searchData != null) {
+        if (searchData.isPresent()) {
             livesearch.setRegistrationId(searchData.get().getRegId());
             livesearch.setPlayerFirstName(searchData.get().getPlayerFirstName());
             livesearch.setPlayerLastName(searchData.get().getPlayerLastName());
@@ -697,7 +697,7 @@ public class RegistrationController {
             Long localPlayerCount = playerRepo2024.countOfLocalPlayer(s);
             Long totalSpendMoney = playerRepo2024.totalMoneySpend(s);
             totalSpendMoney = totalSpendMoney != null ? totalSpendMoney : 0;
-            Long remBalance = 4000 - totalSpendMoney;
+            Long remBalance = 10000 - totalSpendMoney;
 
             liveDataVO.setTeamName(s);
             liveDataVO.setOverSeasplayer(overSeasPlayerCount);
