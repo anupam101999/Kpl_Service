@@ -1,5 +1,7 @@
 package com.kpl.registration;
 
+import com.kpl.registration.config.UTCtoISTConverter;
+import com.kpl.registration.logging.LoggingInterceptor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -11,9 +13,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import com.kpl.registration.config.UTCtoISTConverter;
-import com.kpl.registration.logging.LoggingInterceptor;
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @SpringBootApplication
 public class RegistrationApplication extends SpringBootServletInitializer implements WebMvcConfigurer {

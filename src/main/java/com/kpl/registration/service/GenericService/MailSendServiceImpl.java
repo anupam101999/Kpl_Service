@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
-public class MailSendServiceImpl implements MailSendService{
+public class MailSendServiceImpl implements MailSendService {
     @Autowired
     Configuration config;
     @Value("${spring.mail.username}")
@@ -68,8 +68,7 @@ public class MailSendServiceImpl implements MailSendService{
     }
 
     @Override
-    public void sendMailOnSold(PlayerInfo playerInfo) throws MessagingException, TemplateNotFoundException,
-            MalformedTemplateNameException, ParseException, IOException, TemplateException {
+    public void sendMailOnSold(PlayerInfo playerInfo) throws MessagingException, IOException, TemplateException {
         Map<String, Object> model = new HashMap<>();
         var message = javaMailSender.createMimeMessage();
         var mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,

@@ -1,12 +1,10 @@
 package com.kpl.registration.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import javax.mail.MessagingException;
-
+import com.kpl.registration.repository.PlayerRepository;
+import com.kpl.registration.service.GenericService.PlayerService;
+import com.kpl.registration.service.GenericService.PlayerServiceImpl;
+import freemarker.template.TemplateException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-import com.kpl.registration.repository.PlayerRepository;
-import com.kpl.registration.service.GenericService.PlayerService;
-import com.kpl.registration.service.GenericService.PlayerServiceImpl;
-
-import freemarker.template.TemplateException;
-import lombok.extern.slf4j.Slf4j;
+import javax.mail.MessagingException;
+import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Controller

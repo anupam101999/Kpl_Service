@@ -1,13 +1,12 @@
 package com.kpl.registration.repository;
 
-import java.util.LinkedList;
-import java.util.Optional;
-
+import com.kpl.registration.entity.OwnerInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.kpl.registration.entity.OwnerInfo;
+import java.util.LinkedList;
+import java.util.Optional;
 
 @Repository
 public interface OwnerRepo extends JpaRepository<OwnerInfo, Long> {

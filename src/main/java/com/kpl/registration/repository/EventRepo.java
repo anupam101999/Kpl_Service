@@ -1,13 +1,12 @@
 package com.kpl.registration.repository;
 
-import javax.transaction.Transactional;
-
+import com.kpl.registration.entity.EventCount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.kpl.registration.entity.EventCount;
+import javax.transaction.Transactional;
 
 @Repository
 public interface EventRepo extends JpaRepository<EventCount, Long> {

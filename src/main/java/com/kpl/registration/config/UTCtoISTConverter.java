@@ -1,11 +1,11 @@
 package com.kpl.registration.config;
 
+import org.modelmapper.Converter;
+import org.modelmapper.spi.MappingContext;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-
-import org.modelmapper.Converter;
-import org.modelmapper.spi.MappingContext;
 
 public class UTCtoISTConverter implements Converter<LocalDateTime, LocalDateTime> {
     @Override

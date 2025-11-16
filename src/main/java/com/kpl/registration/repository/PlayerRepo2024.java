@@ -1,6 +1,5 @@
 package com.kpl.registration.repository;
 
-import com.kpl.registration.entity.PlayerInfo;
 import com.kpl.registration.entity.PlayerRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
