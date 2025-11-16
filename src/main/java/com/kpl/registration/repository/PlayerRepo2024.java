@@ -38,5 +38,5 @@ public interface PlayerRepo2024 extends JpaRepository<PlayerRegistration, Long> 
     List<PlayerRegistration> findbyTeam(String soldTeam);
 
     @Query(value = "select * from player_registration_six where paid='Yes' and reg_id between ?1 and ?2 and category=?3 order by reg_id", nativeQuery = true)
-    List<PlayerRegistration> findAllPlayer(Long start, Long end,String category);
+    List<PlayerRegistration> findAllPlayer();
 }
