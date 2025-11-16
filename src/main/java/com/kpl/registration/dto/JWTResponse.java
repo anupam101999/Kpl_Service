@@ -1,4 +1,4 @@
- package com.kpl.registration.dto;
+package com.kpl.registration.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
- public class ImageRequetVO {
-	 private String imageName;
- }
+public class JWTResponse {
+    private String jwtCode;
+}

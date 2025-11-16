@@ -1,12 +1,10 @@
-package com.kpl.registration.service;
+package com.kpl.registration.service.Pdf;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
-import com.kpl.registration.repository.DocRepo;
-import com.kpl.registration.repository.ImageRepo;
 import com.kpl.registration.repository.PlayerRepo2024;
 import com.kpl.registration.repository.PlayerRepository;
 import com.kpl.registration.util.PdfUtil;
@@ -20,7 +18,7 @@ import java.net.MalformedURLException;
 
 @Slf4j
 @Service
-public class PlayerServicePdfImpl implements PlayerServicePdf{
+public class PlayerServicePdfImpl implements PlayerServicePdf {
     @Autowired
     PlayerRepository playerRepository;
 

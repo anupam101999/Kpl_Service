@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.kpl.registration.repository.PlayerRepository;
-import com.kpl.registration.service.PlayerService;
-import com.kpl.registration.service.PlayerServiceImpl;
+import com.kpl.registration.service.GenericService.PlayerService;
+import com.kpl.registration.service.GenericService.PlayerServiceImpl;
 
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;

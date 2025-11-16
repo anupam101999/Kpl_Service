@@ -35,7 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 //            username = jwtService.extractUserName(token);
 //        }
         if (authHeader != null && SecurityContextHolder.getContext().getAuthentication() == null
-                || uri.matches("/kpl/registration/api/validId.*")) {
+                || uri.matches("/kpl/jwt/api/validId.*")) {
             if (authHeader != null) {
                 token = authHeader.substring(7);
                 username = jwtService.extractUserName(token);

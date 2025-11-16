@@ -4,19 +4,15 @@ package com.kpl.registration.controller;
 import java.io.IOException;
 
 //import com.kpl.registration.configJWT.JwtService;
-import com.kpl.registration.configJWT.JwtService;
 import com.kpl.registration.dto.*;
 import com.kpl.registration.entity.*;
-import com.kpl.registration.service.KPLException;
-import com.kpl.registration.service.PlayerServicePdf;
+import com.kpl.registration.service.GenericService.MailSendService;
+import com.kpl.registration.service.Pdf.PlayerServicePdf;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,11 +44,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
-import com.kpl.registration.service.PlayerService;
-import com.kpl.registration.service.PlayerServiceImpl;
+import com.kpl.registration.service.GenericService.PlayerService;
+import com.kpl.registration.service.GenericService.PlayerServiceImpl;
 
 import freemarker.template.TemplateException;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -63,6 +58,8 @@ import lombok.extern.slf4j.Slf4j;
 public class RegistrationController {
     @Autowired
     PlayerService playerService;
+    @Autowired
+    MailSendService mailSendService;
     @Autowired
     PlayerServicePdf playerServicePdf;
     @Autowired
@@ -177,7 +174,7 @@ public class RegistrationController {
     public String paymentUpdate(@RequestParam List<Long> registartionIDS)
             throws IOException, MessagingException, TemplateException {
         playerRepository.paymentUpdate(registartionIDS);
-        playerService.sendMailOnPaymentValidation(registartionIDS);
+        mailSendService.sendMailOnPaymentValidation(registartionIDS);
         return "payment details updated";
     }
 
@@ -207,7 +204,7 @@ public class RegistrationController {
             if (pinCode.equals(phNobyPIN)) {
                 if (phNo.equals(phNobyaadhar)) {
                     playerRepository.updatePassword(password, phNumber);
-                    playerService.resetPasswordMail(phNumber);
+                    mailSendService.resetPasswordMail(phNumber);
                     return "Success";
                 } else {
                     return "Incorrect Aadhaar Number";
@@ -220,10 +217,6 @@ public class RegistrationController {
         }
     }
 
-    @PostMapping("/saveAdmin")
-    public AdminInfo saveAdmin(@RequestBody AdminReqVO adminReqVO) throws IOException {
-        return playerService.saveAdminDetails(adminReqVO);
-    }
 
     @GetMapping("/downloadGenerueSpImage")
     public ResponseEntity<Resource> downloadImages(Model model) {
@@ -756,25 +749,5 @@ public class RegistrationController {
         model.addAttribute("errorMessage", "PDF download is processing");
         playerServicePdf.generueSpecificPlayerPdfForCommitte(response);
 
-    }
-
-    @Autowired
-    AdminRepo adminRepo;
-    @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    JwtService jwtService;
-
-    @GetMapping("/validId/{id}/{password}")
-    public ImageRequetVO getRoleAndUserName(@PathVariable String id, @PathVariable String password) throws Exception {
-        var res = adminRepo.findByIdAndPassword(id, password);
-        if (res.isPresent()) {
-            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(res.get().getId(), "abc"));
-
-            return ImageRequetVO.builder().imageName(jwtService.generateToken(id, password, res.get().getRoleCode())).build();
-
-        } else {
-            throw new KPLException("Unauthorized", HttpStatus.UNAUTHORIZED);
-        }
     }
 }

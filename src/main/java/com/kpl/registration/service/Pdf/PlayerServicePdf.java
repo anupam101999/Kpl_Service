@@ -1,4 +1,4 @@
-package com.kpl.registration.service;
+package com.kpl.registration.service.Pdf;
 
 import com.itextpdf.text.DocumentException;
 

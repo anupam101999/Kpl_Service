@@ -108,7 +108,7 @@ public class AdminController {
 		return "adminLogin";
 	}
 
-	@PostMapping("/soldAmountandTeam")
+	@PostMapping("/soldAmountAndTeam")
 	public String saveSoldTeamAndAmount(@RequestParam("id") Long id, @RequestParam("soldAmount") Long soldAmount,
 			@RequestParam("team") String team, Model model) throws Exception {
 		if (team.equals("Team List")) {

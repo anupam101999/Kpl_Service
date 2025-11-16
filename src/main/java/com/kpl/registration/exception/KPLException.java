@@ -1,4 +1,4 @@
-package com.kpl.registration.service;
+package com.kpl.registration.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

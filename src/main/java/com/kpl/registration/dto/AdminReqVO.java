@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
  public class AdminReqVO {
-	 private Long adminId;
 	 private String id;
 	 private String password;
  }
