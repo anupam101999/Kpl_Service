@@ -5,6 +5,7 @@ import com.kpl.registration.entity.StudentEntity.Student;
 import com.kpl.registration.entity.StudentEntity.Subject;
 import com.kpl.registration.repository.Student.StudentRepo;
 import com.kpl.registration.repository.Student.SubjectRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.kpl.registration.util.CommonConstants.STUDENT_CREATED;
+import static com.kpl.registration.util.CommonConstants.STUDENT_EXIST;
+
 @Service
+@Slf4j
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
@@ -30,14 +35,15 @@ public class StudentServiceImpl implements StudentService {
         var studentId = 0L;
         var message = "";
         var studentExist = studentRepo.existingStuWithSameName(studentCreateResponseVO.getFirstName(), studentCreateResponseVO.getLastName());
-
         if (studentExist.isEmpty()) {
             var student = modelMapper.map(studentCreateResponseVO, Student.class);
             var response = studentRepo.save(student);
             studentId = response.getStudentId();
-            message = "Student Created Successfully";
+            message = STUDENT_CREATED;
+            log.info("new Student Created");
         } else {
-            message = "Student Exist With Same Name";
+            message = STUDENT_EXIST;
+            log.info("Student Exists");
             studentId = studentExist.get(0).getStudentId();
         }
         return new GenericCreateResponseVO(String.valueOf(studentId), message);
