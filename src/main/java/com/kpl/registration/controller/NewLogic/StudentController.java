@@ -40,4 +40,9 @@ public class StudentController {
     public ResponseEntity<SubjectResponseListVO> getStudentInfo(@PathVariable("studentId") Long studentId){
         return ResponseEntity.status(HttpStatus.OK).body(studentService.getStudentInfo(studentId));
     }
+
+    @GetMapping("/asyncCall")
+    public ResponseEntity<GenericCreateResponseVO> asyncMethodTest() throws InterruptedException {
+        return ResponseEntity.status(HttpStatus.OK).body(studentService.CreateAsyncCall());
+    }
 }

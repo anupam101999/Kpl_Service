@@ -24,6 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -577,18 +578,18 @@ public class RegistrationController {
         restTemplate.getForObject(telegramBotUrl + paymentDonemessage + " " + paymentDonelist, String.class);
     }
 
-    // @Scheduled(fixedRate = 300000)
-    // @GetMapping("/mailTriggerOnSell")
-    // public void mailTriggerOnSell() throws Exception {
-    // 	log.info("Mail trigger in each 5 min API trigger");
-    // 	var timeNow = LocalDateTime.now(Clock.systemUTC());
-    // 	var time5minBack = LocalDateTime.now(Clock.systemUTC()).minusMinutes(5);
-    // 	log.info(timeNow.toString());
-    // 	List<PlayerInfo> playerInfo = playerRepository.sellOnLast5min(timeNow, time5minBack);
-    // 	for (int i = 0; i < playerInfo.size(); i++) {
-    // 		playerService.sendMailOnSold(playerInfo.get(i));
-    // 	}
-    // }
+   //  @Scheduled(fixedRate = 300000)
+     @GetMapping("/mailTriggerOnSell")
+     public void mailTriggerOnSell() throws Exception {
+     	log.info("Mail trigger in each 5 min API trigger");
+     	var timeNow = LocalDateTime.now(Clock.systemUTC());
+     	var time5minBack = LocalDateTime.now(Clock.systemUTC()).minusMinutes(5);
+     	log.info(timeNow.toString());
+     	List<PlayerInfo> playerInfo = playerRepository.sellOnLast5min(timeNow, time5minBack);
+     	for (int i = 0; i < playerInfo.size(); i++) {
+     		mailSendService.sendMailOnSold(playerInfo.get(i));
+     	}
+     }
 
 
     @PostMapping("/upload")

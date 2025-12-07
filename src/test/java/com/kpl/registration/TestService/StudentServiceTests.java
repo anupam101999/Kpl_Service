@@ -5,6 +5,7 @@ import com.kpl.registration.entity.StudentEntity.Student;
 import com.kpl.registration.entity.StudentEntity.Subject;
 import com.kpl.registration.repository.Student.StudentRepo;
 import com.kpl.registration.repository.Student.SubjectRepo;
+import com.kpl.registration.service.Student.AsyncCallService;
 import com.kpl.registration.service.Student.StudentServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -13,22 +14,28 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class StudentServiceTests {
 
     @InjectMocks
     private StudentServiceImpl studentServiceImpl;
+    @InjectMocks
+    private AsyncCallService asyncCallSer;
+    @Mock
+    private AsyncCallService asyncCallService;
     @Mock
     private StudentRepo studentRepo;
     @Mock
@@ -107,4 +114,15 @@ public class StudentServiceTests {
         assertEquals("second", res);
     }
 
+    @Test
+    void testCreateAsyncCall() throws InterruptedException {
+        long start = System.currentTimeMillis();
+        GenericCreateResponseVO response = studentServiceImpl.CreateAsyncCall();
+        long duration = System.currentTimeMillis() - start;
+        assertTrue(duration < 10000, "Method took too long, async not working");
+        assertEquals("id", response.getId());
+        assertEquals("Generic Response", response.getResponse());
+
+        verify(asyncCallService, times(1)).asyncCall();
+    }
 }

@@ -8,8 +8,10 @@ import com.kpl.registration.repository.Student.SubjectRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private  AsyncCallService asyncCallService;
+
 
     @Override
     public GenericCreateResponseVO studentCreate(StudentCreateRequestVO studentCreateResponseVO) {
@@ -100,8 +106,17 @@ public class StudentServiceImpl implements StudentService {
         return responseListVO;
     }
 
-    public String junitTest(String sen){
-      //  var sen = "I am learning Streams API in Java";
+    @Override
+    public GenericCreateResponseVO CreateAsyncCall() throws InterruptedException {
+        log.info("Generic Class is called {}", LocalDateTime.now());
+        asyncCallService.asyncCall();
+        return new GenericCreateResponseVO("id", "Generic Response");
+    }
+
+
+
+    public String junitTest(String sen) {
+        //  var sen = "I am learning Streams API in Java";
         return Arrays.stream(sen.split(" ")).sorted(Comparator.comparing(String::length).reversed())
                 .skip(1).findFirst().get();
     }

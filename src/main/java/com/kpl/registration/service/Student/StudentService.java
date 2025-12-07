@@ -12,4 +12,6 @@ public interface StudentService {
     GenericCreateResponseVO saveSubject(List<SubjectRequestVO> subjectVO);
 
     SubjectResponseListVO getStudentInfo(Long studentId);
+
+    GenericCreateResponseVO CreateAsyncCall() throws InterruptedException;
 }
