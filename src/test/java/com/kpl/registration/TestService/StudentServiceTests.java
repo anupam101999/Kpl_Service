@@ -7,23 +7,19 @@ import com.kpl.registration.repository.Student.StudentRepo;
 import com.kpl.registration.repository.Student.SubjectRepo;
 import com.kpl.registration.service.Student.AsyncCallService;
 import com.kpl.registration.service.Student.StudentServiceImpl;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
