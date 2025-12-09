@@ -3,7 +3,6 @@ package com.kpl.registration.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-//@ControllerAdvice
 public class KPLException extends RuntimeException {
     private final String message;
     @Getter
