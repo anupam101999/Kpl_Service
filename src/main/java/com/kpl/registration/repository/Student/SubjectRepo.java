@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface SubjectRepo extends JpaRepository<Subject, Long> {
-    @Query(value = "select * from Subject where student_id=?1", nativeQuery = true)
+    @Query("select s from Subject s where s.student.studentId=:studentId")
     List<Subject> findSubjectByStudentId(Long studentId);
 }

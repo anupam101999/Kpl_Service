@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface StudentRepo extends JpaRepository<Student, Long> {
 
-    @Query(value = "select * from Student where first_name=?1 and last_name=?2", nativeQuery = true)
+    @Query("select s from Student s where s.firstName=:firstName and s.lastName=:lastName")
     List<Student> existingStuWithSameName(String firstName, String lastName);
 
 
