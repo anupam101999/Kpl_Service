@@ -1,3 +1,11 @@
 spring:
   profiles:
     active: local
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      max-file-size: 1500MB
+      max-request-size: 1500MB

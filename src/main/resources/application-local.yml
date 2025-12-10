@@ -1,8 +1,8 @@
 server:
   port : 1999
-       
+protocol: http://localhost
 base:
-  url: http://localhost:${server.port}
+  url: ${protocol}:${server.port}
 spring:
   application:
     name: KPL-SERVICE
@@ -54,7 +54,12 @@ spring:
     password: vhijfojqbbzygyvi
     port: 587
     
-
+eureka:
+  client:
+    service-url:
+      defaultZone: ${protocol}:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
 #JWT Expires in 5 days
 jwt_secret: 87067a5c90101b420dcbdcaa90f1115452bca49a28c9d1bb1ef66c5a04949321
 jwt_expire: 600000000000
