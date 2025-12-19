@@ -46,8 +46,4 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body(studentService.CreateAsyncCall());
     }
 
-    @GetMapping("/caching")
-    public ResponseEntity<List<StudentListVO>> getAllSubjectInfo(){
-        return ResponseEntity.status(HttpStatus.OK).body(studentService.getAllStudent());
-    }
 }

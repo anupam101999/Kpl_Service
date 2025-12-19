@@ -14,4 +14,8 @@ public interface StudentService {
     SubjectResponseListVO getStudentInfo(Long studentId);
 
     GenericCreateResponseVO CreateAsyncCall() throws InterruptedException;
+
+    List<StudentListVO> getAllStudentsCaching(String dummy);
+
+    String printCacheManger(String cacheManager);
 }

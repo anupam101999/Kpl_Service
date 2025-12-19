@@ -9,6 +9,10 @@ import com.kpl.registration.service.Student.Interfaces.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,6 +29,8 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentRepo studentRepo;
 
+    @Autowired
+    private CacheManager cacheManager;
 
     //   Constructor Injector
 // private final StudentRepo studentRepo;
@@ -36,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
 //    @Setter
 //    private StudentRepo studentRepo;
 
-//    private StudentRepo studentRepo;
+    //    private StudentRepo studentRepo;
 //    public void setStudentRepo(StudentRepo studentRepo) {
 //        this.studentRepo = studentRepo;
 //    }
@@ -50,24 +56,7 @@ public class StudentServiceImpl implements StudentService {
     private AsyncCallService asyncCallService;
 
 
-    @Override
-    public GenericCreateResponseVO studentCreate(StudentCreateRequestVO studentCreateResponseVO) {
-        var studentId = 0L;
-        var message = "";
-        var studentExist = studentRepo.existingStuWithSameName(studentCreateResponseVO.getFirstName(), studentCreateResponseVO.getLastName());
-        if (studentExist.isEmpty()) {
-            var student = modelMapper.map(studentCreateResponseVO, Student.class);
-            var response = studentRepo.save(student);
-            studentId = response.getStudentId();
-            message = STUDENT_CREATED;
-            log.info("new Student Created");
-        } else {
-            message = STUDENT_EXIST;
-            log.info("Student Exists");
-            studentId = studentExist.get(0).getStudentId();
-        }
-        return new GenericCreateResponseVO(String.valueOf(studentId), message);
-    }
+
 
     @Override
     public List<StudentListVO> getAllStudent() {
@@ -134,5 +123,46 @@ public class StudentServiceImpl implements StudentService {
         //  var sen = "I am learning Streams API in Java";
         return Arrays.stream(sen.split(" ")).sorted(Comparator.comparing(String::length).reversed())
                 .skip(1).findFirst().get();
+    }
+
+    @Override
+  //  @Cacheable(value = "student", key = "#dummy")
+    public List<StudentListVO> getAllStudentsCaching(String dummy) {
+        var studentList = new ArrayList<StudentListVO>();
+        studentRepo.findAll().forEach(stu -> {
+            var student = modelMapper.map(stu, StudentListVO.class);
+            studentList.add(student);
+        });
+        return studentList;
+    }
+
+    @Override
+    //@CachePut(value = "student", key = "#dummy")
+    public GenericCreateResponseVO studentCreate(StudentCreateRequestVO studentCreateResponseVO) {
+        var studentId = 0L;
+        var message = "";
+        var studentExist = studentRepo.existingStuWithSameName(studentCreateResponseVO.getFirstName(), studentCreateResponseVO.getLastName());
+        if (studentExist.isEmpty()) {
+            var student = modelMapper.map(studentCreateResponseVO, Student.class);
+            var response = studentRepo.save(student);
+            studentId = response.getStudentId();
+            message = STUDENT_CREATED;
+            log.info("new Student Created");
+        } else {
+            message = STUDENT_EXIST;
+            log.info("Student Exists");
+            studentId = studentExist.get(0).getStudentId();
+        }
+        return new GenericCreateResponseVO(String.valueOf(studentId), message);
+    }
+    @Override
+    public String printCacheManger(String cacheName) {
+        Cache cache = cacheManager.getCache(cacheName);
+        var caching = "";
+        log.info("Cache Contents : ");
+        assert cache != null;
+        caching = Objects.requireNonNull(cache.getNativeCache().toString());
+        log.info(caching);
+        return caching;
     }
 }
