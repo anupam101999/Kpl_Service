@@ -60,8 +60,6 @@ public abstract class AuditTable {
         if (createdBy == null || createdBy.trim().isEmpty()) {
             createdBy = auditor;
         }
-        lastModifiedDate = now;
-        lastModifiedBy = auditor;
     }
 
     @PreUpdate
