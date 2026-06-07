@@ -13,12 +13,12 @@ public interface PlayerRepo2024 extends JpaRepository<PlayerRegistration, Long> 
 
     @Transactional
     @Modifying
-    @Query(value="update player_registration_six  set image= :imageBytes WHERE reg_id = :i", nativeQuery = true)
+    @Query(value="update player_registration_six set image=?2 where reg_id=?1", nativeQuery = true)
     void updateImage(int i, byte[] imageBytes);
 
     @Transactional
     @Modifying
-    @Query(value = "update player_registration_six set sold_amount=?2 , sold_team=?3 , sold_time=?4  where reg_id=?1", nativeQuery = true)
+    @Query(value = "update player_registration_six set sold_amount=?2, sold_team=?3, sold_time=?4 where reg_id=?1", nativeQuery = true)
     void updateSoldamountAndTeam(Long regID, Long soldAmount, String soldTeam, LocalDateTime updationTime);
 
     @Query(value = "SELECT count(*) FROM player_registration_six where player_location_category='Overseas' and sold_team=?1", nativeQuery = true)

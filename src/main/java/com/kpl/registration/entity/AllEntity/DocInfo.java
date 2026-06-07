@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "doc_info")
-public class DocInfo implements Serializable {
+public class DocInfo extends AuditTable implements Serializable {
 
 	/**
 	*

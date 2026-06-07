@@ -12,17 +12,17 @@ import javax.transaction.Transactional;
 public interface EventRepo extends JpaRepository<EventCount, Long> {
 	@Transactional
 	@Modifying
-	@Query(value = "update event_count set rules_pdf=rules_pdf+1  where event_id=1", nativeQuery = true)
+	@Query(value = "update event_count set rules_pdf=rules_pdf+1 where event_id=1", nativeQuery = true)
 	void updateRulesPdfCount();
 
 	@Transactional
 	@Modifying
-	@Query(value = "update event_count set owner_pdf=owner_pdf+1  where event_id=1", nativeQuery = true)
+	@Query(value = "update event_count set owner_pdf=owner_pdf+1 where event_id=1", nativeQuery = true)
 	void updateOwnerPdfCount();
 	
 	@Transactional
 	@Modifying
-	@Query(value = "update event_count set player_pdf=player_pdf+1  where event_id=1", nativeQuery = true)
+	@Query(value = "update event_count set player_pdf=player_pdf+1 where event_id=1", nativeQuery = true)
 	void updateTeamPdfCount();
 
 }

@@ -28,6 +28,6 @@ public interface DocRepo extends JpaRepository<DocInfo, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "update doc_info set image=?2  where registration_id=?1", nativeQuery = true)
+	@Query(value = "update doc_info set image=?2 where registration_id=?1", nativeQuery = true)
 	void updateOwnImage(Long id,byte[] imageData);
 }

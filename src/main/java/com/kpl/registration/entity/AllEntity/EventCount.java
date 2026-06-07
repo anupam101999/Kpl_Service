@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "event_count")
-public class EventCount implements Serializable {
+public class EventCount extends AuditTable implements Serializable {
 
 	/**
 	*

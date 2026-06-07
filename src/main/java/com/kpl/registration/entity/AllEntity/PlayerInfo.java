@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  @NoArgsConstructor
  @Entity
  @Table(name = "player_registration")
- public class PlayerInfo implements Serializable {
+ public class PlayerInfo extends AuditTable implements Serializable {
 
  /**
  *

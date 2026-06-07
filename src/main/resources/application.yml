@@ -3,11 +3,19 @@ spring:
     active: local
   application:
     name: KPL-APP
-  mvc:
-    view:
-      prefix: /views/
-      suffix: .jsp
   servlet:
     multipart:
       max-file-size: 1500MB
       max-request-size: 1500MB
+  jpa:
+    properties:
+      hibernate:
+        session_factory:
+          statement_inspector: com.kpl.registration.Audit.AuditSqlStatementInspector
+
+# Server-side page rendering has been removed; this service now exposes API endpoints only.
+logging:
+  level:
+    root: INFO
+    com.kpl.registration: INFO
+    org.springframework.web: WARN

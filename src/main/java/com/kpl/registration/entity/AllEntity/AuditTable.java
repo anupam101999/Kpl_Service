@@ -14,6 +14,13 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
+/**
+ * Shared audit columns for entities persisted through Spring Data JPA.
+ *
+ * <p>Native and JPQL update queries bypass JPA entity listeners. Those updates
+ * are handled centrally by {@code AuditSqlStatementInspector}, so repository
+ * methods do not need to add audit columns by hand.</p>
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,19 +28,19 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditTable {
 
-    @Column(updatable = false)
+    @Column(name = "created_by", updatable = false)
     @CreatedBy
     protected String createdBy;
 
-    @Column(updatable = false)
+    @Column(name = "created_date", updatable = false)
     @CreatedDate
     protected LocalDateTime createdDate;
 
-    @Column(insertable = false)
+    @Column(name = "last_modified_by")
     @LastModifiedBy
     protected String lastModifiedBy;
 
-    @Column(insertable = false)
+    @Column(name = "last_modified_date")
     @LastModifiedDate
     protected LocalDateTime lastModifiedDate;
 
