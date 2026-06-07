@@ -1,9 +1,9 @@
 package com.kpl.registration.Audit;
 
-import com.kpl.registration.dto.AllOther.UserInfo;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,11 +28,8 @@ public class AuditUserProvider {
         }
 
         Object principal = authentication.getPrincipal();
-        if (principal instanceof UserInfo) {
-            return ((UserInfo) principal).getUsername();
-        }
-        if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
-            return ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
         }
         if (principal instanceof String) {
             return (String) principal;

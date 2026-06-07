@@ -35,8 +35,11 @@ public class AuditSqlStatementInspector implements StatementInspector {
             return sql;
         }
 
-        String auditClause = "last_modified_by='" + escapeSql(AuditUserProvider.getCurrentAuditor())
-                + "', last_modified_date=CURRENT_TIMESTAMP, ";
+        String auditor = escapeSql(AuditUserProvider.getCurrentAuditor());
+        String auditClause = "created_by=coalesce(created_by, '" + auditor + "'), "
+                + "created_date=coalesce(created_date, CURRENT_TIMESTAMP), "
+                + "last_modified_by='" + auditor + "', "
+                + "last_modified_date=CURRENT_TIMESTAMP, ";
         return sql.substring(0, matcher.end()) + auditClause + sql.substring(matcher.end());
     }
 

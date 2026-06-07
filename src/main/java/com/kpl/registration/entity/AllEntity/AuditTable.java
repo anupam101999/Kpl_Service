@@ -1,5 +1,6 @@
 package com.kpl.registration.entity.AllEntity;
 
+import com.kpl.registration.Audit.AuditUserProvider;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
-
-import com.kpl.registration.Audit.AuditUserProvider;
 
 /**
  * Shared audit columns for entities persisted through Spring Data JPA.
@@ -67,7 +66,16 @@ public abstract class AuditTable {
 
     @PreUpdate
     public void auditUpdate() {
-        lastModifiedDate = LocalDateTime.now();
-        lastModifiedBy = AuditUserProvider.getCurrentAuditor();
+        LocalDateTime now = LocalDateTime.now();
+        String auditor = AuditUserProvider.getCurrentAuditor();
+
+        if (createdDate == null) {
+            createdDate = now;
+        }
+        if (createdBy == null || createdBy.trim().isEmpty()) {
+            createdBy = auditor;
+        }
+        lastModifiedDate = now;
+        lastModifiedBy = auditor;
     }
 }
