@@ -3,6 +3,7 @@ package com.kpl.registration.entity.AllEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -12,7 +13,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
+
+import com.kpl.registration.Audit.AuditUserProvider;
 
 /**
  * Shared audit columns for entities persisted through Spring Data JPA.
@@ -24,6 +29,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Audited
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditTable {
@@ -44,4 +50,24 @@ public abstract class AuditTable {
     @LastModifiedDate
     protected LocalDateTime lastModifiedDate;
 
+    @PrePersist
+    public void auditCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        String auditor = AuditUserProvider.getCurrentAuditor();
+
+        if (createdDate == null) {
+            createdDate = now;
+        }
+        if (createdBy == null || createdBy.trim().isEmpty()) {
+            createdBy = auditor;
+        }
+        lastModifiedDate = now;
+        lastModifiedBy = auditor;
+    }
+
+    @PreUpdate
+    public void auditUpdate() {
+        lastModifiedDate = LocalDateTime.now();
+        lastModifiedBy = AuditUserProvider.getCurrentAuditor();
+    }
 }
