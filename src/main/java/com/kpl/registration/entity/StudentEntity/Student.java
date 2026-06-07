@@ -1,8 +1,10 @@
 package com.kpl.registration.entity.StudentEntity;
 
+import com.kpl.registration.entity.AllEntity.AuditTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +13,8 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student implements Serializable {
+@Audited
+public class Student extends AuditTable implements Serializable {
     private static final long serialVersionUID = 3980366880241829960L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "student_id")

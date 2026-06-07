@@ -3,6 +3,7 @@ package com.kpl.registration.entity.AllEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,9 +11,10 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Audited
 @Entity
 @Table(name = "owner_information")
-public class OwnerInfo implements Serializable {
+public class OwnerInfo extends AuditTable implements Serializable {
 
 	/**
 	*

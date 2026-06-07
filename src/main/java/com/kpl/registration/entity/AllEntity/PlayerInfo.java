@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
  @Data
  @AllArgsConstructor
  @NoArgsConstructor
+ @Audited
  @Entity
  @Table(name = "player_registration")
  public class PlayerInfo extends AuditTable implements Serializable {
